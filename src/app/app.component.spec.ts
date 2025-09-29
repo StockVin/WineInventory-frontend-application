@@ -17,7 +17,7 @@ describe('AppComponent', () => {
   it(`should have the 'wineinventory-front-end-application' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('wineinventory-front-end-application');
+    expect(app.title()).toEqual('WineInventory');
   });
 
   it('should render title', () => {
