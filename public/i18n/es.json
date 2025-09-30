@@ -1,3 +1,8 @@
 {
-  "title": "WineInventory"
+  "title": "WineInventory",
+  "notFound": {
+    "title": "¡Uy! Página no encontrada.",
+    "description": "La página que buscas podría haber sido eliminada o no estar disponible temporalmente.",
+    "button": "Volver a la página principal"
+  }
 }
