@@ -49,8 +49,7 @@
   "title": "Menu principal",
   "options": {
     "dashboard": "Inicio",
-    "wine": "Productos",
-    "category": "Ordenes",
+    "wine": "Ordenes",
     "order": "Lista de pedidos",
     "report": "Reportes",
     "alert": "Alertas",
