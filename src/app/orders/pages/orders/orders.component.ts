@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { OrderListComponent } from '../../components/order-list/order-list.component';
 
 @Component({
   selector: 'app-orders',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, OrderListComponent],
   templateUrl: './orders.component.html',
-  styleUrl: './orders.component.css'
+  styleUrls: ['./orders.component.css']
 })
-export class OrdersComponent {
-
-}
+export class OrdersComponent {}
