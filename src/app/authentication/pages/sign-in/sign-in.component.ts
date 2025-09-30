@@ -47,6 +47,7 @@ export class SignInComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       console.log('Form submitted', this.loginForm.value);
+      this.router.navigate(['/dashboard']);
     }
   }
 

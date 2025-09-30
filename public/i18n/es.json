@@ -44,5 +44,18 @@
     "title": "¡Uy! Página no encontrada.",
     "description": "La página que buscas podría haber sido eliminada o no estar disponible temporalmente.",
     "button": "Volver a la página principal"
-  }
+  },
+  "side-navbar": {
+  "title": "Menu principal",
+  "options": {
+    "dashboard": "Inicio",
+    "wine": "Productos",
+    "category": "Ordenes",
+    "order": "Lista de pedidos",
+    "report": "Reportes",
+    "alert": "Alertas",
+    "configuration": "Configuración"
+  },
+  "logout": "Cerrar Sesión"
+}
 }

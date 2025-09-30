@@ -44,5 +44,18 @@
     "title": "Oops! Page not found.",
     "description": "The page you're looking for may have been removed or is temporarily unavailable.",
     "button": "Back to Home"
-  }
+  },
+  "side-navbar": {
+  "title": "Main Menu",
+  "options": {
+    "dashboard": "Home",
+    "wine": "Products",
+    "category": "Orders",
+    "order": "Order List",
+    "report": "Reports",
+    "alert": "Alerts",
+    "configuration": "Settings"
+  },
+  "logout": "Log Out"
+}
 }
