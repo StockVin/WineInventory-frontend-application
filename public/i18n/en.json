@@ -39,5 +39,10 @@
     "have-account": "Do you already have an account?",
     "sign-in": "Sign in",
     "welcome-title": "Join Us!"
+  },
+  "notFound": {
+    "title": "Oops! Page not found.",
+    "description": "The page you're looking for may have been removed or is temporarily unavailable.",
+    "button": "Back to Home"
   }
 }
