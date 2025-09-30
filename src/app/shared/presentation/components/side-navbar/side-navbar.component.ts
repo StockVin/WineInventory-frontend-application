@@ -19,7 +19,7 @@ export interface NavItem {
   imports: [
     CommonModule,
     TranslateModule,
-    RouterModule, 
+    RouterModule,
     MatIconModule,
     MatButtonModule,
   ],
@@ -32,13 +32,12 @@ export class SideNavbarComponent implements OnInit {
     { icon: 'home', label: 'side-navbar.options.dashboard', route: ['/dashboard'] },
     { icon: 'inventory_2', label: 'side-navbar.options.wine', route: ['/dashboard', 'products'] },
     { icon: 'shopping_cart', label: 'side-navbar.options.order', route: ['/dashboard', 'sales'] },
-    { icon: 'group', label: 'side-navbar.options.category', route: ['/dashboard', 'clients'] },
     { icon: 'assessment', label: 'side-navbar.options.report', route: ['/dashboard', 'reports'] },
     { icon: 'notifications', label: 'side-navbar.options.alert', route: ['/dashboard', 'alerts'] },
     { icon: 'settings', label: 'side-navbar.options.configuration', route: ['/dashboard', 'settings'] }
   ];
 
-  unreadAlerts = 3; 
+  unreadAlerts = 3;
 
   constructor(private router: Router) {}
 
