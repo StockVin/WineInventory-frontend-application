@@ -71,3 +71,8 @@ For more information on using the Angular CLI, including detailed command refere
 
 npm install @ngx-translate/core @ngx-translate/http-loader --save
 ```
+
+# json-server
+```bash
+npm install -g json-server@0.17.4
+```

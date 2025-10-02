@@ -4,6 +4,10 @@ const SignInComponent = () => import('./authentication/pages/sign-in/sign-in.com
 const SignUpComponent = () => import('./authentication/pages/sign-up/sign-up.component').then(m => m.SignUpComponent);
 const DashboardComponent = () => import('./shared/presentation/view/dashboard/dashboard.component').then(m => m.DashboardComponent);
 const PageNotFoundComponent = () => import('./shared/presentation/view/page-not-found/page-not-found.component').then(m => m.PageNotFoundComponent);
+const ReportsComponent = () => import('./reporting/pages/report-dashboard/report-dashboard.component').then(m => m.ReportDashboardComponent);
+const ReportCreateComponent = () => import('./reporting/pages/report-create/report-create.component').then(m => m.ReportCreateComponent);
+const CareGuidesComponent = () => import('./reporting/pages/careguide-dashboard/careguide-dashboard.component').then(m => m.CareguideDashboardComponent);
+const CareGuidesCreateComponent = () => import('./reporting/pages/careguide-create/careguide-create.component').then(m => m.CareguideCreateComponent);
 
 const baseTitle = 'WineInventory';
 
@@ -12,5 +16,11 @@ export const routes: Routes = [
   { path: 'sign-in', loadComponent: SignInComponent, data: { title: `${baseTitle} | Sign In` } },
   { path: 'sign-up', loadComponent: SignUpComponent, data: { title: `${baseTitle} | Sign Up` } },
   { path: 'dashboard',loadComponent: DashboardComponent,children: [{ path: '', redirectTo: 'home', pathMatch: 'full' },]},
+  { path: 'reports', children: [
+    { path: '', loadComponent: ReportsComponent },
+    { path: 'report-create', loadComponent: ReportCreateComponent },
+    { path: 'careguides', loadComponent: CareGuidesComponent },
+    { path: 'careguides/create', loadComponent: CareGuidesCreateComponent },
+  ], data: { title: `${baseTitle} | Reports` } },
   { path: '**', loadComponent: PageNotFoundComponent, data: { title: `${baseTitle} | Page Not Found` } }
 ];
