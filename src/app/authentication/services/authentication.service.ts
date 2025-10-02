@@ -7,7 +7,6 @@ import {SignUpResponse} from '../models/sign-up.response';
 import {SignInResponse} from '../models/sign-in.response';
 import {SignInRequest} from '../models/sign-in.request';
 import {Injectable} from '@angular/core';
-import { AccountService } from '../../plans-subcripstions/services/account.service';
 
 /**
  * Service for handling authentication operations.
@@ -31,7 +30,6 @@ export class AuthenticationService {
   constructor(
     private router: Router, 
     private http: HttpClient,
-    private accountService: AccountService
   ) {
     this.initializeAuthState();
   }
@@ -116,10 +114,7 @@ export class AuthenticationService {
           localStorage.setItem('accountId', accountId.toString());
           localStorage.setItem('username', username);
 
-          this.accountService.getAccountStatus(accountId).subscribe({
-            next: (res) => {
-              const status = res.accountStatus;
-              console.log('✅ Account status:', status);
+          console.log('✅ Account status:', status);
 
               if (status === 'INACTIVE') {
                 this.router.navigate(['/subscription-choose']);
@@ -127,21 +122,12 @@ export class AuthenticationService {
                 this.router.navigate(['/dashboard']);
               }
             },
-            error: (err) => {
+            error: (err: any) => {
               console.error('❌ Error fetching account status:', err);
               this.router.navigate(['/sign-in']);
             }
           });
-        },
-        error: (error) => {
-          this.signedIn.next(false);
-          this.signedInUserId.next(0);
-          this.signedInUsername.next('');
-          console.error(`❌ Error while signing in:`, error);
-          this.router.navigate(['/sign-in']);
         }
-      });
-  }
 
   /**
    * Sign out the user.

@@ -64,6 +64,20 @@
     "new": "New Report",
     "export": "Export",
     "careguide": "Careguide",
+    "create": "Create Report",
+    "reportCreate": {
+      "data": "Report Data",
+      "information": "Product Information",
+      "cancel": "Cancel",
+      "save": "Save",
+      "number": "Report Number",
+      "date": "Date",
+      "product": "Product",
+      "price": "Price",
+      "type": "Type",
+      "amount": "Quantity",
+      "lost": "Lost"
+    },
     "tableHeaders": {
       "id": "ID",
       "product": "Product",

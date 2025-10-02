@@ -11,8 +11,8 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
-// Import the components using relative paths
 import { SideNavbarComponent } from '../../../shared/presentation/components/side-navbar/side-navbar.component';
 import { LanguageSwitcher } from '../../../shared/presentation/components/language-switcher/language-switcher.component';
 import { MatListModule } from '@angular/material/list';
@@ -37,7 +37,7 @@ import { ReportListComponent } from '../../components/report-list/report-list.co
     TranslateModule,
     SideNavbarComponent,
     LanguageSwitcher,
-    ReportListComponent
+    ReportListComponent,
   ],
   templateUrl: './report-dashboard.component.html',
   styleUrl: './report-dashboard.component.css'
@@ -50,12 +50,11 @@ export class ReportDashboardComponent implements OnInit {
   error: string | null = null;
   private searchTerms = new Subject<string>();
 
-  constructor(private reportService: ReportService) {}
+  constructor(private reportService: ReportService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadReports();
     
-    // Setup search with debounce
     this.searchTerms.pipe(
       debounceTime(300),
       distinctUntilChanged()
@@ -98,7 +97,6 @@ export class ReportDashboardComponent implements OnInit {
       report.id.toString().includes(searchTerm)
     );
   }
-
   getTypeClass(type: string): string {
     switch (type.toLowerCase()) {
       case 'sale':
@@ -111,6 +109,23 @@ export class ReportDashboardComponent implements OnInit {
         return 'type-loss';
       default:
         return 'type-default';
+    }
+  }
+  navigateToReportCreate(): void {
+    this.router.navigate(['reports/report-create']);
+  }
+
+  onDeleteReport(reportId: number): void {
+    if (confirm('¿Estás seguro de que deseas eliminar este reporte?')) {
+      this.reportService.delete(reportId).subscribe({
+        next: () => {
+          this.reports = this.reports.filter(report => report.id !== reportId);
+          this.filteredReports = this.filteredReports.filter(report => report.id !== reportId);
+        },
+        error: (error) => {
+          console.error('Error deleting report:', error);
+        }
+      });
     }
   }
 }

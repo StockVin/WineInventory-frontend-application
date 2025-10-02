@@ -64,6 +64,20 @@
     "new": "Nuevo Reporte",
     "export": "Exportar",
     "careguide": "Guia de cuidado",
+    "create": "Crear Reporte",
+    "reportCreate": {
+      "data": "Datos del Reporte",
+      "information": "Información del Producto",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "number": "Número de Reporte",
+      "date": "Fecha",
+      "product": "Producto",
+      "price": "Precio",
+      "type": "Tipo",
+      "amount": "Cantidad",
+      "lost": "Perdida"
+    },
     "tableHeaders": {
       "id": "ID",
       "product": "Producto",

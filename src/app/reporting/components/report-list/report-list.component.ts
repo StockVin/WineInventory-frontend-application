@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Report } from '../../models/report.entity';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,6 +23,12 @@ import { ReportItemComponent } from '../report-item/report-item.component';
 })
 export class ReportListComponent {
   @Input() reports: Report[] = [];
+  @Input() loading = false;
+  @Output() delete = new EventEmitter<number>();
+
+  onDelete(reportId: number): void {
+    this.delete.emit(reportId);
+  }
   
   displayedColumns: string[] = ['id', 'date', 'product', 'type', 'price', 'amount', 'lost', 'actions'];
   

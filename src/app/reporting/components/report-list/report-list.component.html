@@ -10,7 +10,11 @@
   </div>
   
   <div class="report-items">
-    <app-report-item *ngFor="let report of reports" [report]="report"></app-report-item>
+    <app-report-item 
+      *ngFor="let report of reports" 
+      [report]="report"
+      (delete)="onDelete($event)">
+    </app-report-item>
   </div>
 
   <div *ngIf="reports.length === 0" class="no-reports">

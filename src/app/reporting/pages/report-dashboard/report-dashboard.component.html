@@ -16,7 +16,7 @@
             <mat-icon>download</mat-icon>
             {{ 'report.export' | translate }}
           </button>
-          <button mat-raised-button color="primary" class="new-report-btn">
+          <button mat-raised-button color="primary" class="new-report-btn" (click)="navigateToReportCreate()">
             <mat-icon>add</mat-icon>
             {{ 'report.new' | translate }}
           </button>
@@ -46,7 +46,11 @@
         <mat-icon>search_off</mat-icon>
         <p>{{ 'report.noResults' | translate }}</p>
       </div>
-      <app-report-list [reports]="filteredReports"></app-report-list>
+      <app-report-list 
+        [reports]="filteredReports" 
+        [loading]="loading"
+        (delete)="onDeleteReport($event)">
+      </app-report-list>
     </div>
   </div>
 </div>

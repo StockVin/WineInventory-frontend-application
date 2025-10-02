@@ -1,4 +1,3 @@
-/* Main container */
 .report-list {
   width: 100%;
   border-radius: 12px;
@@ -8,7 +7,6 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Header row */
 .report-header {
   display: grid;
   grid-template-columns: 120px 1fr 100px 100px 80px 80px 60px;
@@ -26,7 +24,6 @@
   z-index: 1;
 }
 
-/* Header cells */
 .report-header > div {
   padding: 8px 4px;
   display: flex;
@@ -42,7 +39,6 @@
   letter-spacing: 0.3px;
 }
 
-/* Items container */
 .report-items {
   max-height: 600px;
   overflow-y: auto;
@@ -51,7 +47,6 @@
   scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
 
-/* Custom scrollbar for WebKit browsers */
 .report-items::-webkit-scrollbar {
   width: 6px;
 }
@@ -69,7 +64,6 @@
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Report item */
 .report-item {
   display: grid;
   grid-template-columns: 120px 1fr 100px 100px 80px 80px 60px;
@@ -114,7 +108,6 @@
   transition: transform 0.1s ease;
 }
 
-/* Common cell styles */
 .report-item > div {
   padding: 8px 4px;
   font-size: 0.9rem;
@@ -122,14 +115,12 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-/* Header column adjustments */
 .report-header > div {
   text-align: center;
   padding: 8px 4px;
   box-sizing: border-box;
 }
 
-/* Specific header styles */
 .header-date { 
   text-align: left;
   padding-left: 0;
@@ -190,7 +181,7 @@
   display: flex;
   justify-content: center;
   padding-right: 0;
-  width: 60px; /* Para que coincida con el ancho del botón de eliminar */
+  width: 60px;
 }
 
 .report-actions {
@@ -199,7 +190,6 @@
   padding-right: 0;
 }
 
-/* No reports message */
 .no-reports {
   display: flex;
   flex-direction: column;
@@ -229,7 +219,6 @@
   color: #FEEED4;
 }
 
-/* Responsive adjustments */
 @media (max-width: 1200px) {
   .report-header {
     grid-template-columns: 120px 1fr 100px 100px 80px 80px 40px;
@@ -271,7 +260,6 @@
   }
 }
 
-/* Mobile styles */
 @media (max-width: 768px) {
   .report-header {
     display: none;
@@ -321,5 +309,5 @@
     font-size: 1rem;
   }
 
-}
+} 
 }

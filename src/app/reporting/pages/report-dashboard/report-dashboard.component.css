@@ -1,6 +1,4 @@
-/* ===== Color Variables ===== */
 :root {
-  /* Base Colors */
   --primary-bg: #2C2129;
   --accent-light: #FEEED4;
   --card-bg: #FFF8F7;
@@ -9,24 +7,17 @@
   --primary-accent: #C81D33;
   --text-secondary: #6B6B6B;
   --accent-warning: #CC8811;
-  
-  /* Utility Colors */
   --border-color: rgba(232, 200, 200, 0.3);
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
-  
-  /* Border Radius */
   --border-radius-sm: 8px;
   --border-radius-md: 12px;
   --border-radius-lg: 16px;
-  
-  /* Transitions */
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ===== Base Styles ===== */
 * {
   margin: 0;
   padding: 0;
@@ -42,7 +33,6 @@ body {
   min-height: 100vh;
 }
 
-/* ===== Dashboard Layout ===== */
 .dashboard-container {
   display: flex;
   min-height: 100vh;
@@ -71,7 +61,6 @@ body {
   z-index: 1;
 }
 
-/* Header Styles */
 .header {
   background: linear-gradient(135deg, rgba(200, 29, 51, 0.15) 0%, rgba(44, 33, 41, 0.25) 100%);
   border-radius: 16px;
@@ -120,7 +109,6 @@ body {
   align-items: center;
 }
 
-/* ===== Search Bar ===== */
 .search-bar {
   padding: 1rem 1.5rem;
   background: rgba(255, 255, 255, 0.03);
@@ -144,7 +132,6 @@ body {
   position: relative;
 }
 
-/* Form field styles */
 .search-field .mat-mdc-text-field-wrapper {
   background: rgba(255, 255, 255, 0.04) !important;
   border-radius: 12px;
@@ -168,7 +155,6 @@ body {
   transform: translateY(-1px);
 }
 
-/* Input text */
 .search-field .mat-mdc-form-field-flex {
   height: 54px;
   align-items: center;
@@ -208,7 +194,6 @@ body {
   color: rgba(255, 255, 255, 0.5) !important;
 }
 
-/* Label */
 .search-field .mdc-floating-label {
   color: rgba(255, 255, 255, 0.6) !important;
   top: 50% !important;
@@ -236,7 +221,6 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Search icon */
 .search-field .mat-mdc-form-field-icon-suffix {
   padding: 0 0 0 12px !important;
   opacity: 0.8;
@@ -278,13 +262,11 @@ body {
   transform: scale(1.15);
 }
 
-/* Remove underline */
 .search-field .mdc-line-ripple::before,
 .search-field .mdc-line-ripple::after {
   display: none !important;
 }
 
-/* Focus animation */
 @keyframes searchFocus {
   0% { box-shadow: 0 0 0 0 rgba(200, 29, 51, 0.2); }
   100% { box-shadow: 0 0 0 8px rgba(200, 29, 51, 0); }
@@ -314,7 +296,6 @@ body {
   border-radius: 3px;
 }
 
-/* Header Actions */
 .header-actions {
   display: flex;
   gap: 1.25rem;
@@ -322,7 +303,6 @@ body {
   z-index: 2;
 }
 
-/* Add icon animation */
 .export-btn mat-icon,
 .new-report-btn mat-icon {
   transition: transform 0.3s ease;
@@ -333,7 +313,6 @@ body {
   transform: scale(1.1) translateX(2px);
 }
 
-/* Buttons */
 .export-btn,
 .new-report-btn {
   display: flex;
@@ -356,7 +335,6 @@ body {
   min-width: 180px;
 }
 
-/* Button hover effect for export button */
 .export-btn::before {
   content: '';
   position: absolute;
@@ -433,7 +411,6 @@ body {
   box-shadow: 0 2px 15px rgba(200, 29, 51, 0.4);
 }
 
-/* Search and Filter Bar */
 .search-bar {
   background: var(--card-bg);
   border-radius: var(--border-radius-md);
@@ -445,7 +422,6 @@ body {
   align-items: center;
 }
 
-/* Table Styles */
 .table-container {
   background: rgba(255, 255, 255, 0.02);
   border-radius: 12px;
@@ -470,7 +446,6 @@ body {
   border-radius: 12px;
 }
 
-/* ===== Table Styles ===== */
 .table-container {
   background: rgba(255, 255, 255, 0.03);
   border-radius: 12px;
@@ -490,13 +465,11 @@ body {
   font-size: 0.9rem;
 }
 
-/* Header row */
 .mat-mdc-header-row {
   background: rgba(200, 29, 51, 0.1) !important;
   height: 56px;
 }
 
-/* Header cells */
 .mat-mdc-header-cell {
   color: #FFFFFF !important;
   font-weight: 600;
@@ -508,7 +481,6 @@ body {
   white-space: nowrap;
 }
 
-/* Ensure all text in table cells is white */
 .mat-mdc-cell, 
 .mat-mdc-cell *,
 .mat-mdc-paginator,
@@ -516,18 +488,14 @@ body {
   color: #FFFFFF !important;
 }
 
-/* Override any other potential text colors */
 .mat-mdc-table,
 .mat-mdc-table * {
   color: #FFFFFF !important;
 }
-
-/* Ensure input text is white */
 input.mat-mdc-input-element {
   color: #FFFFFF !important;
 }
 
-/* Ensure placeholders are visible */
 .mat-mdc-form-field-label,
 .mat-mdc-floating-label {
   color: rgba(255, 255, 255, 0.7) !important;
@@ -537,7 +505,6 @@ input.mat-mdc-input-element {
   background-color: transparent !important;
 }
 
-/* Table rows */
 .mat-mdc-row {
   transition: background-color 0.2s ease;
   position: relative;
@@ -547,7 +514,6 @@ input.mat-mdc-input-element {
   background: rgba(200, 29, 51, 0.05) !important;
 }
 
-/* Table cells */
 .mat-mdc-cell {
   color: rgba(255, 255, 255, 0.9) !important;
   padding: 16px !important;
@@ -555,7 +521,6 @@ input.mat-mdc-input-element {
   vertical-align: middle;
 }
 
-/* Product cell */
 .product-cell {
   display: flex;
   align-items: center;
@@ -575,7 +540,6 @@ input.mat-mdc-input-element {
   font-size: 0.9rem;
 }
 
-/* Type badge */
 .type-badge {
   display: inline-block;
   padding: 4px 12px;
@@ -588,7 +552,6 @@ input.mat-mdc-input-element {
   transition: all 0.2s ease;
 }
 
-/* Lost amount warning */
 .lost-amount {
   display: flex;
   align-items: center;
@@ -603,7 +566,6 @@ input.mat-mdc-input-element {
   height: 1.1rem;
 }
 
-/* Actions cell */
 .actions-cell {
   text-align: right !important;
   padding-right: 8px !important;
@@ -619,7 +581,6 @@ input.mat-mdc-input-element {
   background: rgba(200, 29, 51, 0.1) !important;
 }
 
-/* Hover effect for rows */
 .mat-mdc-row {
   position: relative;
   overflow: hidden;
@@ -635,7 +596,6 @@ input.mat-mdc-input-element {
   background: linear-gradient(90deg, transparent, rgba(200, 29, 51, 0.2), transparent);
 }
 
-/* Pagination styles */
 .pagination-container {
   display: flex;
   justify-content: space-between;
@@ -668,7 +628,6 @@ input.mat-mdc-input-element {
   color: var(--accent-light) !important;
 }
 
-/* Loading, Error & Empty States */
 .loading-state,
 .error-state,
 .no-results {
@@ -725,7 +684,6 @@ input.mat-mdc-input-element {
   margin-top: 1rem;
 }
 
-/* Header styles */
 .mat-mdc-header-row {
   background: rgba(200, 29, 51, 0.1) !important;
   height: 56px;
@@ -741,7 +699,6 @@ input.mat-mdc-input-element {
   background: rgba(200, 29, 51, 0.2) !important;
 }
 
-/* Row styles */
 .mat-mdc-row {
   transition: all 0.2s ease;
   background: transparent;
@@ -756,7 +713,6 @@ input.mat-mdc-input-element {
   background: rgba(200, 29, 51, 0.05) !important;
 }
 
-/* Cell styles */
 .mat-mdc-cell {
   color: var(--accent-light) !important;
   padding: 1.25rem 1.5rem !important;
@@ -769,7 +725,6 @@ input.mat-mdc-input-element {
   color: var(--accent-light) !important;
 }
 
-/* Product cell */
 .product-cell {
   display: flex;
   align-items: center;
@@ -790,7 +745,6 @@ input.mat-mdc-input-element {
   box-shadow: 0 2px 8px rgba(200, 29, 51, 0.2);
 }
 
-/* Type badge */
 .type-badge {
   display: inline-block;
   padding: 0.35rem 0.8rem;
@@ -804,7 +758,6 @@ input.mat-mdc-input-element {
   border: 1px solid rgba(200, 29, 51, 0.3);
 }
 
-/* Specific badge types */
 .type-badge.completed {
   background: rgba(46, 204, 113, 0.15) !important;
   border-color: rgba(46, 204, 113, 0.3);
@@ -823,7 +776,6 @@ input.mat-mdc-input-element {
   color: #e74c3c !important;
 }
 
-/* Paginator */
 .mat-mdc-paginator {
   background: transparent !important;
   color: #FEEED4 !important;
@@ -836,7 +788,6 @@ input.mat-mdc-input-element {
   padding: 1rem;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -894,7 +845,6 @@ input.mat-mdc-input-element {
   border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
 }
 
-/* Status Badges */
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -921,7 +871,6 @@ input.mat-mdc-input-element {
   color: #F44336;
 }
 
-/* Action Buttons */
 .action-button {
   margin: 0 4px;
   transition: var(--transition-fast);
@@ -943,7 +892,6 @@ input.mat-mdc-input-element {
   border-color: var(--primary-accent);
 }
 
-/* Paginator */
 .mat-mdc-paginator {
   background: var(--card-bg) !important;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
@@ -955,7 +903,6 @@ input.mat-mdc-input-element {
   padding: 1rem;
 }
 
-/* Form Fields */
 .mat-mdc-form-field {
   width: 100%;
 }
@@ -977,7 +924,6 @@ input.mat-mdc-input-element {
   background: transparent !important;
 }
 
-/* Responsive Adjustments */
 @media (max-width: 1200px) {
   .main-content {
     padding: 1.5rem;
@@ -1027,7 +973,6 @@ input.mat-mdc-input-element {
   }
 }
 
-/* Animation for loading state */
 @keyframes pulse {
   0% { opacity: 0.6; }
   50% { opacity: 1; }
