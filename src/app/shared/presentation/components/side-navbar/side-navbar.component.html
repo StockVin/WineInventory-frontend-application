@@ -16,8 +16,8 @@
     <div class="nav-section">
       <div class="nav-section-title" *ngIf="isExpanded">{{ 'side-navbar.title' | translate }}</div>
       <ul class="nav-items">
-        <li *ngFor="let item of navItems" 
-            [class.active]="item.isActive" 
+        <li *ngFor="let item of navItems"
+            [class.active]="item.isActive"
             (click)="onNavItemClick(item)"
             [title]="!isExpanded ? (item.label | translate) : ''"
             [attr.aria-label]="item.label | translate"

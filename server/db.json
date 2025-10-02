@@ -1,3 +1,46 @@
 {
-
+  "orders": [
+    {
+      "id": 1,
+      "proveedor": "Proveedor A",
+      "estado": "Aceptada",
+      "productos": [
+        { "nombre": "Vino Tinto", "cantidad": 2, "precio": 20 },
+        { "nombre": "Vino Blanco", "cantidad": 1, "precio": 15 }
+      ],
+      "fecha": "2025-10-01",
+      "total": 55
+    },
+    {
+      "id": 2,
+      "proveedor": "Proveedor B",
+      "estado": "Rechazada",
+      "productos": [
+        { "nombre": "Vino Rosado", "cantidad": 5, "precio": 18 }
+      ],
+      "fecha": "2025-10-02",
+      "total": 90
+    },
+    {
+      "id": 3,
+      "proveedor": "Proveedor C",
+      "estado": "Pendiente",
+      "productos": [
+        { "nombre": "Cerveza Artesanal", "cantidad": 10, "precio": 8 }
+      ],
+      "fecha": "2025-10-03",
+      "total": 80
+    },
+    {
+      "id": 4,
+      "proveedor": "Proveedor D",
+      "estado": "Aceptada",
+      "productos": [
+        { "nombre": "Vino Tinto", "cantidad": 3, "precio": 25 },
+        { "nombre": "Cerveza Artesanal", "cantidad": 2, "precio": 10 }
+      ],
+      "fecha": "2025-10-04",
+      "total": 95
+    }
+  ]
 }

@@ -1,1 +1,10 @@
-<p>new-order works!</p>
+<div class="new-order">
+  <label for="proveedor">Correo del proveedor</label>
+  <input id="proveedor" [(ngModel)]="emailProveedor" type="email" placeholder="Correo del proveedor">
+
+  <div *ngFor="let producto of productos">
+    <p>{{ producto.nombre }} x {{ producto.cantidad }}</p>
+  </div>
+
+  <button (click)="enviarOrden()">Enviar Orden</button>
+</div>
