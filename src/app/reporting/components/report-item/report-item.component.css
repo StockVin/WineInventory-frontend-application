@@ -1,0 +1,228 @@
+/* Main item container */
+.report-item {
+  display: grid;
+  grid-template-columns: 120px 1fr 100px 100px 80px 80px 60px;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(232, 200, 200, 0.1);
+  background-color: transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.report-item:last-child {
+  border-bottom: none;
+}
+
+.report-item:hover {
+  background-color: rgba(255, 248, 247, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+  border-color: rgba(200, 29, 51, 0.2);
+}
+
+.report-item:active {
+  transform: translateY(0);
+  transition: transform 0.1s ease;
+}
+
+/* Common cell styles */
+.report-item > div {
+  padding: 8px 4px;
+  font-size: 0.9rem;
+  color: #FFFFFF;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Date column */
+.report-date {
+  text-align: left;
+  padding-left: 0;
+  color: #FEEED4;
+  opacity: 0.9;
+}
+
+/* Products column */
+.report-products {
+  text-align: left;
+  padding: 0 8px;
+}
+
+/* Type column */
+.report-type {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+/* Price column */
+.report-price {
+  text-align: right;
+  padding-right: 16px;
+  font-weight: 500;
+}
+
+/* Amount column */
+.report-amount {
+  text-align: center;
+}
+
+/* Lost column */
+.report-lost {
+  text-align: right;
+  padding-right: 16px;
+  color: #FF6B6B;
+}
+
+.report-lost.lost {
+  color: #FF6B6B;
+}
+
+/* Actions column */
+.report-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 0;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.report-item:hover .report-actions {
+  opacity: 1;
+}
+
+/* Delete button styles */
+.delete-button {
+  color: #E8C8C8;
+  transition: all 0.3s ease;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(200, 29, 51, 0.2);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+.delete-button:hover {
+  background-color: rgba(200, 29, 51, 0.4);
+  transform: scale(1.1);
+  color: #FFFFFF;
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.delete-button mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+}
+
+/* Type badge */
+.type-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.type-badge.entry {
+  background-color: #E8F5E9;
+  color: #2E7D32;
+}
+
+.type-badge.exit {
+  background-color: #FFEBEE;
+  color: #C62828;
+}
+
+.type-badge.adjustment {
+  background-color: #E3F2FD;
+  color: #1565C0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .report-item {
+    grid-template-columns: 100px 1fr 90px 80px 70px 70px 40px;
+    padding: 10px 12px;
+  }
+  
+  .report-item > div {
+    font-size: 0.85rem;
+  }
+  
+  .type-badge {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 992px) {
+  .report-item {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border: 1px solid rgba(232, 200, 200, 0.3);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    gap: 8px;
+  }
+  
+  .report-item > div {
+    width: 100%;
+    padding: 4px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .report-item > div::before {
+    content: attr(data-label);
+    font-weight: 500;
+    color: #FEEED4;
+    margin-right: 12px;
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+  
+  .report-date::before { content: 'Fecha: '; }
+  .report-products::before { content: 'Productos: '; }
+  .report-type::before { content: 'Tipo: '; }
+  .report-price::before { content: 'Precio: '; }
+  .report-amount::before { content: 'Cantidad: '; }
+  .report-lost::before { content: 'Pérdida: '; }
+  
+  .report-actions {
+    justify-content: flex-start;
+    padding-top: 8px;
+    margin-top: 8px;
+    border-top: 1px solid rgba(255, 248, 247, 0.1);
+  }
+  
+  .report-products {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .report-lost, 
+  .report-price {
+    text-align: left;
+  }
+  
+  .report-lost {
+    color: #FF6B6B;
+  }
+}

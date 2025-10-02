@@ -46,15 +46,42 @@
     "button": "Volver a la página principal"
   },
   "side-navbar": {
-  "title": "Menu principal",
-  "options": {
-    "dashboard": "Inicio",
-    "wine": "Ordenes",
-    "order": "Lista de pedidos",
-    "report": "Reportes",
-    "alert": "Alertas",
-    "configuration": "Configuración"
+    "title": "Menu principal",
+    "options": {
+      "dashboard": "Inicio",
+      "wine": "Ordenes",
+      "order": "Lista de pedidos",
+      "report": "Reportes",
+      "alert": "Alertas",
+      "configuration": "Configuración"
+    },
+    "logout": "Cerrar Sesión"
   },
-  "logout": "Cerrar Sesión"
-}
+  "report": {
+    "title": "Reportes",
+    "search": "Buscar",
+    "searchPlaceholder": "Buscar reporte...",
+    "new": "Nuevo Reporte",
+    "export": "Exportar",
+    "careguide": "Guia de cuidado",
+    "tableHeaders": {
+      "id": "ID",
+      "product": "Producto",
+      "type": "Tipo",
+      "price": "Precio",
+      "amount": "Cantidad",
+      "date": "Fecha",
+      "lost": "Perdida",
+      "actions": "Acciones"
+    },
+    "actions": {
+      "delete": "Eliminar"
+    },
+    "pagination": {
+      "showing": "Mostrando",
+      "of": "de",
+      "items": "elementos"
+    },
+    "noResults": "No se encontraron resultados"
+  }
 }

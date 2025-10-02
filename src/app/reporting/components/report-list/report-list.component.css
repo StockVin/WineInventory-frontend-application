@@ -1,0 +1,325 @@
+/* Main container */
+.report-list {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #2C2129;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Header row */
+.report-header {
+  display: grid;
+  grid-template-columns: 120px 1fr 100px 100px 80px 80px 60px;
+  background: linear-gradient(135deg, #3A2D36 0%, #2C2129 100%);
+  color: #FEEED4;
+  padding: 14px 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header cells */
+.report-header > div {
+  padding: 8px 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  font-weight: 500;
+  color: #FEEED4;
+  opacity: 0.9;
+  letter-spacing: 0.3px;
+}
+
+/* Items container */
+.report-items {
+  max-height: 600px;
+  overflow-y: auto;
+  background-color: rgba(36, 27, 34, 0.8);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+/* Custom scrollbar for WebKit browsers */
+.report-items::-webkit-scrollbar {
+  width: 6px;
+}
+
+.report-items::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.report-items::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.report-items::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Report item */
+.report-item {
+  display: grid;
+  grid-template-columns: 120px 1fr 100px 100px 80px 80px 60px;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: rgba(255, 255, 255, 0.01);
+  position: relative;
+}
+
+.report-item:last-child {
+  border-bottom: none;
+}
+
+.report-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.report-item:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.report-item:hover::before {
+  opacity: 1;
+}
+
+.report-item:active {
+  transform: translateY(0);
+  transition: transform 0.1s ease;
+}
+
+/* Common cell styles */
+.report-item > div {
+  padding: 8px 4px;
+  font-size: 0.9rem;
+  color: #FFFFFF;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+/* Header column adjustments */
+.report-header > div {
+  text-align: center;
+  padding: 8px 4px;
+  box-sizing: border-box;
+}
+
+/* Specific header styles */
+.header-date { 
+  text-align: left;
+  padding-left: 0;
+}
+
+.report-date {
+  text-align: left;
+  padding-left: 0;
+}
+
+.header-products { 
+  text-align: left;
+  padding: 0 8px;
+}
+
+.report-products { 
+  text-align: left;
+  padding: 0 8px;
+}
+
+.header-type { 
+  text-align: center;
+}
+
+.report-type { 
+  text-align: center;
+}
+
+.header-price { 
+  text-align: right;
+  padding-right: 16px;
+}
+
+.report-price { 
+  text-align: right;
+  padding-right: 16px;
+}
+
+.header-amount { 
+  text-align: center;
+}
+
+.report-amount { 
+  text-align: center;
+}
+
+.header-lost { 
+  text-align: right;
+  padding-right: 16px;
+}
+
+.report-lost { 
+  text-align: right;
+  padding-right: 16px;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: center;
+  padding-right: 0;
+  width: 60px; /* Para que coincida con el ancho del botón de eliminar */
+}
+
+.report-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 0;
+}
+
+/* No reports message */
+.no-reports {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 20px;
+  text-align: center;
+  color: rgba(232, 200, 200, 0.7);
+  font-size: 1rem;
+  background: linear-gradient(135deg, rgba(44, 33, 41, 0.7) 0%, rgba(36, 27, 34, 0.7) 100%);
+  min-height: 200px;
+  border-radius: 0 0 12px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.no-reports mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  color: #E8C8C8;
+}
+
+.no-reports p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #FEEED4;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .report-header {
+    grid-template-columns: 120px 1fr 100px 100px 80px 80px 40px;
+    font-size: 0.7rem;
+    padding: 10px 16px;
+  }
+  
+  .report-item {
+    grid-template-columns: 120px 1fr 100px 100px 80px 80px 40px;
+    padding: 10px 16px;
+  }
+  
+  .header-type,
+  .report-type {
+    width: 100px;
+  }
+  
+  .header-price,
+  .report-price {
+    width: 100px;
+    padding-right: 16px;
+  }
+  
+  .header-amount,
+  .report-amount {
+    width: 80px;
+  }
+  
+  .header-lost,
+  .report-lost {
+    width: 80px;
+    padding-right: 16px;
+  }
+  
+  .header-actions,
+  .report-actions {
+    width: 60px;
+    padding-right: 0;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .report-header {
+    display: none;
+  }
+  
+  .report-item {
+    grid-template-columns: 1fr;
+    padding: 12px;
+    gap: 8px;
+    border-bottom: 1px solid rgba(232, 200, 200, 0.2);
+  }
+  
+  .report-item > div {
+    width: 100%;
+    padding: 4px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .report-item > div::before {
+    content: attr(data-label);
+    font-weight: 500;
+    color: #FEEED4;
+    opacity: 0.8;
+    margin-right: 12px;
+  }
+  
+  .report-actions {
+    justify-content: flex-start;
+    padding-top: 8px;
+    margin-top: 8px;
+    border-top: 1px solid rgba(255, 248, 247, 0.1);
+  }
+  
+  .no-reports {
+    padding: 20px 12px;
+  }
+  
+  .no-reports mat-icon {
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+    margin-bottom: 12px;
+  }
+  
+  .no-reports p {
+    font-size: 1rem;
+  }
+
+}
+}

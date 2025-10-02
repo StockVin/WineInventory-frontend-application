@@ -1,3 +1,58 @@
 {
-
+    "users": [
+        {
+            "id": 1,
+            "username": "admin@admin.com",
+            "password": "admin",
+            "role": "ADMIN"
+            
+        }
+    ],
+    "profile": [
+        {
+            "id": 1,
+            "username": "admin@admin.com",
+            "password": "admin",
+            "role": "ADMIN"
+            
+        }
+    ],
+    "reporting": [
+        {
+            "id": 1,
+            "products": "Vinos",
+            "type": "destilado",
+            "price": 20,
+            "amount": 2,
+            "date": "2025/05/13",
+            "lost": 40
+        },
+        {
+            "id": 2,
+            "products": "Ron",
+            "type": "destilado",
+            "price": 20,
+            "amount": 2,
+            "date": "2025/05/13",
+            "lost": 40
+        },
+        {
+            "id": 3,
+            "products": "Pisco",
+            "type": "destilado",
+            "price": 20,
+            "amount": 2,
+            "date": "2025/05/13",
+            "lost": 40
+        }
+    ],
+    "careguides": [
+        {
+            "id": 1,
+            "name": "Vino",
+            "type": "destilado",
+            "description": "Vino",
+            "imageUrl": "Vino"
+        }
+    ]
 }
