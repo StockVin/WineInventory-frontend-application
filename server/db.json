@@ -69,6 +69,22 @@
       "type": "destilado",
       "description": "Vino",
       "imageUrl": "Vino"
+    },
+    {
+      "name": "asdasd",
+      "type": "Red",
+      "description": "probando",
+      "imageUrl": "",
+      "date": "2025-10-02T19:22:33.369Z",
+      "id": 2
+    },
+    {
+      "name": "probando",
+      "type": "White",
+      "description": "probando el endpoint de careguide",
+      "imageUrl": "",
+      "date": "2025-10-02T19:23:35.381Z",
+      "id": 3
     }
   ],
   "product": [

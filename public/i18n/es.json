@@ -97,5 +97,27 @@
       "items": "elementos"
     },
     "noResults": "No se encontraron resultados"
+  },
+  "careguide": {
+    "title": "Guia de cuidado",
+    "buttons": {
+      "return": "Reportes",
+      "create": "Crear nueva guia"
+    },
+    "tableHeaders": {
+      "name": "Nombre",
+      "type": "Tipo",
+      "description": "Descripción"
+    },
+    "create": {
+      "title": "Crear Guia de Cuidado",
+      "name": "Nombre",
+      "type": "Tipo",
+      "description": "Descripción",
+      "image": "Imagen",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "uploadImage": "Subir Imagen"
+    }
   }
 }

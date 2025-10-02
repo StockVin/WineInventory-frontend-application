@@ -115,6 +115,10 @@ export class ReportDashboardComponent implements OnInit {
     this.router.navigate(['reports/report-create']);
   }
 
+  navigateToCareGuides(): void {
+    this.router.navigate(['reports/careguides']);
+  }
+  
   onDeleteReport(reportId: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar este reporte?')) {
       this.reportService.delete(reportId).subscribe({

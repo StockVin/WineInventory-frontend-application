@@ -1,1 +1,31 @@
-<p>careguide-list works!</p>
+<div class="careguide-list">
+  <div class="careguide-table">
+    <!-- Table Header -->
+    <div class="table-header">
+      <div class="header-cell name">{{ 'careguide.tableHeaders.name' | translate }}</div>
+      <div class="header-cell type">{{ 'careguide.tableHeaders.type' | translate }}</div>
+      <div class="header-cell description">{{ 'careguide.tableHeaders.description' | translate }}</div>
+    </div>
+    
+    <!-- Table Rows -->
+    <div class="table-body">
+      <div class="table-row" *ngFor="let careguide of careguides" (click)="onSelectCareGuide(careguide)">
+        <div class="cell name">{{careguide.name}}</div>
+        <div class="cell type">
+          <span class="type-badge" [ngClass]="careguide.type">
+            {{careguide.type}}
+          </span>
+        </div>
+        <div class="cell description" [title]="careguide.description">
+          {{careguide.description}}
+        </div>
+      </div>
+      
+      <!-- Empty State -->
+      <div class="no-careguides" *ngIf="!careguides?.length">
+        <mat-icon>wine_bar</mat-icon>
+        <p>{{ 'noResults' | translate }}</p>
+      </div>
+    </div>
+  </div>
+</div>

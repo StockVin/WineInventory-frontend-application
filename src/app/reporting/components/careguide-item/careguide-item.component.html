@@ -1,1 +1,20 @@
-<p>careguide-item works!</p>
+<div class="careguide-item">  
+  <div *ngIf="careguide" class="careguide-content">
+    <div class="careguide-header">
+      <h3 class="careguide-name">{{ careguide.name || 'Sin nombre' }}</h3>
+      <span class="careguide-type" [ngClass]="careguide.type.toLowerCase()">
+        {{ careguide.type || 'Sin tipo' }}
+      </span>
+    </div>
+    
+    <div class="careguide-description">
+      {{ careguide.description || 'Sin descripción' }}
+    </div>
+    
+    <div *ngIf="careguide.imageUrl" class="careguide-image">
+      <img [src]="careguide.imageUrl" [alt]="careguide.name || 'Imagen de la guía'">
+    </div>
+    
+  </div>
+</div>
+

@@ -20,8 +20,8 @@
             <mat-icon>add</mat-icon>
             {{ 'report.new' | translate }}
           </button>
-          <button mat-raised-button color="primary" class="new-report-btn">
-            <mat-icon>add</mat-icon>
+          <button mat-raised-button color="primary" class="new-report-btn" (click)="navigateToCareGuides()">
+            <mat-icon>list</mat-icon>
             {{ 'report.careguide' | translate }}
           </button>
         </div>

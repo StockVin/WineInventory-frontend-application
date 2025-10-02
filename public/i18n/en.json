@@ -97,5 +97,27 @@
       "items": "items"
     },
     "noResults": "No results found"
+  },
+  "careguide": {
+    "title": "Care Guide",
+    "buttons": {
+      "return": "Reports",
+      "create": "Create New Guide"
+    },
+    "tableHeaders": {
+      "name": "Name",
+      "type": "Type",
+      "description": "Description"
+    },
+    "create": {
+      "title": "Create Care Guide",
+      "name": "Name",
+      "type": "Type",
+      "description": "Description",
+      "image": "Image",
+      "cancel": "Cancel",
+      "save": "Save",
+      "uploadImage": "Upload Image"
+    }
   }
 }

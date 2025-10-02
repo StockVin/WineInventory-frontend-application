@@ -1,1 +1,46 @@
-<p>careguide-dashboard works!</p>
+<div class="dashboard-container">
+    <!-- Side Navigation -->
+    <app-side-navbar></app-side-navbar>
+    <!-- Main Content -->
+  <div class="main-content">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-content">
+        <h1>{{ 'careguide.title' | translate }}</h1>
+        <div class="header-actions">
+          <!-- Language Switcher -->
+          <app-language-switcher></app-language-switcher>
+          <button mat-raised-button color="primary" class="new-careguide-btn" (click)="navigateToReturnReport()">
+            <mat-icon>arrow_back</mat-icon>
+            {{ 'careguide.buttons.return' | translate }}
+          </button>
+          <button mat-raised-button color="accent" class="new-careguide-btn" (click)="navigateToCareGuidesCreate()">
+            <mat-icon>add</mat-icon>
+            {{ 'careguide.buttons.create' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Search  -->
+    <div class="search-bar">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>{{ 'report.search' | translate }}</mat-label>
+        <input matInput 
+               [placeholder]="'report.searchPlaceholder' | translate" 
+               (keyup)="onSearch($event)"
+               [disabled]="loading">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+    <!-- Reports List -->
+    <div *ngIf="!loading && !error" class="reports-container">
+      <div *ngIf="filteredCareGuides.length === 0" class="no-results">
+        <mat-icon>search_off</mat-icon>
+        <p>{{ 'report.noResults' | translate }}</p>
+      </div>
+      <app-careguide-list 
+        [careguides]="filteredCareGuides" 
+        [loading]="loading">
+      </app-careguide-list> 
+    </div>
+</div>

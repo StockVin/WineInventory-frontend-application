@@ -1,1 +1,111 @@
-<p>careguide-create works!</p>
+<div class="dashboard-container">
+  <app-side-navbar></app-side-navbar>
+
+  <div class="main-content">
+    <div class="header">
+      <div class="header-content">
+        <h1>{{ "careguide.create.title" | translate }}</h1>
+        <div class="header-actions">
+          <app-language-switcher></app-language-switcher>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-container">
+      <form class="careguide-form" (ngSubmit)="onSubmit()">
+        <div class="form-section">
+          <div class="form-grid">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>{{ "careguide.create.name" | translate }} *</mat-label>
+              <input
+                matInput
+                [(ngModel)]="careguide.name"
+                name="name"
+                required
+              />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>{{ "careguide.create.type" | translate }} *</mat-label>
+              <mat-select [(ngModel)]="careguide.type" name="type" required>
+                <mat-option *ngFor="let type of careguideTypes" [value]="type">
+                  {{ type }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field full-width">
+              <mat-label
+                >{{ "careguide.create.description" | translate }} *</mat-label
+              >
+              <textarea
+                matInput
+                rows="4"
+                [(ngModel)]="careguide.description"
+                name="description"
+                required
+              ></textarea>
+            </mat-form-field>
+
+            <div class="form-field full-width image-upload-container">
+              <label class="image-upload-label">{{
+                "careguide.create.image" | translate
+              }}</label>
+              <div
+                class="image-upload-box"
+                (click)="fileInput.click()"
+                [class.has-image]="imagePreview"
+              >
+                <input
+                  #fileInput
+                  type="file"
+                  (change)="onImagePicked($event)"
+                  accept="image/*"
+                  style="display: none"
+                />
+                @if (imagePreview) {
+                <img [src]="imagePreview" alt="Preview" class="image-preview" />
+                } @else {
+                <div class="upload-placeholder">
+                  <mat-icon>cloud_upload</mat-icon>
+                  <span>{{ "careguide.create.uploadImage" | translate }}</span>
+                </div>
+                }
+              </div>
+              @if (selectedImage) {
+              <div class="file-info">
+                <span>{{ selectedImage.name }}</span>
+                <button
+                  type="button"
+                  mat-icon-button
+                  (click)="removeImage()"
+                  class="remove-image-btn"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" mat-button class="cancel-btn" (click)="onCancel()">
+            <mat-icon>close</mat-icon>
+            {{ "careguide.create.cancel" | translate }}
+          </button>
+          <button
+            type="submit"
+            mat-raised-button
+            color="primary"
+            class="save-btn"
+            [disabled]="!isFormValid()"
+          >
+            <mat-icon>save</mat-icon>
+            {{ "careguide.create.save" | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
