@@ -1,1 +1,82 @@
-<p>order-detail works!</p>
+<section class="order-detail" *ngIf="order$ | async as order; else notFound">
+  <header class="order-detail__header">
+    <div>
+      <h1>{{ 'orders.detail.header.title' | translate: { code: order.code } }}</h1>
+      <p>{{ 'orders.detail.header.createdAt' | translate: { date: (order.createdAt | date:'medium') } }}</p>
+    </div>
+    <div class="order-detail__actions">
+      <select [value]="order.status" (change)="updateStatus(order, $any($event.target).value)">
+        <option *ngFor="let status of statusOptions" [value]="status">{{ statusLabels[status] | translate }}</option>
+      </select>
+      <button
+        type="button"
+        class="order-detail__delete"
+        (click)="deleteOrder(order)"
+        [disabled]="isDeleting"
+      >
+        {{ isDeleting ? ('orders.detail.actions.deleting' | translate) : ('orders.detail.actions.delete' | translate) }}
+      </button>
+      <button type="button" (click)="goBack()">{{ 'orders.detail.actions.back' | translate }}</button>
+    </div>
+  </header>
+
+  <section class="order-detail__info">
+    <article>
+      <h2>{{ 'orders.detail.sections.customer' | translate }}</h2>
+      <p class="order-detail__customer">{{ order.customerName }}</p>
+      <p *ngIf="order.customerEmail">{{ order.customerEmail }}</p>
+      <p *ngIf="order.notes" class="order-detail__notes">{{ order.notes }}</p>
+    </article>
+    <article>
+      <h2>{{ 'orders.detail.sections.delivery' | translate }}</h2>
+      <p>{{ 'orders.detail.delivery.expected' | translate: { date: (order.expectedDelivery | date:'mediumDate') } }}</p>
+      <p>
+        {{ 'orders.detail.delivery.status' | translate }}
+        <span class="badge" [class]="'badge ' + (order.status | lowercase)">{{ statusLabels[order.status] | translate }}</span>
+      </p>
+    </article>
+    <article>
+      <h2>{{ 'orders.detail.sections.summary' | translate }}</h2>
+      <p>{{ 'orders.detail.summary.subtotal' | translate }} <strong>{{ order.subtotal | currency:'USD':'symbol':'1.0-0' }}</strong></p>
+      <p>{{ 'orders.detail.summary.tax' | translate }} <strong>{{ order.tax | currency:'USD':'symbol':'1.0-0' }}</strong></p>
+      <p>{{ 'orders.detail.summary.total' | translate }} <strong>{{ order.total | currency:'USD':'symbol':'1.0-0' }}</strong></p>
+    </article>
+  </section>
+
+  <section class="order-detail__items">
+    <h2>{{ 'orders.detail.sections.items' | translate }}</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>{{ 'orders.detail.table.reference' | translate }}</th>
+        <th>{{ 'orders.detail.table.varietal' | translate }}</th>
+        <th>{{ 'orders.detail.table.vintage' | translate }}</th>
+        <th>{{ 'orders.detail.table.quantity' | translate }}</th>
+        <th>{{ 'orders.detail.table.unitPrice' | translate }}</th>
+        <th>{{ 'orders.detail.table.total' | translate }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of order.items">
+        <td>
+          <span class="item-name">{{ item.catalogItem.name }}</span>
+          <small>{{ item.catalogItem.origin }}</small>
+        </td>
+        <td>{{ item.catalogItem.varietal }}</td>
+        <td>{{ item.catalogItem.vintage }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.unitPrice | currency:'USD':'symbol':'1.0-0' }}</td>
+        <td>{{ item.lineTotal | currency:'USD':'symbol':'1.0-0' }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+</section>
+
+<ng-template #notFound>
+  <div class="order-detail__empty">
+    <h2>{{ 'orders.detail.empty.title' | translate }}</h2>
+    <p>{{ 'orders.detail.empty.description' | translate }}</p>
+    <a routerLink="/dashboard/sales">{{ 'orders.detail.empty.backToList' | translate }}</a>
+  </div>
+</ng-template>
