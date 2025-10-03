@@ -17,7 +17,6 @@ interface StatusFilter {
   standalone: true,
   imports: [CommonModule, RouterModule, DatePipe, CurrencyPipe],
   templateUrl: './order-list.component.html',
-
   styleUrls: ['./order-list.component.css']
 })
 export class OrderListComponent {
