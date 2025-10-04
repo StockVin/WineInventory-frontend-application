@@ -1,0 +1,20 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.product-card{
+  display: flex;
+  width: clamp(250px, 20vw, 400px);
+  height: clamp(250px, 20vw, 400px);
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+.product-image{
+  width: clamp(50px, 20vw, 200px);
+}

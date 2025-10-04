@@ -1,0 +1,16 @@
+<div class="warehouse-card">
+  <div class="card-header center-text">
+    <h2 class="card-title">{{warehouses.name}}</h2>
+  </div>
+  <div class="image-container">
+    <img [src]="warehouses.imageUrl" [alt]="warehouses.name" class="warehouse-image">
+  </div>
+  <div class="card-content">
+    <p><strong>{{ 'warehouse.card.address' | translate }}:</strong> {{warehouses.street }}</p>
+    <p><strong>{{ 'warehouse.card.capacity' | translate }}:</strong> {{warehouses.capacity}} m³</p>
+  </div>
+  <div class="action-buttons">
+    <button class="action-button" (click)="navigateToCreate()"> <mat-icon>edit</mat-icon> {{ 'components.edit' | translate }}</button>
+    <button class="action-button" (click)="navigateToZones()">{{ 'components.show' | translate }}</button>
+  </div>
+</div>

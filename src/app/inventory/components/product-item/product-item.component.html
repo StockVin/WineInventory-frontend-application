@@ -1,0 +1,7 @@
+<div class="product-card" *ngIf="product">
+  <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
+  <h2>{{ product.name }}</h2>
+  <p><strong>Categoría:</strong> {{ product.liquorType }}</p>
+  <p><strong>Precio:</strong> {{ product.unitPriceAmount }}</p>
+  <p><strong>Stock:</strong> {{ product.minimumStock }}</p>
+</div>
