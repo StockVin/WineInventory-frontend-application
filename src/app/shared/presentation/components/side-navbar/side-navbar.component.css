@@ -326,7 +326,7 @@
     width: 70px;
     box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
   }
-
+  
   .sidebar:not(.collapsed) {
     width: 250px;
     z-index: 1100;

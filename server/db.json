@@ -53,49 +53,6 @@
   ],
   "orders": [
     {
-      "id": "ord-0001",
-      "code": "WI-2025-001",
-      "customerName": "Restaurante La Vid",
-      "customerEmail": "compras@lavid.com",
-      "status": "completed",
-      "createdAt": "2025-02-20T09:30:00.000Z",
-      "expectedDelivery": "2025-02-24T09:30:00.000Z",
-      "notes": "Entrega en horario matutino.",
-      "items": [
-        {
-          "id": "ord-0001-item-1",
-          "catalogItem": {
-            "id": "cab-2018",
-            "name": "Gran Reserva Cabernet Sauvignon",
-            "varietal": "Cabernet Sauvignon",
-            "vintage": 2018,
-            "origin": "Napa Valley, USA",
-            "price": 58
-          },
-          "quantity": 6,
-          "unitPrice": 58,
-          "lineTotal": 348
-        },
-        {
-          "id": "ord-0001-item-2",
-          "catalogItem": {
-            "id": "cha-2020",
-            "name": "Costa Dorada Chardonnay",
-            "varietal": "Chardonnay",
-            "vintage": 2020,
-            "origin": "Casablanca, Chile",
-            "price": 36
-          },
-          "quantity": 3,
-          "unitPrice": 36,
-          "lineTotal": 108
-        }
-      ],
-      "subtotal": 456,
-      "tax": 86.64,
-      "total": 542.64
-    },
-    {
       "id": "ord-0002",
       "code": "WI-2025-002",
       "customerName": "Bodega El Roble",

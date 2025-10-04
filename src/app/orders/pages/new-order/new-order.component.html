@@ -1,51 +1,53 @@
 <section class="new-order">
+  <app-side-navbar></app-side-navbar>
   <header class="new-order__header">
     <div>
-      <h1>Nuevo pedido</h1>
-      <p>Completa la información del cliente y selecciona los vinos que formarán parte del pedido.</p>
+      <h1>{{ 'order-create.title' | translate }}</h1>
+      <p>{{ 'order-create.text' | translate }}</p>
     </div>
     <nav>
-      <a routerLink="/dashboard/sales">Volver al listado</a>
+      <a routerLink="/orders">{{ 'order-create.button' | translate }}</a>
     </nav>
+    <app-language-switcher></app-language-switcher>
   </header>
 
   <form [formGroup]="orderForm" (ngSubmit)="submit()" class="new-order__form">
     <section class="form-section">
-      <h2>Datos del cliente</h2>
+      <h2>{{ 'order-create.data' | translate }}</h2>
       <div class="form-grid">
         <label class="form-field">
-          <span>Nombre del cliente *</span>
+          <span>{{ 'order-create.name' | translate }} *</span>
           <input type="text" formControlName="customerName" placeholder="Ej. Restaurante La Vid" />
           <small class="error" *ngIf="orderForm.get('customerName')?.touched && orderForm.get('customerName')?.hasError('required')">
             Este campo es obligatorio.
           </small>
         </label>
         <label class="form-field">
-          <span>Correo electrónico</span>
+          <span>{{ 'order-create.email' | translate }}</span>
           <input type="email" formControlName="customerEmail" placeholder="correo@cliente.com" />
           <small class="error" *ngIf="orderForm.get('customerEmail')?.touched && orderForm.get('customerEmail')?.hasError('email')">
             Ingresa un correo válido.
           </small>
         </label>
         <label class="form-field form-field--full">
-          <span>Notas adicionales</span>
+          <span>{{ 'order-create.notes' | translate }}</span>
           <textarea rows="3" formControlName="notes" placeholder="Indica instrucciones especiales de entrega"></textarea>
         </label>
       </div>
     </section>
 
     <section class="form-section">
-      <h2>Información del pedido</h2>
+      <h2>{{ 'order-create.information' | translate }}</h2>
       <div class="form-grid">
         <label class="form-field">
-          <span>Fecha de creación *</span>
+          <span>{{ 'order-create.date' | translate }} *</span>
           <input type="datetime-local" formControlName="createdAt" />
           <small class="error" *ngIf="orderForm.get('createdAt')?.touched && orderForm.get('createdAt')?.hasError('required')">
             Este campo es obligatorio.
           </small>
         </label>
         <label class="form-field">
-          <span>Fecha de entrega *</span>
+          <span>{{ 'order-create.expectedDelivery' | translate }} *</span>
           <input type="datetime-local" formControlName="expectedDelivery" [min]="orderForm.get('createdAt')?.value || undefined" />
           <small class="error" *ngIf="orderForm.get('expectedDelivery')?.touched && orderForm.get('expectedDelivery')?.hasError('required')">
             Este campo es obligatorio.
@@ -55,7 +57,7 @@
           </small>
         </label>
         <label class="form-field">
-          <span>Estado *</span>
+          <span>{{ 'order-create.status' | translate }} *</span>
           <select formControlName="status">
             <option [ngValue]="null" disabled>Selecciona un estado</option>
             <option *ngFor="let status of statusOptions" [ngValue]="status">{{ statusLabels[status] }}</option>
@@ -69,14 +71,14 @@
 
     <section class="form-section">
       <div class="section-header">
-        <h2>Detalle del pedido</h2>
-        <button type="button" (click)="addItem()">Agregar producto</button>
+        <h2>{{ 'order-create.details' | translate }}</h2>
+        <button type="button" (click)="addItem()">{{ 'order-create.add' | translate }}</button>
       </div>
 
       <div class="order-items" formArrayName="items">
         <div class="order-item" *ngFor="let item of items.controls; let i = index; trackBy: trackByIndex" [formGroupName]="i">
           <label>
-            <span>Producto *</span>
+            <span>{{ 'order-create.product' | translate }} *</span>
             <select formControlName="catalogItemId">
               <option [ngValue]="null" disabled>Selecciona una referencia</option>
               <option *ngFor="let catalogItem of (catalogItems$ | async)" [ngValue]="catalogItem.id">
@@ -89,7 +91,7 @@
           </label>
 
           <label>
-            <span>Cantidad *</span>
+            <span>{{ 'order-create.quantity' | translate }} *</span>
             <input type="number" min="1" formControlName="quantity" />
             <small class="error" *ngIf="item.get('quantity')?.touched && item.get('quantity')?.hasError('min')">
               Debe ser al menos 1 unidad.
@@ -102,7 +104,7 @@
     </section>
 
     <section class="form-section" *ngIf="orderPreview$ | async as preview">
-      <h2>Resumen</h2>
+      <h2>{{ 'order-create.resume' | translate }}</h2>
       <ul class="preview-list">
         <li *ngFor="let item of preview.items">
           <span>{{ item.name }} · {{ item.quantity }} uds.</span>
@@ -111,22 +113,22 @@
       </ul>
       <div class="preview-totals">
         <div>
-          <span>Subtotal</span>
+          <span>{{ 'order-create.subtotal' | translate }}</span>
           <strong>{{ preview.subtotal | currency:'USD':'symbol':'1.0-0' }}</strong>
         </div>
         <div>
-          <span>Impuestos (19%)</span>
+          <span>{{ 'order-create.tax' | translate }}</span>
           <strong>{{ preview.tax | currency:'USD':'symbol':'1.0-0' }}</strong>
         </div>
         <div class="preview-totals__total">
-          <span>Total</span>
+          <span>{{ 'order-create.total' | translate }}</span>
           <strong>{{ preview.total | currency:'USD':'symbol':'1.0-0' }}</strong>
         </div>
       </div>
     </section>
 
     <footer class="form-actions">
-      <button type="submit">Guardar pedido</button>
+      <button type="submit">{{ 'order-create.save' | translate }}</button>
     </footer>
   </form>
 </section>

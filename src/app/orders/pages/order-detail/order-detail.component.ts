@@ -7,11 +7,13 @@ import { Observable, of } from 'rxjs';
 import { OrdersService } from '../../services/orders.service';
 import { Order, OrderStatus } from '../../models/order.entity';
 import { TranslateModule } from '@ngx-translate/core';
+import { SideNavbarComponent } from "../../../shared/presentation/components/side-navbar/side-navbar.component";
+import { LanguageSwitcher } from "../../../shared/presentation/components/language-switcher/language-switcher.component";
 
 @Component({
   selector: 'app-order-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, DatePipe, CurrencyPipe, TranslateModule],
+  imports: [CommonModule, RouterModule, DatePipe, CurrencyPipe, TranslateModule, SideNavbarComponent, LanguageSwitcher],
   templateUrl: './order-detail.component.html',
   styleUrls: ['./order-detail.component.css']
 })
@@ -66,6 +68,6 @@ export class OrderDetailComponent {
   }
 
   goBack(): void {
-    this.router.navigate(['/dashboard', 'sales']);
+    this.router.navigate(['/orders']);
   }
 }

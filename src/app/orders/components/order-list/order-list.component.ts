@@ -3,7 +3,7 @@ import { CommonModule, DatePipe, CurrencyPipe } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { OrdersService } from '../../services/orders.service';
 import { Order, OrderStatus } from '../../models/order.entity';
 
@@ -15,13 +15,14 @@ interface StatusFilter {
 @Component({
   selector: 'app-order-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, DatePipe, CurrencyPipe],
+  imports: [CommonModule, RouterModule, DatePipe, CurrencyPipe, TranslateModule],
   templateUrl: './order-list.component.html',
   styleUrls: ['./order-list.component.css']
 })
 export class OrderListComponent {
   private readonly ordersService = inject(OrdersService);
   private readonly router = inject(Router);
+  private readonly translateService = inject(TranslateService);
 
   private readonly statusFilterSubject = new BehaviorSubject<OrderStatus | 'all'>('all');
 
@@ -39,11 +40,11 @@ export class OrderListComponent {
   );
 
   readonly statusFilters: StatusFilter[] = [
-    { value: 'all', label: 'Todos' },
-    { value: 'pending', label: 'Pendientes' },
-    { value: 'processing', label: 'En preparación' },
-    { value: 'completed', label: 'Completados' },
-    { value: 'cancelled', label: 'Cancelados' }
+    { value: 'all', label: this.translateService.instant('orders.status.all') },
+    { value: 'pending', label: this.translateService.instant('orders.status.pending') },
+    { value: 'processing', label: this.translateService.instant('orders.status.processing') },
+    { value: 'completed', label: this.translateService.instant('orders.status.completed') },
+    { value: 'cancelled', label: this.translateService.instant('orders.status.cancelled') }
   ];
 
   readonly statusBadges: Record<OrderStatus, string> = {
@@ -54,10 +55,10 @@ export class OrderListComponent {
   };
 
   readonly filterLabels: Record<OrderStatus, string> = {
-    pending: 'Pendiente',
-    processing: 'En preparación',
-    completed: 'Completado',
-    cancelled: 'Cancelado'
+    pending: this.translateService.instant('orders.status.pending'),
+    processing: this.translateService.instant('orders.status.processing'),
+    completed: this.translateService.instant('orders.status.completed'),
+    cancelled: this.translateService.instant('orders.status.cancelled')
   };
 
   setFilter(filter: StatusFilter['value']): void {
@@ -69,6 +70,6 @@ export class OrderListComponent {
   }
 
   goToOrderDetail(order: Order): void {
-    this.router.navigate(['/dashboard', 'sales', order.id]);
+    this.router.navigate(['/orders', order.id, 'details']);
   }
 }

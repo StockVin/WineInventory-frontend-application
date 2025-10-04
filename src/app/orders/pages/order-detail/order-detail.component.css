@@ -3,6 +3,8 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  margin-left: 250px; /* Prevent overlap with fixed sidebar */
+  color: black; /* Color de texto negro por defecto */
 }
 
 .order-detail__header {
@@ -17,13 +19,12 @@
 .order-detail__header h1 {
   margin: 0;
   font-size: 2rem;
-  color: black;
+  color: #FEEED4;
 }
 
 .order-detail__header p {
   margin: 0.25rem 0 0;
-  color: #6a6a6a;
-
+  color: black; /* Cambiado de #6a6a6a a negro */
 }
 
 .order-detail__actions {
@@ -54,8 +55,14 @@
   cursor: not-allowed;
 }
 
+.order-detail__actions button:hover {
+  background: rgba(106, 27, 154, 0.1);
+}
+
 .order-detail__delete {
   background: linear-gradient(135deg, #c62828, #ef5350);
+  color: #ffffff;
+  padding: 0.6rem 1.4rem;
 }
 
 .order-detail__delete:disabled {
@@ -90,6 +97,11 @@
   color: black;
 }
 
+/* Asegurar que los párrafos dentro de order-detail sean negros */
+.order-detail p {
+  color: black;
+}
+
 .order-detail__notes {
   margin-top: 0.5rem;
   padding: 0.75rem 1rem;
@@ -115,20 +127,16 @@
 .order-detail__items table {
   width: 100%;
   border-collapse: collapse;
-
 }
+
+.order-detail__items th,
+/* table header background removed to match provided CSS */
 
 .order-detail__items th,
 .order-detail__items td {
   padding: 0.85rem 0.75rem;
   text-align: left;
   border-bottom: 1px solid #ede7f6;
-}
-
-.item-name {
-  display: block;
-  font-weight: 600;
-  color: black;
 }
 
 .badge {
@@ -181,5 +189,6 @@
 @media (max-width: 768px) {
   .order-detail {
     padding: 1.5rem;
+    margin-left: 70px; /* Sidebar collapses to 70px on small screens */
   }
 }

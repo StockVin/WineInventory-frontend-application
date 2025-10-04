@@ -1,26 +1,30 @@
-<section class="orders-page">
-  <header class="orders-page__header">
+<div class="orders-page">
+  <app-side-navbar></app-side-navbar>
+  <div class="orders-page__content">
+    <header class="orders-page__header">
     <div>
-      <h1>Pedidos</h1>
-      <p class="orders-page__subtitle">Administra el ciclo completo de ventas y el estado de cada pedido.</p>
+      <h1>{{ 'orders.title' | translate }}</h1>
+      <p class="orders-page__subtitle">{{ 'orders.text' | translate }}</p>
     </div>
-    <a class="orders-page__cta" routerLink="/dashboard/sales/new">Crear pedido</a>
+    <a class="orders-page__cta" routerLink="new">{{ 'orders.button' | translate }}</a>
+     <app-language-switcher></app-language-switcher>
   </header>
 
   <section class="orders-page__summary" *ngIf="summary$ | async as summary">
     <article class="summary-card">
-      <span class="summary-card__label">Pedidos totales</span>
+      <span class="summary-card__label">{{ 'orders.total' | translate }}</span>
       <strong class="summary-card__value">{{ summary.totalOrders }}</strong>
     </article>
     <article class="summary-card">
-      <span class="summary-card__label">Ingresos acumulados</span>
+      <span class="summary-card__label">{{ 'orders.income' | translate }}</span>
       <strong class="summary-card__value">{{ summary.totalRevenue | currency:'USD':'symbol':'1.0-0' }}</strong>
     </article>
     <article class="summary-card" *ngFor="let status of summaryStatuses">
-      <span class="summary-card__label">{{ statusLabels[status] }}</span>
+      <span class="summary-card__label">{{ 'orders.status.' + status | translate }}</span>
       <strong class="summary-card__value">{{ summary.byStatus[status] }}</strong>
     </article>
   </section>
 
-  <app-order-list></app-order-list>
-</section>
+    <app-order-list></app-order-list>
+  </div>
+</div>

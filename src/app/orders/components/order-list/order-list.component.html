@@ -1,6 +1,6 @@
 <section class="order-list">
   <header class="order-list__header">
-    <h2>Pedidos recientes</h2>
+    <h2>{{ 'orders.recent' | translate }}</h2>
     <nav class="order-list__filters">
       <button
         type="button"
@@ -18,11 +18,11 @@
     <table class="order-list__table" *ngIf="orders.length; else emptyState">
       <thead>
       <tr>
-        <th>Código</th>
-        <th>Cliente</th>
-        <th>Fecha</th>
-        <th>Estado</th>
-        <th>Total</th>
+        <th>{{ 'orders.table.id' | translate }}</th>
+        <th>{{ 'orders.table.client' | translate }}</th>
+        <th>{{ 'orders.table.date' | translate }}</th>
+        <th>{{ 'orders.table.status' | translate }}</th>
+        <th>{{ 'orders.table.total' | translate }}</th>
         <th></th>
       </tr>
       </thead>
@@ -41,7 +41,7 @@
         </td>
         <td>{{ order.total | currency:'USD':'symbol':'1.0-0' }}</td>
         <td class="order-list__actions">
-          <button type="button" (click)="goToOrderDetail(order)">Ver detalle</button>
+          <button type="button" (click)="goToOrderDetail(order)">{{ 'orders.table.details' | translate }}</button>
         </td>
       </tr>
       </tbody>
@@ -51,8 +51,8 @@
 
 <ng-template #emptyState>
   <div class="order-list__empty">
-    <h3>No hay pedidos registrados</h3>
-    <p>Comienza creando tu primer pedido para visualizarlo en esta lista.</p>
-    <a routerLink="/dashboard/sales/new">Crear pedido</a>
+    <h3>{{ 'orders.emptyState.title' | translate }}</h3>
+    <p>{{ 'orders.emptyState.description' | translate }}</p>
+    <a routerLink="new">{{ 'orders.emptyState.button' | translate }}</a>
   </div>
 </ng-template>

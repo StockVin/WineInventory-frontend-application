@@ -4,11 +4,13 @@ import { Router, RouterModule } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { combineLatest } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { CatalogService } from '../../services/catalog.service';
 import { OrdersService } from '../../services/orders.service';
 import { CatalogItem } from '../../models/catalog-item.entity';
 import { NewOrderInput, OrderStatus } from '../../models/order.entity';
+import { SideNavbarComponent } from "../../../shared/presentation/components/side-navbar/side-navbar.component";
+import { LanguageSwitcher } from "../../../shared/presentation/components/language-switcher/language-switcher.component";
 
 interface OrderFormItemValue {
   catalogItemId: string | null;
@@ -28,7 +30,7 @@ interface OrderFormValue {
 @Component({
   selector: 'app-new-order',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, CurrencyPipe],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, CurrencyPipe, SideNavbarComponent, LanguageSwitcher, TranslateModule],
 
   templateUrl: './new-order.component.html',
   styleUrls: ['./new-order.component.css']

@@ -1,11 +1,13 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { map } from 'rxjs/operators';
-
 import { OrdersService } from '../../services/orders.service';
 import { OrderStatus } from '../../models/order.entity';
 import { OrderListComponent } from '../../components/order-list/order-list.component';
+import { SideNavbarComponent } from "../../../shared/presentation/components/side-navbar/side-navbar.component";
+import { LanguageSwitcher } from "../../../shared/presentation/components/language-switcher/language-switcher.component";
 
 interface OrdersSummary {
   totalOrders: number;
@@ -16,7 +18,7 @@ interface OrdersSummary {
 @Component({
   selector: 'app-orders',
   standalone: true,
-  imports: [CommonModule, RouterModule, OrderListComponent],
+  imports: [CommonModule, RouterModule, OrderListComponent, TranslateModule, SideNavbarComponent, LanguageSwitcher],
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css']
 })
@@ -31,7 +33,6 @@ export class OrdersComponent {
       }, { pending: 0, processing: 0, completed: 0, cancelled: 0 });
 
       const totalRevenue = orders.reduce((acc, order) => acc + order.total, 0);
-
       return {
         totalOrders: orders.length,
         totalRevenue,
