@@ -30,8 +30,8 @@ export class SideNavbarComponent implements OnInit {
   isExpanded = true;
   navItems: NavItem[] = [
     { icon: 'home', label: 'side-navbar.options.dashboard', route: ['/dashboard'] },
-    { icon: 'inventory_2', label: 'side-navbar.options.wine', route: ['/products'] },
-    { icon: 'shopping_cart', label: 'side-navbar.options.order', route: ['/sales'] },
+    { icon: 'inventory_2', label: 'side-navbar.options.wine', route: ['/orders'] },
+    { icon: 'shopping_cart', label: 'side-navbar.options.order', route: ['/products'] },
     { icon: 'assessment', label: 'side-navbar.options.report', route: ['/reports'] },
     { icon: 'notifications', label: 'side-navbar.options.alert', route: ['/alerts'] },
     { icon: 'settings', label: 'side-navbar.options.configuration', route: ['/settings'] }

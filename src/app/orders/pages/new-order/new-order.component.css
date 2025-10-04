@@ -1,0 +1,241 @@
+.new-order {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  color: #1f1f1f;
+  margin-left: 240px; /* ancho del side navbar */
+  position: relative;
+  z-index: 1;
+}
+
+.new-order__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: #FEEED4;
+}
+
+.new-order__header h1 {
+  margin: 0;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #FEEED4;
+}
+
+.new-order__header p {
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+  color: #5a5a5a;
+  max-width: 600px;
+}
+
+.new-order__header a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #6B0F0F, #C81D33);
+  color: #ffffff;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(110, 39, 129, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.new-order__header a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(110, 39, 129, 0.35);
+}
+
+.new-order__form {
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 12px 24px rgba(126, 76, 178, 0.12);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-section h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  color: #C81D33;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.section-header button {
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #6B0F0F, #C81D33);
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(110, 39, 129, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.section-header button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(110, 39, 129, 0.35);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-field span {
+  font-weight: 600;
+  color: gray;
+}
+
+.form-field input,
+.form-field textarea,
+.order-item select,
+.order-item input {
+  border-radius: 0.75rem;
+  border: 1px solid #e0e0e0;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-field input:focus,
+.form-field textarea:focus,
+.order-item select:focus,
+.order-item input:focus {
+  outline: none;
+  border-color: #C81D33;
+  box-shadow: 0 0 0 3px rgba(200, 29, 51, 0.15);
+}
+
+.form-field--full {
+  grid-column: 1 / -1;
+}
+
+.error {
+  color: #c62828;
+  font-size: 0.8rem;
+}
+
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.order-item {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: 1rem;
+  background: linear-gradient(145deg, #ffffff, #f3ecff);
+  box-shadow: 0 8px 20px rgba(126, 76, 178, 0.08);
+}
+
+.order-item label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.order-item .remove {
+  align-self: flex-start;
+  border: none;
+  background: transparent;
+  color: #c62828;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.preview-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.preview-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.preview-totals {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.preview-totals div {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.preview-totals__total {
+  font-size: 1.2rem;
+  color: #C81D33;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-actions button {
+  border: none;
+  padding: 0.75rem 1.75rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #6B0F0F, #C81D33);
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(110, 39, 129, 0.24);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-actions button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(110, 39, 129, 0.35);
+}
+
+@media (max-width: 768px) {
+  .new-order {
+    padding: 1.5rem;
+    margin-left: 0;
+  }
+
+  .new-order__form {
+    padding: 1.5rem;
+  }
+}

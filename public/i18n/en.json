@@ -119,5 +119,83 @@
       "save": "Save",
       "uploadImage": "Upload Image"
     }
+  },
+    "orders": {
+    "title": "Orders",
+    "text": "Manage the complete sales cycle and the status of each order",
+    "button": "Add new order",
+    "total": "Total orders",
+    "income": "Accrued income",
+    "pending": "Pending",
+    "processing": "In preparation",
+    "completed": "Completed",
+    "cancelled": "Canceled",
+    "recent": "Recent orders",
+    "status": {
+      "all": "All",
+      "pending": "Pending",
+      "processing": "In preparation",
+      "completed": "Completed",
+      "cancelled": "Canceled"
+    },
+    "table": {
+      "id": "Code",
+      "client": "Client",
+      "date": "Date",
+      "status": "Status",
+      "total": "Total",
+      "details": "View Details"
+    },
+    "emptyState": {
+      "title": "No orders registered",
+      "description": "Start by creating your first order to view it in this list.",
+      "button": "Create order"
+    }
+  },
+  "order-create": {
+    "title": "New Order",
+    "text": "Complete the customer information and select the wines that will be part of the order.",
+    "button": "Back to order list",
+    "data": "Customer information",
+    "name": "Customer name",
+    "email": "Email",
+    "notes": "Additional notes",
+    "information": "Order information",
+    "date": "Creation date",
+    "expectedDelivery": "Delivery date",
+    "status": "Status",
+    "details": "Order details",
+    "product": "Product",
+    "quantity": "Quantity",
+    "resume": "Summary",
+    "subtotal": "Subtotal",
+    "tax": "Tax",
+    "total": "Total",
+    "save": "Save order",
+    "add": "Add product"
+  },
+  "order-detail": {
+    "title": "Order Details",
+    "text": "Order Details",
+    "button": "Back to order list",
+    "delete": "Delete order",
+    "deleting": "Deleting order...",
+    "customer": "Customer Details",
+    "delivery": "Delivery Information",
+    "expected": "Delivery Date",
+    "status": "Status",
+    "summary": "Summary",
+    "subtotal": "Subtotal",
+    "tax": "Tax",
+    "total": "Total",
+    "items": "Order Details",
+    "table": {
+      "reference": "Reference",
+      "varietal": "Varietal",
+      "vintage": "Vineyard",
+      "quantity": "Quantity",
+      "unitPrice": "Unit Price",
+      "total": "Total"
+    }
   }
 }
