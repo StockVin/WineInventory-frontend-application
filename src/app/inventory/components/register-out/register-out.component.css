@@ -1,0 +1,95 @@
+/* inventory/components/register-out/register-out.component.css */
+
+/* NOTA: El fondo principal del modal se aplica globalmente en styles.css con .custom-dark-dialog-container */
+
+.register-out-container {
+    color: #FFFFFF;
+    padding: 30px;
+    border-radius: 12px;
+    width: 450px;
+}
+
+.header {
+    border-bottom: 1px solid #3c323b;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    color: black;
+}
+
+.form-field {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+/* --- Estilos para Angular Material (Para tema oscuro) --- */
+
+/* Fondo del input/select: Más claro que el fondo del modal */
+:host ::ng-deep .mat-form-field-wrapper .mat-form-field-flex {
+    background-color: #3C323B !important;
+    border-radius: 8px !important;
+}
+
+/* Color del texto (lo que el usuario escribe/selecciona) */
+:host ::ng-deep .mat-input-element,
+:host ::ng-deep .mat-select-value {
+    color: #FFFFFF !important;
+}
+
+/* Color de la etiqueta/placeholder */
+:host ::ng-deep .mat-form-field-label {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Color del borde del campo (Outline) en foco */
+:host ::ng-deep .mat-form-field-outline-thick {
+    color: #DBA736 !important;
+    /* Dorado */
+}
+
+/* Color del hint (Stock actual) */
+:host ::ng-deep .mat-form-field-hint {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+
+/* --- Estilos de Botones --- */
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* Botón Primario: Registrar (Dorado) */
+.register-btn {
+    background-color: #DBA736;
+    color: #20181F;
+    font-weight: 600;
+    height: 48px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+.register-btn[disabled] {
+    background-color: #5a4f41 !important;
+    /* Dorado atenuado */
+    color: #b3a89a !important;
+    cursor: not-allowed;
+}
+
+/* Botón Secundario: Cancelar (Oscuro) */
+.cancel-btn {
+    background-color: #554854;
+    color: #FFFFFF;
+    font-weight: 600;
+    height: 48px;
+    border-radius: 8px;
+    box-shadow: none;
+}

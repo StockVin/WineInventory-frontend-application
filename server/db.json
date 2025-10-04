@@ -1,3 +1,81 @@
 {
-
+  "inventory": [
+    {
+      "id": "1",
+      "name": "Whiskey Escocés",
+      "type": "Destilado",
+      "expirationDate": "2024-04-24",
+      "currentStock": 20,
+      "minStockLevel": 20,
+      "price": 40,
+      "location": "Almacén 1A",
+      "imageUrl": "assets/images/whiskey.png"
+    },
+    {
+      "id": "2",
+      "name": "Vino Blanco Chardonnay",
+      "type": "Vino",
+      "expirationDate": "2023-07-23",
+      "currentStock": 20,
+      "minStockLevel": 10,
+      "price": 50,
+      "location": "Almacén 2B",
+      "imageUrl": "assets/images/vino-blanco.png"
+    },
+    {
+      "id": "3",
+      "name": "Vino Tinto Malbec",
+      "type": "Destilado",
+      "expirationDate": "2023-05-12",
+      "currentStock": 20,
+      "minStockLevel": 15,
+      "price": 55,
+      "location": "Almacén 1A",
+      "imageUrl": "assets/images/vino-tinto.png"
+    },
+    {
+      "id": "4",
+      "name": "Cerveza Artesanal IPA",
+      "type": "Cerveza",
+      "expirationDate": "2023-05-12",
+      "currentStock": 20,
+      "minStockLevel": 15,
+      "price": 60,
+      "location": "Almacén 3C",
+      "imageUrl": "assets/images/cerveza.png"
+    },
+    {
+      "id": "5",
+      "name": "Vodka Ruso Premium",
+      "type": "Destilado",
+      "expirationDate": "2023-05-12",
+      "currentStock": 20,
+      "minStockLevel": 15,
+      "price": 45,
+      "location": "Almacén 3C",
+      "imageUrl": "assets/images/vodka.png"
+    },
+    {
+      "id": "6",
+      "name": "Whiskey Japonés",
+      "type": "Destilado",
+      "expirationDate": "2023-05-12",
+      "currentStock": 20,
+      "minStockLevel": 15,
+      "price": 68,
+      "location": "Almacén 2B",
+      "imageUrl": "assets/images/whiskey.png"
+    },
+    {
+      "id": "SLWdXgH",
+      "name": "Ejemplo de Licor",
+      "type": "Licor Anisado",
+      "price": 36,
+      "expirationDate": "2025-10-04",
+      "currentStock": 20,
+      "minStockLevel": 8,
+      "location": "Almacén general",
+      "imageUrl": "assets/images/placeholder.png"
+    }
+  ]
 }

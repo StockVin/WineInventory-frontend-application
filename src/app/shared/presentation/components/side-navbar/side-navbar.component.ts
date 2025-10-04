@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { filter } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
 
+
 export interface NavItem {
   icon: string;
   label: string;
@@ -30,6 +31,7 @@ export class SideNavbarComponent implements OnInit {
   isExpanded = true;
   navItems: NavItem[] = [
     { icon: 'home', label: 'side-navbar.options.dashboard', route: ['/dashboard'] },
+    { icon: 'storefront', label: 'side-navbar.options.inventory', route: ['/inventory', 'inventory'] },
     { icon: 'inventory_2', label: 'side-navbar.options.wine', route: ['/dashboard', 'products'] },
     { icon: 'shopping_cart', label: 'side-navbar.options.order', route: ['/dashboard', 'sales'] },
     { icon: 'assessment', label: 'side-navbar.options.report', route: ['/dashboard', 'reports'] },

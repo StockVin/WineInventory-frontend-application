@@ -49,6 +49,7 @@
   "title": "Menu principal",
   "options": {
     "dashboard": "Inicio",
+    "inventory": "Inventario",
     "wine": "Ordenes",
     "order": "Lista de pedidos",
     "report": "Reportes",

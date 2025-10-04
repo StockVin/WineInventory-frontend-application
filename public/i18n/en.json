@@ -49,6 +49,7 @@
   "title": "Main Menu",
   "options": {
     "dashboard": "Home",
+    "inventory": "Inventory",
     "wine": "Orders",
     "order": "Order List",
     "report": "Reports",

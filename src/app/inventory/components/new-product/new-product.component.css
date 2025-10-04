@@ -1,0 +1,121 @@
+.new-product-slide {
+    background-color: #2C2129;
+    color: #FEEED4;
+    padding: 20px;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.back-button {
+    background: transparent;
+    border: none;
+    color: #FEEED4;
+    cursor: pointer;
+    padding: 0;
+    margin-right: 15px;
+    min-width: 40px;
+}
+
+.header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.form-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
+
+.form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+:host ::ng-deep .mat-form-field-wrapper {
+    background-color: #1a1a1a !important;
+    border-radius: 4px;
+    padding: 0 10px;
+}
+
+:host ::ng-deep .mat-form-field-outline {
+    display: none !important;
+}
+
+:host ::ng-deep .mat-input-element,
+:host ::ng-deep .mat-select-value {
+    color: #FEEED4 !important;
+}
+
+:host ::ng-deep .mat-form-field-label {
+    color: rgba(254, 238, 212, 0.7) !important;
+}
+
+.side-panels {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.options-panel,
+.image-panel {
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    padding: 15px;
+    color: #DBA736;
+}
+
+.options-panel h4,
+.image-panel h4 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #FEEED4;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    cursor: pointer;
+    color: #FEEED4;
+}
+
+.image-placeholder {
+    height: 150px;
+    background-color: rgba(254, 238, 212, 0.1);
+    border: 2px dashed rgba(254, 238, 212, 0.4);
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.cancel-btn {
+    background-color: transparent;
+    border: 1px solid #DBA736;
+    color: #DBA736;
+}
+
+.save-btn {
+    background-color: #DBA736;
+    color: #1a1a1a;
+    font-weight: 600;
+}
