@@ -1,0 +1,25 @@
+.alert-item {
+  padding: 8px 0;
+}
+
+.product-name {
+  font-weight: 500;
+  color: #4E4E4E;
+}
+
+.stock-actual {
+  font-weight: bold;
+  color: #DD0031;
+}
+
+.stock-minimo {
+  font-weight: 500;
+  color: #4E4E4E;
+}
+
+.expiration {
+  color: #FB8C00;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 4px;
+}
