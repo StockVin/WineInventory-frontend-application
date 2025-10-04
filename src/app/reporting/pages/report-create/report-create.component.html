@@ -1,1 +1,88 @@
-<p>report-create works!</p>
+<div class="dashboard-container">
+  <!-- Side Navigation -->
+  <app-side-navbar></app-side-navbar>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Header -->
+    <div class="header">
+      <h1>{{ 'report.create' | translate }}</h1>
+      <div class="header-actions">
+        <app-language-switcher></app-language-switcher>
+      </div>
+    </div>
+
+    <!-- Form Container -->
+    <div class="form-container">
+      <form class="report-form" (ngSubmit)="createReport()">
+        <!-- Report Details Section -->
+        <div class="form-section">
+          <h2 class="section-title">{{ 'report.reportCreate.data' | translate }}</h2>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="report-number">{{ 'report.reportCreate.number' | translate }}</label>
+              <input type="text" id="report-number" [(ngModel)]="report.id" name="reportNumber" readonly>
+            </div>
+            
+            <div class="form-group">
+              <label for="report-date">{{ 'report.reportCreate.date' | translate }}</label>
+              <input type="date" id="report-date" [(ngModel)]="report.date" name="reportDate" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Information Section -->
+        <div class="form-section">
+          <h2 class="section-title">{{ 'report.reportCreate.information' | translate }}</h2>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="product">{{ 'report.reportCreate.product' | translate }}</label>
+              <select id="product" [(ngModel)]="report.products" name="product" required>
+                <option value="">Seleccione un producto</option>
+                <option value="Vino Tinto Reserva">Vino Tinto Reserva</option>
+                <option value="Vino Blanco Joven">Vino Blanco Joven</option>
+                <option value="Cava Brut">Cava Brut</option>
+                <option value="Vino Rosado">Vino Rosado</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="quantity">{{ 'report.reportCreate.amount' | translate }}</label>
+              <input type="number" id="quantity" [(ngModel)]="report.amount" name="quantity" min="1" required>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="price">{{ 'report.reportCreate.price' | translate }}</label>
+              <input type="number" id="price" [(ngModel)]="report.price" name="price" min="0" step="0.01" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="type">{{ 'report.reportCreate.type' | translate }}</label>
+              <select id="type" [(ngModel)]="report.type" name="type" required>
+                <option value="">Seleccione un tipo</option>
+                <option value="destilado">Destilado</option>
+                <option value="fermentado">Fermentado</option>
+                <option value="licor">Licor</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="lost">{{ 'report.reportCreate.lost' | translate }}</label>
+              <input type="number" id="lost" [(ngModel)]="report.lost" name="lost" min="0" step="0.01">
+            </div>
+          </div>
+        
+        </div>
+        
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="button" class="btn btn-cancel" (click)="cancelReport()">{{ 'report.reportCreate.cancel' | translate }}</button>
+          <button type="submit" class="btn btn-primary" (ngSubmit)="createReport()">{{ 'report.reportCreate.save' | translate }}</button>
+        </div>
+      </form>
+    </div>
+</div>

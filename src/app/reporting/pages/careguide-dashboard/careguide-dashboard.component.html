@@ -1,33 +1,26 @@
 <div class="dashboard-container">
-  <!-- Side Navigation -->
-  <app-side-navbar></app-side-navbar>
-
-  <!-- Main Content -->
+    <!-- Side Navigation -->
+    <app-side-navbar></app-side-navbar>
+    <!-- Main Content -->
   <div class="main-content">
     <!-- Header -->
     <div class="header">
       <div class="header-content">
-        <h1>{{ 'report.title' | translate }}</h1>
+        <h1>{{ 'careguide.title' | translate }}</h1>
         <div class="header-actions">
           <!-- Language Switcher -->
           <app-language-switcher></app-language-switcher>
-          
-          <button mat-stroked-button class="export-btn">
-            <mat-icon>download</mat-icon>
-            {{ 'report.export' | translate }}
+          <button mat-raised-button color="primary" class="new-careguide-btn" (click)="navigateToReturnReport()">
+            <mat-icon>arrow_back</mat-icon>
+            {{ 'careguide.buttons.return' | translate }}
           </button>
-          <button mat-raised-button color="primary" class="new-report-btn" (click)="navigateToReportCreate()">
+          <button mat-raised-button color="accent" class="new-careguide-btn" (click)="navigateToCareGuidesCreate()">
             <mat-icon>add</mat-icon>
-            {{ 'report.new' | translate }}
-          </button>
-          <button mat-raised-button color="primary" class="new-report-btn" (click)="navigateToCareGuides()">
-            <mat-icon>list</mat-icon>
-            {{ 'report.careguide' | translate }}
+            {{ 'careguide.buttons.create' | translate }}
           </button>
         </div>
       </div>
     </div>
-
     <!-- Search  -->
     <div class="search-bar">
       <mat-form-field appearance="outline" class="search-field">
@@ -39,18 +32,15 @@
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
     </div>
-
     <!-- Reports List -->
     <div *ngIf="!loading && !error" class="reports-container">
-      <div *ngIf="filteredReports.length === 0" class="no-results">
+      <div *ngIf="filteredCareGuides.length === 0" class="no-results">
         <mat-icon>search_off</mat-icon>
         <p>{{ 'report.noResults' | translate }}</p>
       </div>
-      <app-report-list 
-        [reports]="filteredReports" 
-        [loading]="loading"
-        (delete)="onDeleteReport($event)">
-      </app-report-list>
+      <app-careguide-list 
+        [careguides]="filteredCareGuides" 
+        [loading]="loading">
+      </app-careguide-list> 
     </div>
-  </div>
 </div>

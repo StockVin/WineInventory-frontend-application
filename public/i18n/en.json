@@ -57,7 +57,70 @@
     },
     "logout": "Log Out"
   },
-  "orders": {
+  "report": {
+    "title": "Reports",
+    "search": "Search",
+    "searchPlaceholder": "Search report...",
+    "new": "New Report",
+    "export": "Export",
+    "careguide": "Careguide",
+    "create": "Create Report",
+    "reportCreate": {
+      "data": "Report Data",
+      "information": "Product Information",
+      "cancel": "Cancel",
+      "save": "Save",
+      "number": "Report Number",
+      "date": "Date",
+      "product": "Product",
+      "price": "Price",
+      "type": "Type",
+      "amount": "Quantity",
+      "lost": "Lost"
+    },
+    "tableHeaders": {
+      "id": "ID",
+      "product": "Product",
+      "type": "Type",
+      "price": "Price",
+      "amount": "Quantity",
+      "date": "Date",
+      "lost": "Lost",
+      "actions": "Actions"
+    },
+    "actions": {
+      "delete": "Delete"
+    },
+    "pagination": {
+      "showing": "Showing",
+      "of": "of",
+      "items": "items"
+    },
+    "noResults": "No results found"
+  },
+  "careguide": {
+    "title": "Care Guide",
+    "buttons": {
+      "return": "Reports",
+      "create": "Create New Guide"
+    },
+    "tableHeaders": {
+      "name": "Name",
+      "type": "Type",
+      "description": "Description"
+    },
+    "create": {
+      "title": "Create Care Guide",
+      "name": "Name",
+      "type": "Type",
+      "description": "Description",
+      "image": "Image",
+      "cancel": "Cancel",
+      "save": "Save",
+      "uploadImage": "Upload Image"
+    }
+  },
+    "orders": {
     "title": "Orders",
     "text": "Manage the complete sales cycle and the status of each order",
     "button": "Add new order",

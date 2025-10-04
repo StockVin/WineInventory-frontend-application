@@ -57,7 +57,70 @@
     },
     "logout": "Cerrar Sesión"
   },
-  "orders":{
+  "report": {
+    "title": "Reportes",
+    "search": "Buscar",
+    "searchPlaceholder": "Buscar reporte...",
+    "new": "Nuevo Reporte",
+    "export": "Exportar",
+    "careguide": "Guia de cuidado",
+    "create": "Crear Reporte",
+    "reportCreate": {
+      "data": "Datos del Reporte",
+      "information": "Información del Producto",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "number": "Número de Reporte",
+      "date": "Fecha",
+      "product": "Producto",
+      "price": "Precio",
+      "type": "Tipo",
+      "amount": "Cantidad",
+      "lost": "Perdida"
+    },
+    "tableHeaders": {
+      "id": "ID",
+      "product": "Producto",
+      "type": "Tipo",
+      "price": "Precio",
+      "amount": "Cantidad",
+      "date": "Fecha",
+      "lost": "Perdida",
+      "actions": "Acciones"
+    },
+    "actions": {
+      "delete": "Eliminar"
+    },
+    "pagination": {
+      "showing": "Mostrando",
+      "of": "de",
+      "items": "elementos"
+    },
+    "noResults": "No se encontraron resultados"
+  },
+  "careguide": {
+    "title": "Guia de cuidado",
+    "buttons": {
+      "return": "Reportes",
+      "create": "Crear nueva guia"
+    },
+    "tableHeaders": {
+      "name": "Nombre",
+      "type": "Tipo",
+      "description": "Descripción"
+    },
+    "create": {
+      "title": "Crear Guia de Cuidado",
+      "name": "Nombre",
+      "type": "Tipo",
+      "description": "Descripción",
+      "image": "Imagen",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "uploadImage": "Subir Imagen"
+    }
+  },
+   "orders":{
     "title": "Ordenes",
     "text": "Administra el ciclo completo de ventas y el estado de cada pedido",
     "button": "Agregar nuevo pedido",
