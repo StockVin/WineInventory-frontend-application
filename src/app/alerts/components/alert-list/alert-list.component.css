@@ -1,0 +1,254 @@
+:root {
+  --blue: #263238;
+  --magenta: #880E4F;
+  --purple: #8E24AA;
+  --red: #DD0031;
+  --dark-text: #fff;
+  --dark-background: #222;
+  --light-text: #4E4E4E;
+  --light-background: #F4EDE4;
+  --white: #fff;
+}
+
+:host {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  width: 100%;
+  justify-content: center;
+}
+
+.alerts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.alerts-row {
+  display: flex;
+  flex-direction: row;
+  gap: 48px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.alert-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  padding: 32px 32px 32px 32px;
+  margin-bottom: 16px;
+  min-width: 440px;
+  max-width: 600px;
+  min-height: 340px;
+  flex: 1 1 440px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.alert-card .mat-card-title {
+  color: #273238;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.alert-item {
+  padding: 12px 0;
+  font-size: 1.2rem;
+}
+
+.product-name {
+  font-weight: 500;
+  color: #4E4E4E;
+}
+
+.stock-actual {
+  font-weight: bold;
+  color: #DD0031;
+}
+
+.stock-minimo {
+  font-weight: 500;
+  color: #4E4E4E;
+}
+
+.expiration {
+  color: #FB8C00;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 4px;
+}
+
+.stock-info {
+  display: block;
+  color: #333;
+  font-size: 1.1rem;
+  margin: 6px 0 10px 0;
+}
+
+/* Backend Alert Styles */
+.backend-alert {
+  padding: 12px 0;
+  border-left: 4px solid #e0e0e0;
+  padding-left: 12px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  background: #fafafa;
+  transition: 0.3s ease;
+}
+
+.alert-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.severity-icon {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.alert-title {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.alert-message {
+  color: #666;
+  font-size: 13px;
+  margin: 4px 0;
+  line-height: 1.4;
+}
+
+.alert-severity {
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.link {
+  color: #1976d2;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.loading {
+  text-align: center;
+  color: #666;
+  padding: 20px;
+  font-style: italic;
+}
+
+.error-msg {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  border-left: 4px solid #c62828;
+}
+
+.success-msg {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  border-left: 4px solid #2e7d32;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 24px;
+  border-radius: 8px;
+  min-width: 300px;
+  max-width: 500px;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.modal-content button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.modal-content button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.modal-content button:hover:not(:disabled) {
+  background-color: #1565c0;
+}
+
+.modal-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.modal-content th, .modal-content td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+.modal-content th {
+  background: #f4f4f4;
+  font-weight: 600;
+}
+.modal-content input[type="number"] {
+  width: 70px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
