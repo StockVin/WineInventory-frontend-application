@@ -1,3 +1,201 @@
 {
-
+  "users": [
+    {
+      "id": 1,
+      "username": "admin@admin.com",
+      "password": "admin",
+      "role": "ADMIN"
+    }
+  ],
+  "profile": [
+    {
+      "id": 1,
+      "username": "admin@admin.com",
+      "password": "admin",
+      "role": "ADMIN"
+    }
+  ],
+  "reporting": [
+    {
+      "id": 1,
+      "products": "Vinos",
+      "type": "destilado",
+      "price": 20,
+      "amount": 2,
+      "date": "2025/05/13",
+      "lost": 40
+    },
+    {
+      "id": 2,
+      "products": "Ron",
+      "type": "destilado",
+      "price": 20,
+      "amount": 2,
+      "date": "2025/05/13",
+      "lost": 40
+    },
+    {
+      "id": 3,
+      "products": "Pisco",
+      "type": "destilado",
+      "price": 20,
+      "amount": 2,
+      "date": "2025/05/13",
+      "lost": 40
+    },
+    {
+      "id": 4,
+      "products": "Vino Tinto",
+      "type": "destilado",
+      "price": 12,
+      "amount": 112,
+      "date": "2025-10-02T00:00:00.000Z",
+      "lost": 122
+    },
+    {
+      "id": 5,
+      "products": "Vino Tinto Reserva",
+      "type": "licor",
+      "price": 1212,
+      "amount": 112,
+      "date": "2025-10-02T00:00:00.000Z",
+      "lost": 1212
+    }
+  ],
+  "careguides": [
+    {
+      "id": 1,
+      "name": "Vino",
+      "type": "destilado",
+      "description": "Vino",
+      "imageUrl": "Vino"
+    },
+    {
+      "name": "asdasd",
+      "type": "Red",
+      "description": "probando",
+      "imageUrl": "",
+      "date": "2025-10-02T19:22:33.369Z",
+      "id": 2
+    },
+    {
+      "name": "probando",
+      "type": "White",
+      "description": "probando el endpoint de careguide",
+      "imageUrl": "",
+      "date": "2025-10-02T19:23:35.381Z",
+      "id": 3
+    }
+  ],
+  "product": [
+    {
+      "name": "Vino Tinto Malbec",
+      "type": "Destilado",
+      "description": "Temperatura recomendada: 16 - 20 °C",
+      "imageUrl": "",
+      "id": "7ca4"
+    },
+    {
+      "name": "Vino Blanco",
+      "type": "Destilado",
+      "description": "Temperatura recomendada: 16 - 20 °C",
+      "imageUrl": "",
+      "id": "c52b"
+    },
+    {
+      "name": "Ron Cartavio",
+      "type": "Ron",
+      "description": "Temperatura recomendada: 16 - 20 °C",
+      "imageUrl": "",
+      "id": "aa97"
+    },
+    {
+      "name": "Absolut Vodka",
+      "type": "Vodka",
+      "description": "Temperatura recomendada: 16 - 20 °C",
+      "imageUrl": "",
+      "id": "1f2e"
+    }
+  ],
+  "warehouses": [
+    {
+      "warehouseId": 1,
+      "name": "Almacén Central",
+      "imageUrl": "https://gxtra-cr-dxtra.cdn.mediatiquepress.com/wp-content/uploads/2024/11/licores-contrabando-9-800x436.jpeg",
+      "street": "Av. Arequipa 1500",
+      "city": "Lima",
+      "state": "Lima",
+      "postalCode": "15046",
+      "capacity": 1000,
+      "profileId": 1
+    }
+  ],
+  "zones": [
+    {
+      "zoneId": 1,
+      "warehouseId": 1,
+      "name": "Zona Refrigerada",
+      "type": "Vinos Blancos",
+      "description": "Temperatura controlada entre 5°C y 10°C"
+    },
+    {
+      "zoneId": 2,
+      "warehouseId": 1,
+      "name": "Zona Reserva",
+      "type": "Tintos y destilados",
+      "description": "Temperatura entre 15°C y 18°C"
+    }
+  ],
+  "purchase-orders": [
+    {
+      "id": 1,
+      "date": { "_date": "2025-10-01T10:00:00.000Z" },
+      "status": "Delayed",
+      "buyer": {
+        "id": "1",
+        "userOwnerId": 1,
+        "role": "Liquor Store Owner",
+        "businessName": "Licorería San Borja",
+        "name": "Admin",
+        "email": "admin@admin.com"
+      },
+      "supplier": {
+        "id": "2",
+        "userOwnerId": 2,
+        "role": "Supplier",
+        "businessName": "Distribuidora Lima Norte",
+        "name": "Proveedor X",
+        "email": "proveedor@lima.com"
+      },
+      "items": [
+        {
+          "id": "item-123",
+          "catalogId": 1,
+          "name": "Ron Cartavio",
+          "productType": "Ron",
+          "brand": "Cartavio",
+          "content": 750,
+          "unitPrice": 25.5,
+          "customQuantity": "12 botellas"
+        }
+      ],
+      "totalAmount": 306,
+      "totalItems": 12
+    }
+  ],
+  "settings": [
+    {
+      "expirationAlertMargin": 7,
+      "id": 1
+    }
+  ],
+  "accounts": [
+    {
+      "id": "1",
+      "userOwnerId": 1,
+      "role": "ADMIN",
+      "businessName": "Licorería San Borja",
+      "email": "admin@admin.com"
+    }
+  ]
 }
