@@ -1,0 +1,16 @@
+
+<h2 mat-dialog-title>Business Location</h2>
+<mat-dialog-content class="map-container">
+  <iframe
+    width="100%"
+    height="400"
+    style="border:0"
+    [src]="mapUrl"
+    allowfullscreen
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button class="buton-map" (click)="close()">Cerrar</button>
+</mat-dialog-actions>

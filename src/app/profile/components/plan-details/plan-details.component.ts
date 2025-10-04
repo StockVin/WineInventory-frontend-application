@@ -1,11 +1,12 @@
+
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-plan-details',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './plan-details.component.html',
-  styleUrl: './plan-details.component.css'
+  styleUrls: ['./plan-details.component.css']
 })
-export class PlanDetailsComponent {
-
-}
+export class PlanDetailsComponent {}

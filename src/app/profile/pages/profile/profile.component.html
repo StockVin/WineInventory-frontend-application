@@ -1,1 +1,45 @@
-<p>profile works!</p>
+<div class="profile-bg">
+
+  <app-side-navbar/>
+
+  <div class="profile-main">
+
+    <app-tool-bar [titleKey]="'profile.title'"></app-tool-bar>
+
+    <div class="profile-container">
+      <div class="profile-left">
+        <div class="user-card">
+          <div class="avatar-container">
+            <div class="avatar">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z" />
+              </svg>
+            </div>
+          </div>
+          <div class="user-info">
+            <h2 class="user-name">{{ userData.name }}</h2>
+            <p class="user-email">{{ userData.email }}</p>
+          </div>
+        </div>
+        <app-profile-edit></app-profile-edit>
+      </div>
+    </div>
+
+    <section class="account-type">
+      <h2 class="section-title">Account Type</h2>
+      <div class="account-box">
+        <div class="account-info">
+          <p><strong>Role:</strong> {{ userData.role }}</p>
+          <p><strong>Current Plan:</strong> Free</p>
+        </div>
+        <a class="change-plan-link" href="#">Do you want to change your plan?</a>
+      </div>
+    </section>
+    <app-plan-details></app-plan-details>
+    <app-plan-benefits></app-plan-benefits>
+
+
+  </div>
+
+</div>

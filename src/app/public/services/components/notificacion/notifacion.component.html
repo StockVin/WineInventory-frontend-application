@@ -1,0 +1,9 @@
+<div *ngIf="showCloseButton" [class]="getClassTypeNotification()">
+  <div (click)="closeNotification()" class="close-notification-container">✖</div>
+  <div class="title-notification-container">
+    <h1>{{ title }}</h1>
+  </div>
+  <div class="content-container">
+    <p>{{ content }}</p>
+  </div>
+</div>
