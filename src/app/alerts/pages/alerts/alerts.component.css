@@ -1,0 +1,93 @@
+:root {
+  --blue:#263238;
+  --magenta:#880E4F;
+  --purple:#8E24AA;
+  --red:#DD0031;
+  --dark-text: #fff;
+  --dark-background: #222;
+  --light-text: #4E4E4E;
+  --light-background: #F4EDE4;
+  --white: #fff;
+}
+
+.alerts-bg {
+  padding: 2rem;
+  background: #F7EDDC;
+  min-height: 100vh;
+  display: flex;
+}
+
+.alerts-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.alerts-container {
+  background-color: #F4EDE3;
+  color: #000;
+  min-height: 100vh;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.title {
+  color: #8E24AA;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 20px;
+  font-size: 50px;
+}
+
+.cards-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.alert-card {
+  background-color: #fff;
+  flex: 1 1 300px;
+  max-width: 400px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.alert-card .mat-card-title{
+  color: #273238;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.alert-card .product-name {
+  color: #4E4E4E;
+  font-weight: 500;
+}
+
+.alert-card .stock-actual{
+  color: #DD0031;
+  font-weight: 500;
+}
+
+.alert-card .stock-minimo{
+  color: #4E4E4E;
+  font-weight: 500;
+}
+
+.alert-card .link {
+  color: purple;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 12px;
+  display: inline-block;
+}
+
+.alert-card .expiration {
+  color: #FB8C00;
+  margin-top: 12px;
+  display: inline-block;
+}
