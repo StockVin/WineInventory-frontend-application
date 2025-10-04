@@ -56,5 +56,72 @@
     "configuration": "Configuración"
   },
   "logout": "Cerrar Sesión"
-}
+},
+"form": {
+      "name": "Nombre",
+      "street": "Calle",
+      "city": "Ciudad",
+      "district": "Distrito",
+      "postalCode": "Código postal",
+      "country": "País",
+      "maxTemperature": "Temperatura máxima",
+      "minTemperature": "Temperatura mínima",
+      "capacity": "Capacidad",
+      "image": "Imagen del almacén",
+      "name-required": "El nombre es obligatorio",
+      "street-required": "La calle es obligatoria",
+      "city-required": "La ciudad es obligatoria",
+      "district-required": "El distrito es obligatorio",
+      "postalCode-required": "El código postal es obligatorio",
+      "postalCode-length": "El código postal debe tener 5 caracteres",
+      "country-required": "El país es obligatorio",
+      "maxTemperature-required": "La temperatura máxima es obligatoria",
+      "minTemperature-required": "La temperatura mínima es obligatoria",
+      "capacity-required": "La capacidad es obligatoria",
+      "capacity-length": "La capacidad debe ser mayor a 0"
+    },
+  
+  "dashboard": {
+    "title": "Dasboard"
+  },
+  "storage": {
+    "title": "Productos almacenados"
+  },
+   "subscription": {
+    "title": "Planes de suscripción",
+    "plan-free": {
+      "title": "Plan gratuito",
+      "description": "Este plan es gratuito y tiene algunas limitaciones. Es ideal para empresas pequeñas que quieren probar la aplicación.",
+      "benefit1": "Gestionar hasta 10 productos",
+      "benefit2": "Almacenes limitados",
+      "benefit3": "Alertas básicas",
+      "benefit4": "Soporte básico",
+      "benefit5": "Informes limitados",
+      "benefit6": "Almacenes limitados",
+      "price": "Gratis"
+    },
+    "plan-premium": {
+      "title": "Plan Premium",
+      "description": "Este plan es ideal para empresas que necesitan más funcionalidades y soporte. Ofrece una experiencia completa con todas las características de la aplicación.",
+      "benefit1": "Almacena hasta 100 productos",
+      "benefit2": "Ilimitado número de almacenes",
+      "benefit3": "Alertas personalizadas",
+      "benefit4": "Soporte prioritario",
+      "benefit5": "Informes avanzados",
+      "benefit6": "Acceso a todas las funcionalidades",
+      "price": "S/. 19.90 per month"
+    }
+  },
+   "components": {
+    "edit": "Editar",
+    "show": "Mostrar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "upload": "Subir imagen",
+    "no-file": "No hay archivo seleccionado",
+    "complete": "Completa todos los campos del formulario"
+  },
+    "alerts": {
+    "title": "Alertas"
+  }
 }

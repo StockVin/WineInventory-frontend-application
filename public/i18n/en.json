@@ -56,5 +56,75 @@
     "configuration": "Settings"
   },
   "logout": "Log Out"
-}
+},
+"form" : {
+      "name": "Name",
+      "street": "Street",
+      "city": "City",
+      "district": "District",
+      "postalCode": "Postal Code",
+      "country": "Country",
+      "maxTemperature": "Max Temperature",
+      "minTemperature": "Min Temperature",
+      "capacity": "Capacity",
+      "image": "Warehouse image",
+      "name-required": "Name is required",
+      "street-required": "Street is required",
+      "city-required": "City is required",
+      "district-required": "District is required",
+      "postalCode-required": "Postal code is required",
+      "postalCode-length": "Enter a valid 5-digits postal code",
+      "country-required": "Country is required",
+      "maxTemperature-required": "Max temperature is required",
+      "minTemperature-required": "Min temperature is required",
+      "capacity-required": "Capacity is required",
+      "capacity-length": "Capacity must be a number greater than 0"
+    },
+    "dashboard": {
+    "title": "Dashboard"
+  },
+  "storage": {
+    "title": "Products in storage"
+  },
+  
+  "subscription": {
+    "title": "Subscription plans",
+    "plan-free": {
+      "title": "Free plan",
+      "description": "This plan is free and has limitations. It is ideal for individuals who want to use the application without paying.",
+      "benefit1":  "Manage up to 50 products",
+      "benefit2": "Storage guides",
+      "benefit3": "Limited number of conservation guides",
+      "benefit4": "Basic alerts",
+      "benefit5": "Community support",
+      "benefit6": "Limited access to reports",
+      "benefit7": "Limited access to warehouses",
+      "price": "Free"
+    },
+    "plan-premium": {
+      "title": "Premium plan",
+      "description": "This plan is paid and has no limitations. It is ideal for companies that want to use the application without restrictions.",
+      "benefit1": "Manage unlimited products",
+      "benefit2": "Unlimited storage guides",
+      "benefit3": "Custom alerts",
+      "benefit4": "Advanced alerts",
+      "benefit5": "Priority support",
+      "benefit6": "Full access to reports",
+      "benefit7": "Full access to warehouses",
+      "price": "S/. 19.90 per month"
+    }
+  },
+  "components": {
+    "edit": "Edit",
+    "show": "Show",
+    "save": "Save",
+    "cancel": "Cancel",
+    "upload": "Upload image",
+    "no-file": "No file chosen",
+    "complete": "Complete all form fields"
+  },
+    "alerts": {
+    "title": "Alerts"
+  }
+
 }
