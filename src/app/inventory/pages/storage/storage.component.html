@@ -1,0 +1,24 @@
+<div class="storage-layout">
+  <app-side-navbar class="sidebar"></app-side-navbar>
+
+  <div class="main-content">
+    <app-tool-bar [titleKey]="'storage.title'"></app-tool-bar>
+
+    <div class="storage-content">
+      <div *ngIf="products.length === 0" class="empty-message">
+        <p>You haven’t added any products yet.</p>
+      </div>
+
+      <div *ngIf="products.length > 0" class="products-list-container">
+        <app-product-list [products]="products"></app-product-list>
+      </div>
+
+      <div class="new-product">
+        <mat-button-toggle (click)="goToCreateProduct()">
+          <mat-icon>add</mat-icon>
+          <span>Add New Product</span>
+        </mat-button-toggle>
+      </div>
+    </div>
+  </div>
+</div>

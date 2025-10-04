@@ -1,0 +1,29 @@
+.warehouse-bg {
+  padding: 2rem;
+  background: #f4ede3;
+  min-height: 100vh;
+  display: flex;
+}
+
+.warehouse-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.warehouse-content {
+  padding: 2rem;
+}
+
+.create-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  background-color: #8D1454;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  border-radius: 24px;
+  text-transform: none;
+}

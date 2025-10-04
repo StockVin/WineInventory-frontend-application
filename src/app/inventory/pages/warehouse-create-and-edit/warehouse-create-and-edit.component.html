@@ -1,0 +1,128 @@
+<div class="warehouse-bg">
+  <app-side-navbar></app-side-navbar>
+
+  <div class="warehouse-main">
+    <app-tool-bar [titleKey]="pageTitle"></app-tool-bar>
+
+    <div class="warehouse-content">
+      <mat-card class="form-card">
+        <mat-card-content>
+          <form [formGroup]="warehouseForm">
+            <h2 class="form-title">{{ isEditMode ? 'Edit Data' : ('components.complete' | translate) }}</h2>
+
+            <div class="form-grid">
+              <!-- Name -->
+              <mat-form-field appearance="outline" class="form-group">
+                <mat-label>{{ 'warehouse.form.name' | translate }}</mat-label>
+                <input matInput formControlName="name" placeholder="Principal Warehouse">
+                @if (nameFormControl.hasError('required')) {
+                  <mat-error>{{ 'warehouse.form.name-required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+
+              <!-- Street -->
+              <mat-form-field appearance="outline" class="form-group">
+                <mat-label>{{ 'warehouse.form.street' | translate }}</mat-label>
+                <input matInput formControlName="street" placeholder="Av. Sol">
+                @if (streetFormControl.hasError('required')) {
+                  <mat-error>{{ 'warehouse.form.street-required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+
+              <!-- City -->
+              <mat-form-field appearance="outline" class="form-group">
+                <mat-label>{{ 'warehouse.form.city' | translate }}</mat-label>
+                <input matInput formControlName="city" placeholder="Lima">
+                @if (cityFormControl.hasError('required')) {
+                  <mat-error>{{ 'warehouse.form.city-required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+
+              <!-- District -->
+              <mat-form-field appearance="outline" class="form-group">
+                <mat-label>{{ 'warehouse.form.district' | translate }}</mat-label>
+                <input matInput formControlName="district" placeholder="Villa El Salvador">
+                @if (districtFormControl.hasError('required')) {
+                  <mat-error>{{ 'warehouse.form.district-required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+
+              <!-- Postal Code -->
+              <mat-form-field appearance="outline" class="form-group">
+                <mat-label>{{ 'warehouse.form.postalCode' | translate }}</mat-label>
+                <input matInput formControlName="postalCode" placeholder="12345">
+                @if (postalCodeFormControl.hasError('required')) {
+                  <mat-error>{{ 'warehouse.form.postalCode-required' | translate }}</mat-error>
+                }
+                @if (postalCodeFormControl.hasError('pattern')) {
+                  <mat-error>{{ 'warehouse.form.postalCode-length' | translate }}</mat-error>
+                }
+              </mat-form-field>
+
+              <!-- Country -->
+              <mat-form-field appearance="outline" class="form-group">
+                <mat-label>{{ 'warehouse.form.country' | translate }}</mat-label>
+                <input matInput formControlName="country" placeholder="Perú">
+                @if (countryFormControl.hasError('required')) {
+                  <mat-error>{{ 'warehouse.form.country-required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+
+              <!-- Max Temperature -->
+              <mat-form-field appearance="outline" class="form-group">
+                <mat-label>{{ 'warehouse.form.maxTemperature' | translate }}</mat-label>
+                <input matInput type="number" formControlName="maxTemperature" placeholder="10" min="-50" max="50">
+                @if (maxTemperatureFormControl.hasError('required')) {
+                  <mat-error>{{ 'warehouse.form.maxTemperature-required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+
+              <!-- Min Temperature -->
+              <mat-form-field appearance="outline" class="form-group">
+                <mat-label>{{ 'warehouse.form.minTemperature' | translate }}</mat-label>
+                <input matInput type="number" formControlName="minTemperature" placeholder="10" min="-50" max="50">
+                @if (minTemperatureFormControl.hasError('required')) {
+                  <mat-error>{{ 'warehouse.form.minTemperature-required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+
+              <!-- Capacity -->
+              <mat-form-field appearance="outline" class="form-group full-width">
+                <mat-label>{{ 'warehouse.form.capacity' | translate }} (m³)</mat-label>
+                <input matInput type="number" formControlName="capacity" placeholder="1000" min="1">
+                @if (capacityFormControl.hasError('required')) {
+                  <mat-error>{{ 'warehouse.form.capacity-required' | translate }}</mat-error>
+                }
+                @if (capacityFormControl.hasError('min')) {
+                  <mat-error>{{ 'warehouse.form.capacity-length' | translate }}</mat-error>
+                }
+              </mat-form-field>
+
+              <!-- Image Upload -->
+              <div class="form-group full-width image-section">
+                <label>{{ 'warehouse.form.image' | translate }}</label>
+                <div class="image-upload-container">
+                  <input type="file" accept="image/*" hidden #fileInput (change)="onImageSelected($event)">
+                  <button mat-raised-button type="button" (click)="fileInput.click()" class="upload-button">
+                    <mat-icon>upload</mat-icon>
+                    <span>{{ 'components.upload' | translate }}</span>
+                  </button>
+                  <span class="file-name">{{ selectedImageFile?.name || ('components.no-file' | translate) }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button mat-stroked-button type="button" class="cancel-button" (click)="onCancel()">
+                {{ 'components.cancel' | translate }}
+              </button>
+              <button mat-raised-button color="primary" type="submit" class="submit-button" [disabled]="warehouseForm.invalid" (click)="onSubmit()">
+                {{ isEditMode ? ('components.edit' | translate) : ('components.save' | translate) }}
+              </button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

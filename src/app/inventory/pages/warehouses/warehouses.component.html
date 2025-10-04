@@ -1,0 +1,26 @@
+<div class="warehouse-bg">
+
+  <app-side-navbar/>
+  <div class="warehouse-main">
+
+    <app-tool-bar [titleKey]="'warehouse.title'"></app-tool-bar>
+
+    <div class="warehouse-content">
+      <div *ngIf="warehouses.length === 0" class="empty-message">
+        <p>No warehouses have been created yet.</p>
+      </div>
+      <div *ngIf="warehouses.length > 0">
+        <app-warehouse-list [warehouses]="warehouses"></app-warehouse-list>
+      </div>
+
+      <button mat-fab extended
+              color="primary"
+              class="create-button"
+              (click)="navigateToCreate()"
+              aria-label="Create a new Warehouse">
+        <mat-icon>add</mat-icon>
+        New Warehouse
+      </button>
+    </div>
+  </div>
+</div>
