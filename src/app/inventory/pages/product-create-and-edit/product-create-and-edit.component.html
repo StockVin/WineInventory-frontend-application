@@ -1,0 +1,54 @@
+<div class="dashboard-bg">
+  <app-side-navbar/>
+
+  <div class="main-container-product-create-edit">
+
+    <h1> CREATE AND EDIT PRODUCT</h1>
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" required/>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Brand</mat-label>
+        <mat-select formControlName="brandName" required>
+          <mat-option *ngFor="let brand of brands" [value]="brand">{{ brand }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Liquor Type</mat-label>
+        <mat-select formControlName="liquorType" required>
+          <mat-option *ngFor="let type of liquorTypes" [value]="type">{{ type }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Price</mat-label>
+        <input matInput type="number" formControlName="unitPriceAmount" required/>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Minimum Stock</mat-label>
+        <input matInput type="number" formControlName="minimumStock" required/>
+      </mat-form-field>
+
+      <div class="upload-section">
+        <button mat-button (click)="fileInput.click()" type="button">Upload file</button>
+        <input #fileInput type="file" (change)="onFileSelected($event)" hidden/>
+        <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+      </div>
+
+      <button mat-raised-button color="red" type="submit">Save</button>
+    </form>
+  </div>
+</div>
+<app-notification
+  *ngIf="showNotification"
+  [title]="notificationTitle"
+  [content]="notificationContent"
+  [type]="notificationType"
+  [showCloseButton]="true"
+>
+</app-notification>

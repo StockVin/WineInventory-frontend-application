@@ -1,0 +1,85 @@
+.sidenav-container {
+  height: 100vh;
+  background-color: #f4ede3;
+}
+
+.sidenav {
+  background-color: #273238;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 70px;
+  min-height: 100vh;
+  padding-top: 16px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
+  border-radius: 0;
+}
+
+.sidenav.expanded {
+  width: 200px;
+}
+
+.sidebar-content {
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+mat-nav-list {
+  flex: 1;
+}
+
+
+mat-nav-list a {
+  display: flex;
+  align-items: center;
+  padding: 40px 1vw;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+mat-nav-list a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+mat-nav-list a mat-icon {
+  font-size: 24px;
+  margin-right: 24px;
+  transition: color 0.3s ease;
+}
+
+mat-nav-list a:hover mat-icon {
+  color: #880E4F;
+}
+
+mat-nav-list a .menu-text {
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  margin-left: 8px;
+}
+
+.sidenav.expanded mat-nav-list a .menu-text {
+  opacity: 1;
+  transition-delay: 0.1s;
+}
+
+.toggle-icon {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidenav.expanded .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.main-content {
+  min-height: 100vh;
+  background-color: #F7EDDC;
+  transition: margin-left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidenav.expanded ~ .mat-sidenav-content .main-content {
+  margin-left: 180px;
+}

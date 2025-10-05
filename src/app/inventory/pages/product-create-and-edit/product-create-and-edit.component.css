@@ -1,0 +1,27 @@
+.main-container-product-create-edit{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+mat-form-field{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  color: white;
+
+}
+
+:host {
+  display: block;
+  background-color: #f4ede3;
+  font-family: 'Arial', sans-serif;
+}
+
+.dashboard-bg {
+  background: #F7EDDC;
+  display: flex;
+  min-height: 100vh;
+}

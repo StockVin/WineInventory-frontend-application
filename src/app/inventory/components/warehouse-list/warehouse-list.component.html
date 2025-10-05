@@ -1,0 +1,7 @@
+<div class="warehouse-grid">
+  @for (warehouse of warehouses; track warehouse.warehouseId) {
+    <div class="warehouse-item">
+      <app-warehouse-item [warehouses]="warehouse"></app-warehouse-item>
+    </div>
+  }
+</div>
