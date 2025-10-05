@@ -1,0 +1,56 @@
+<div *ngIf="product$ | async as product" class="product-detail-container">
+
+    <div class="header">
+        <button (click)="closeModal()" class="close-btn" mat-icon-button>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <div class="content">
+        <div class="details-left">
+
+            <h3 class="product-name">{{ product.name }}</h3>
+
+            <p class="data-row">
+                <span class="label">Tipo de licor:</span>
+                <span class="value">{{ product.type || 'N/A' }}</span>
+            </p>
+
+            <p class="data-row">
+                <span class="label">Precio:</span>
+                <span class="value price-tag">S/. {{ product.price | number:'1.2-2' }}</span>
+            </p>
+
+            <p class="data-row">
+                <span class="label">Fecha de caducidad:</span>
+                <span class="value">{{ product.expirationDate ? (product.expirationDate | date: 'dd-MM-yyyy') : 'Sin
+                    caducidad' }}</span>
+            </p>
+
+            <p class="data-row status-stock">
+                <span class="label">Stock Actual:</span>
+                <span class="value actual-stock">{{ product.currentStock || 0 }}</span>
+            </p>
+
+            <p class="data-row status-stock">
+                <span class="label">Stock Mínimo:</span>
+                <span class="value min-stock">{{ product.minStockLevel || 0 }}</span>
+            </p>
+
+            <p class="data-row location-row">
+                <span class="label">Asignado a:</span>
+                <span class="value location-value">{{ product.location || 'Almacén general' }}</span>
+            </p>
+
+            <div class="guide-link-section">
+                <p>Este producto no cuenta con una guía registrada.</p>
+                <a href="/guides" class="guide-link">Ir a la sección guías</a>
+            </div>
+
+        </div>
+
+        <div class="image-right">
+            <img [src]="product.imageUrl || imagePlaceholderUrl" alt="{{ product.name }}" class="product-image">
+        </div>
+    </div>
+</div>
