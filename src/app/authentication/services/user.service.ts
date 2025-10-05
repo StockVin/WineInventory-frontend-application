@@ -3,6 +3,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
 import {Observable, of, delay, switchMap, map, throwError, catchError} from 'rxjs';
 
+
 import { Profile } from '../../profile/models/profile.entity';
 import { Account } from '../../plans-subcripstions/models/account.entity';
 
@@ -141,5 +142,32 @@ export class UserService {
     return this.http
       .get<Account>(`${this.baseUrl}${this.accountsEndpoint}/${accountId}`)
       .pipe(map(a => a ?? null));
+  }
+  private readonly userEndpointPath = environment.userEndpointPath;
+  private currentUser: any = null;
+
+  constructor(private http: HttpClient) {
+    this.loadCurrentUser();
+  }
+
+  private loadCurrentUser() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.http.get(`${this.backendApi}/${this.userEndpointPath}/current-user`, {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        })
+      })
+        .subscribe((user: any) => { 
+          this.currentUser = user;
+        });
+    }
+    else {
+      this.currentUser = null;
+    }
+  }
+
+  getCurrentUser(): any {
+    return this.currentUser;
   }
 }
