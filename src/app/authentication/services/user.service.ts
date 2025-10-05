@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
-import {Observable, of, delay, switchMap, map, throwError, catchError} from 'rxjs';
-
+import { Observable, of, delay, switchMap, map, throwError, catchError } from 'rxjs';
 
 import { Profile } from '../../profile/models/profile.entity';
 import { Account } from '../../plans-subcripstions/models/account.entity';
@@ -17,7 +16,9 @@ export class UserService {
 
   private currentUser: any = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loadCurrentUser();
+  }
 
   login(username: string, password: string): Observable<boolean> {
     const url = `${this.baseUrl}${this.usersEndpoint}?username=${username}&password=${password}`;
@@ -50,7 +51,7 @@ export class UserService {
                     };
 
                     localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-                    localStorage.setItem('token', token); // Se guarda el token ya existente
+                    localStorage.setItem('token', token);
                     return true;
                   })
                 );
@@ -98,15 +99,24 @@ export class UserService {
     this.currentUser = null;
   }
 
-  private initFromStorage(): void {
-    if (!this.currentUser) {
-      const saved = localStorage.getItem('currentUser');
-      this.currentUser = saved ? JSON.parse(saved) : null;
+  private loadCurrentUser() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.http.get(`${this.backendApi}/${this.usersEndpoint}/current-user`, {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        })
+      })
+        .subscribe((user: any) => {
+          this.currentUser = user;
+        });
+    }
+    else {
+      this.currentUser = null;
     }
   }
 
   getCurrentUser() {
-    this.initFromStorage();
     return this.currentUser;
   }
 
@@ -142,32 +152,5 @@ export class UserService {
     return this.http
       .get<Account>(`${this.baseUrl}${this.accountsEndpoint}/${accountId}`)
       .pipe(map(a => a ?? null));
-  }
-  private readonly userEndpointPath = environment.userEndpointPath;
-  private currentUser: any = null;
-
-  constructor(private http: HttpClient) {
-    this.loadCurrentUser();
-  }
-
-  private loadCurrentUser() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.http.get(`${this.backendApi}/${this.userEndpointPath}/current-user`, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${token}`
-        })
-      })
-        .subscribe((user: any) => { 
-          this.currentUser = user;
-        });
-    }
-    else {
-      this.currentUser = null;
-    }
-  }
-
-  getCurrentUser(): any {
-    return this.currentUser;
   }
 }

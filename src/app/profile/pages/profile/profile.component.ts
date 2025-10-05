@@ -1,6 +1,6 @@
 
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { finalize, filter } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -8,23 +8,18 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PlanBenefitsComponent } from '../../components/plan-benefits/plan-benefits.component';
 import { PlanDetailsComponent } from '../../components/plan-details/plan-details.component';
 import { ProfileEditComponent, ProfileFormValue } from '../../components/profile-edit/profile-edit.component';
-import { ProfileService } from '../../services/profile.service';
+import { ProfileService, UserProfile } from '../../services/profile.service';
 import { AccountStatus, Profile, ProfileUpdateInput, SubscriptionPlan } from '../../models/profile.entity';
+import { UserService } from '../../../authentication/services/user.service';
 
-import {CommonModule} from '@angular/common';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {ProfileEditComponent} from '../../components/profile-edit/profile-edit.component';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatListModule} from '@angular/material/list';
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {PlanDetailsComponent} from '../../components/plan-details/plan-details.component';
-import {PlanBenefitsComponent} from '../../components/plan-benefits/plan-benefits.component';
-import {ProfileService, UserProfile} from '../../services/profile.service';
-import {UserService} from '../../../authentication/services/user.service';
-import {ToolBarComponent} from '../../../public/services/components/tool-bar/tool-bar.component';
-import {SideNavbarComponent} from '../../../public/components/side-navbar/side-navbar.component';
+
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { SideNavbarComponent } from "../../../shared/presentation/components/side-navbar/side-navbar.component";
+import { LanguageSwitcher } from "../../../shared/presentation/components/language-switcher/language-switcher.component";
 
 
 @Component({
@@ -43,13 +38,13 @@ import {SideNavbarComponent} from '../../../public/components/side-navbar/side-n
     PlanDetailsComponent,
     PlanBenefitsComponent,
     SideNavbarComponent,
-    ToolBarComponent
+    LanguageSwitcher
   ]
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
   private readonly profileService = inject(ProfileService);
   private readonly router = inject(Router);
-  private readonly route = inject(ActivatedRoute);
+  private readonly userService = inject(UserService);
 
   readonly profile = signal<Profile | null>(null);
   readonly plans = signal<SubscriptionPlan[]>([]);
@@ -59,10 +54,25 @@ export class ProfileComponent {
   readonly loadError = signal<string | null>(null);
   readonly updateError = signal<string | null>(null);
   readonly isSettingsView = signal(false);
+  readonly isProfileView = computed(() => !this.isSettingsView() && !this.isAccountView() && !this.isBenefitView());
+  readonly isAccountView = computed(() => this.currentRoute().includes('/profile/account'));
+  readonly isBenefitView = computed(() => this.currentRoute().includes('/profile/benefit'));
+
+  private currentRoute = signal('');
+
   readonly overviewAvatarError = signal(false);
 
   readonly accountStatus = computed<AccountStatus | null>(() => this.profile()?.accountStatus ?? null);
   readonly selectedPlanId = computed<string | null>(() => this.profile()?.selectedPlanId ?? null);
+
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
+  userData: UserProfile = {
+    profileId: 0,
+    name: '',
+    email: '',
+    role: ''
+  };
 
   constructor() {
     this.profileService
@@ -92,6 +102,29 @@ export class ProfileComponent {
 
     this.evaluateView(this.router.url);
     this.fetchInitialData();
+  }
+
+  ngOnInit(): void {
+    const currentUser = this.userService.getCurrentUser();
+
+    if (!currentUser || !currentUser.profileId) {
+      console.error('No profileId found in currentUser');
+      return;
+    }
+
+    const profileId = currentUser.profileId;
+
+    console.log('Fetching profile for ID:', profileId);
+
+    this.profileService.getProfileById(profileId).subscribe({
+      next: (profile) => {
+        console.log('Profile fetched:', profile);
+        this.userData = profile;
+      },
+      error: (err) => {
+        console.error('Error fetching profile:', err);
+      }
+    });
   }
 
   fetchInitialData(): void {
@@ -169,16 +202,24 @@ export class ProfileComponent {
   }
 
   private evaluateView(url: string): void {
+    this.currentRoute.set(url);
     this.isSettingsView.set(url.includes('/profile/settings'));
   }
 
-  goToSettings(): void {
-    this.router.navigate(['/dashboard/profile/settings']);
+  goToProfile(): void {
+    this.router.navigate(['/profile']);
   }
 
-  goToProfile(): void {
-    // 🚀 Ir siempre al resumen
-    this.router.navigate(['/dashboard/profile']);
+  goToAccount(): void {
+    this.router.navigate(['/profile/account']);
+  }
+
+  goToBenefits(): void {
+    this.router.navigate(['/profile/benefit']);
+  }
+
+  goToSettings(): void {
+    this.router.navigate(['/profile/edit']);
   }
 
   computeInitials(fullName: string): string {
@@ -198,49 +239,6 @@ export class ProfileComponent {
 
   handleOverviewAvatarError(): void {
     this.overviewAvatarError.set(true);
-  }
-}
-
-export class ProfileComponent implements OnInit {
-  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
-
-  userData: UserProfile = {
-    profileId: 0,
-    name: '',
-    email: '',
-    role: ''
-  };
-
-
-  constructor(
-    private profileService: ProfileService,
-    private userService: UserService
-    ) {}
-
-
-
-  ngOnInit(): void {
-    const currentUser = this.userService.getCurrentUser();
-
-    if (!currentUser || !currentUser.profileId) {
-      console.error('No profileId found in currentUser');
-      return;
-    }
-
-    const profileId = currentUser.profileId;
-
-    console.log('Fetching profile for ID:', profileId);
-
-    this.profileService.getProfileById(profileId).subscribe({
-      next: (profile) => {
-        console.log('Profile fetched:', profile);
-        this.userData = profile;
-      },
-      error: (err) => {
-        console.error('Error fetching profile:', err);
-      }
-    });
-
   }
 }
 

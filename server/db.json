@@ -149,7 +149,9 @@
   "purchase-orders": [
     {
       "id": 1,
-      "date": { "_date": "2025-10-01T10:00:00.000Z" },
+      "date": {
+        "_date": "2025-10-01T10:00:00.000Z"
+      },
       "status": "Delayed",
       "buyer": {
         "id": "1",
@@ -414,7 +416,7 @@
         "statusLabel": "Activo"
       },
       "selectedPlanId": "starter",
-      "lastUpdated": "2025-10-04T23:24:03.936Z"
+      "lastUpdated": "2025-10-05T05:31:42.702Z"
     }
   ],
   "subscriptionPlans": [
@@ -460,4 +462,3 @@
     "Soporte prioritario 24/7 con especialistas en enología"
   ]
 }
-

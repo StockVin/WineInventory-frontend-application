@@ -34,7 +34,7 @@ export class SideNavbarComponent implements OnInit {
     { icon: 'shopping_cart', label: 'side-navbar.options.order', route: ['/products'] },
     { icon: 'assessment', label: 'side-navbar.options.report', route: ['/reports'] },
     { icon: 'notifications', label: 'side-navbar.options.alert', route: ['/alerts'] },
-    { icon: 'settings', label: 'side-navbar.options.configuration', route: ['/settings'] }
+    { icon: 'settings', label: 'side-navbar.options.configuration', route: ['/profile'] }
   ];
 
   unreadAlerts = 3;

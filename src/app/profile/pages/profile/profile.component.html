@@ -1,49 +1,36 @@
 <div class="profile-layout">
+  <app-side-navbar></app-side-navbar>
   <section class="workspace" [class.workspace--settings]="isSettingsView()">
     <header class="workspace__header">
       <div class="header__title">
-        <div class="header__icon material-symbols-outlined">badge</div>
+        <div class="header__icon material-symbols-outlined">
+          {{ isProfileView() ? 'person' : isAccountView() ? 'account_circle' : 'workspace_premium' }}
+        </div>
         <div>
-          <h1>{{ isSettingsView() ? 'Ajustes' : 'Perfil' }}</h1>
-          <p *ngIf="!isSettingsView()">Gestiona tu información personal, credenciales y plan de suscripción.</p>
-          <p *ngIf="isSettingsView()">Actualiza tus datos personales y preferencias de acceso.</p>
+          <h1>
+            {{ isProfileView() ? 'Perfil' : isAccountView() ? 'Cuenta' : 'Beneficios' }}
+          </h1>
+          <p *ngIf="isProfileView()">Gestiona tu información personal y datos de contacto.</p>
+          <p *ngIf="isAccountView()">Administra tu suscripción y configuración de cuenta.</p>
+          <p *ngIf="isBenefitView()">Conoce todos los beneficios de tu plan actual.</p>
         </div>
       </div>
 
-      <div class="header__status-chip" *ngIf="accountStatus() as status">
-        <span class="material-symbols-outlined">verified</span>
-        {{ status.statusLabel }}
+      <div class="header__right">
+        <div class="header__status-chip" *ngIf="accountStatus() as status">
+          <span class="material-symbols-outlined">verified</span>
+          {{ status.statusLabel }}
+        </div>
+        <app-language-switcher></app-language-switcher>
       </div>
     </header>
 
     <p class="workspace__error" *ngIf="loadError() as errorMessage">{{ errorMessage }}</p>
-
     <ng-container *ngIf="!isLoading(); else loading">
       <ng-container *ngIf="profile() as currentProfile; else emptyProfile">
-        <ng-container *ngIf="isSettingsView(); else summaryView">
-          <div class="settings-view">
-            <div class="settings-view__header">
-              <button type="button" class="ghost-button settings-view__back" (click)="goToProfile()">
-                <span class="material-symbols-outlined">arrow_back</span>
-                Volver al perfil
-              </button>
-              <div>
-                <h2>Editar perfil</h2>
-                <p>Actualiza tus datos personales y preferencias de acceso.</p>
-              </div>
-            </div>
-            <div class="settings-view__panel">
-              <app-profile-edit
-                [profile]="currentProfile"
-                [saving]="isSaving()"
-                [errorMessage]="updateError()"
-                (saveProfile)="handleProfileSave($event)"
-                (cancelEdit)="handleCancelEdit()"
-              ></app-profile-edit>
-            </div>
-          </div>
-        </ng-container>
-        <ng-template #summaryView>
+
+        <!-- Profile View -->
+        <ng-container *ngIf="isProfileView()">
           <div class="summary-grid">
             <article class="card profile-overview">
               <div class="profile-overview__header">
@@ -92,50 +79,18 @@
               </div>
             </article>
 
-            <article class="card account-card" *ngIf="accountStatus() as status">
-              <header class="card__header">
-                <h2>Tipo de cuenta</h2>
-                <span class="status-chip status-chip--active">
-                  <span class="material-symbols-outlined">workspace_premium</span>
-                  {{ status.statusLabel }}
-                </span>
-              </header>
-              <div class="account-card__body">
-                <p class="account-card__plan">{{ status.planName }}</p>
-                <p class="account-card__subtitle">
-                  Tu plan se renovará automáticamente el {{ status.renewalDate | date: 'dd MMMM yyyy' }}.
-                </p>
-                <div class="account-card__actions">
-                  <button
-                    type="button"
-                    class="primary-button"
-                    (click)="selectedPlanId() && handlePlanSelected(selectedPlanId()!)"
-                    [disabled]="isSaving() || !selectedPlanId()"
-                  >
-                    Mantener plan actual
-                  </button>
-                  <button type="button" class="ghost-button" [disabled]="isSaving()">
-                    Contactar soporte
-                  </button>
-                </div>
-                <p class="account-card__support">
-                  ¿Necesitas ayuda? Escríbenos a
-                  <a [href]="'mailto:' + status.supportContact">{{ status.supportContact }}</a>.
-                </p>
-              </div>
-            </article>
-
-            <app-plan-details
-              class="summary-grid__plans"
-              [plans]="plans()"
-              [selectedPlanId]="selectedPlanId()"
-              [disabled]="isSaving()"
-              (planSelected)="handlePlanSelected($event)"
-            ></app-plan-details>
-
-            <app-plan-benefits class="summary-grid__benefits" [benefits]="premiumBenefits()"></app-plan-benefits>
+            <!-- Plan Details Section -->
+            <div class="plan-details-section">
+              <app-plan-details
+                class="plan-details-container"
+                [plans]="plans()"
+                [selectedPlanId]="selectedPlanId()"
+                [disabled]="isSaving()"
+                (planSelected)="handlePlanSelected($event)"
+              ></app-plan-details>
+            </div>
           </div>
-        </ng-template>
+        </ng-container>
       </ng-container>
     </ng-container>
   </section>
@@ -154,48 +109,3 @@
     No encontramos información del perfil para mostrar.
   </div>
 </ng-template>
-<div class="profile-bg">
-
-  <app-side-navbar/>
-
-  <div class="profile-main">
-
-    <app-tool-bar [titleKey]="'profile.title'"></app-tool-bar>
-
-    <div class="profile-container">
-      <div class="profile-left">
-        <div class="user-card">
-          <div class="avatar-container">
-            <div class="avatar">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z" />
-              </svg>
-            </div>
-          </div>
-          <div class="user-info">
-            <h2 class="user-name">{{ userData.name }}</h2>
-            <p class="user-email">{{ userData.email }}</p>
-          </div>
-        </div>
-        <app-profile-edit></app-profile-edit>
-      </div>
-    </div>
-
-    <section class="account-type">
-      <h2 class="section-title">Account Type</h2>
-      <div class="account-box">
-        <div class="account-info">
-          <p><strong>Role:</strong> {{ userData.role }}</p>
-          <p><strong>Current Plan:</strong> Free</p>
-        </div>
-        <a class="change-plan-link" href="#">Do you want to change your plan?</a>
-      </div>
-    </section>
-    <app-plan-details></app-plan-details>
-    <app-plan-benefits></app-plan-benefits>
-
-
-  </div>
-
-</div>

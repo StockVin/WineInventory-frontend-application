@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { SubscriptionPlan } from '../../models/profile.entity';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-plan-details',
@@ -20,6 +20,8 @@ export class PlanDetailsComponent {
   @Input() selectedPlanId: string | null = null;
   @Input() disabled = false;
   @Output() planSelected = new EventEmitter<string>();
+
+  constructor(private router: Router) {}
 
   onSelectPlan(planId: string): void {
     if (this.disabled || this.selectedPlanId === planId) {

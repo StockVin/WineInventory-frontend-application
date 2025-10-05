@@ -1,11 +1,21 @@
 
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, forkJoin, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, forkJoin, throwError, catchError, map } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { AccountStatus, Profile, ProfileUpdateInput, SubscriptionPlan } from '../models/profile.entity';
+
+export interface UserProfile {
+  profileId: number;
+  name: string;
+  email: string;
+  role: string;
+  businessName?: string;
+  businessAddress?: string;
+  phone?: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class ProfileService {
@@ -110,34 +120,9 @@ export class ProfileService {
       statusLabel: profile.accountStatus.statusLabel || 'Activo'
     };
   }
-}
-
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, catchError, map, throwError } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { Profile } from '../models/profile.entity';
-
-export interface UserProfile {
-  profileId: number;
-  name: string;
-  email: string;
-  role: string;
-  businessName?: string;
-  businessAddress?: string;
-  phone?: string;
-}
-
-@Injectable({
-  providedIn: 'root',
-})
-export class ProfileService {
-  private apiUrl = environment.apiUrl;
-
-  constructor(private http: HttpClient) {}
 
   getProfileById(profileId: number): Observable<UserProfile> {
-    const url = `${this.apiUrl}/profiles?profileId=${profileId}`;
+    const url = `${environment.apiUrl}/profiles?profileId=${profileId}`;
     console.log('URL llamada API getProfileById:', url);
     return this.http.get<UserProfile[]>(url).pipe(
       map(profiles => {
@@ -154,7 +139,7 @@ export class ProfileService {
   }
 
   editProfile(profile: Profile): Observable<Profile> {
-    return this.http.put<Profile>(`${this.apiUrl}/profiles/${profile.profileId}`, profile);
+    return this.http.put<Profile>(`${environment.apiUrl}/profiles/${profile.id}`, profile);
   }
 }
 
