@@ -1,1 +1,52 @@
-<p>plan-details works!</p>
+<div class="plan-details-container">
+  <h2 class="plan-details__title">Selecciona tu Plan</h2>
+  <p class="plan-details__subtitle">Elige el plan que mejor se adapte al crecimiento de tu bodega</p>
+
+  <ng-container *ngIf="plans?.length; else emptyState">
+    <div class="plan-details__grid">
+      <div
+        *ngFor="let plan of plans"
+        class="plan-card"
+        [class.plan-card--current]="plan.id === selectedPlanId"
+      >
+        <div class="plan-card__header">
+          <h3 class="plan-card__name">{{ plan.name }}</h3>
+          <div class="plan-card__price">
+            {{ plan.price }}<small>/mes</small>
+          </div>
+          <p class="plan-card__description">{{ plan.shortDescription }}</p>
+        </div>
+
+        <ul class="plan-card__features">
+          <li *ngFor="let benefit of plan.benefits" class="plan-card__feature">
+            <span class="material-symbols-outlined plan-card__feature-icon">check_circle</span>
+            {{ benefit }}
+          </li>
+        </ul>
+
+        <div class="plan-card__actions">
+          <button
+            type="button"
+            class="plan-card__button"
+            [class.plan-card__button--current]="plan.id === selectedPlanId"
+            (click)="onSelectPlan(plan.id)"
+            [disabled]="disabled || plan.id === selectedPlanId"
+          >
+            {{ plan.id === selectedPlanId ? 'Plan Actual' : 'Seleccionar Plan' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #emptyState>
+    <div class="plan-details__empty">
+      <span class="material-symbols-outlined plan-details__empty-icon">info</span>
+      <h3 class="plan-details__empty-title">Planes No Disponibles</h3>
+      <p class="plan-details__empty-message">
+        En este momento no hay planes disponibles para mostrar. Por favor, inténtalo más tarde.
+      </p>
+    </div>
+  </ng-template>
+</div>
+

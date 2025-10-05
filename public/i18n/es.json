@@ -46,16 +46,162 @@
     "button": "Volver a la página principal"
   },
   "side-navbar": {
-  "title": "Menu principal",
-  "options": {
-    "dashboard": "Inicio",
-    "inventory": "Inventario",
-    "wine": "Ordenes",
-    "order": "Lista de pedidos",
-    "report": "Reportes",
-    "alert": "Alertas",
-    "configuration": "Configuración"
+    "title": "Menu principal",
+    "options": {
+      "dashboard": "Inicio",
+      "wine": "Ordenes",
+      "order": "Lista de pedidos",
+      "report": "Reportes",
+      "alert": "Alertas",
+      "configuration": "Configuración"
+    },
+    "logout": "Cerrar Sesión"
   },
-  "logout": "Cerrar Sesión"
-}
+  "report": {
+    "title": "Reportes",
+    "search": "Buscar",
+    "searchPlaceholder": "Buscar reporte...",
+    "new": "Nuevo Reporte",
+    "export": "Exportar",
+    "careguide": "Guia de cuidado",
+    "create": "Crear Reporte",
+    "reportCreate": {
+      "data": "Datos del Reporte",
+      "information": "Información del Producto",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "number": "Número de Reporte",
+      "date": "Fecha",
+      "product": "Producto",
+      "price": "Precio",
+      "type": "Tipo",
+      "amount": "Cantidad",
+      "lost": "Perdida"
+    },
+    "tableHeaders": {
+      "id": "ID",
+      "product": "Producto",
+      "type": "Tipo",
+      "price": "Precio",
+      "amount": "Cantidad",
+      "date": "Fecha",
+      "lost": "Perdida",
+      "actions": "Acciones"
+    },
+    "actions": {
+      "delete": "Eliminar"
+    },
+    "pagination": {
+      "showing": "Mostrando",
+      "of": "de",
+      "items": "elementos"
+    },
+    "noResults": "No se encontraron resultados"
+  },
+  "careguide": {
+    "title": "Guia de cuidado",
+    "buttons": {
+      "return": "Reportes",
+      "create": "Crear nueva guia"
+    },
+    "tableHeaders": {
+      "name": "Nombre",
+      "type": "Tipo",
+      "description": "Descripción"
+    },
+    "create": {
+      "title": "Crear Guia de Cuidado",
+      "name": "Nombre",
+      "type": "Tipo",
+      "description": "Descripción",
+      "image": "Imagen",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "uploadImage": "Subir Imagen"
+    }
+  },
+  "orders":{
+    "title": "Ordenes",
+    "text": "Administra el ciclo completo de ventas y el estado de cada pedido",
+    "button": "Agregar nuevo pedido",
+    "total": "Pedidos totales",
+    "income": "Ingresos acumulados",
+    "pending": "Pendiente",
+    "processing": "En preparación",
+    "completed": "Completado",
+    "cancelled": "Cancelado",
+    "recent": "Pedidos recientes",
+    "status": {
+      "all": "Todos",
+      "pending": "Pendiente",
+      "processing": "En preparación",
+      "completed": "Completado",
+      "cancelled": "Cancelado"
+    },
+    "table": {
+      "id": "Codigo",
+      "client": "Cliente",
+      "date": "Fecha",
+      "status": "Estado",
+      "total": "Total",
+      "details": "Ver Detalles"
+    },
+    "emptyState": {
+      "title": "No hay pedidos registrados",
+      "description": "Comienza creando tu primer pedido para visualizarlo en esta lista.",
+      "button": "Crear pedido"
+    }
+  },
+  "order-create":{
+    "title":"Nuevo Pedido",
+    "texto":"Completa la información del cliente y selecciona los vinos que formarán parte del pedido.",
+    "button":"Volver a la lista de pedidos",
+    "data":"Datos del cliente",
+    "name":"Nombre del cliente",
+    "email":"Correo electrónico",
+    "notes":"Notas adicionales",
+    "information":"Información del pedido",
+    "date":"Fecha de creación",
+    "expectedDelivery":"Fecha de entrega",
+    "status":"Estado",
+    "details":"Detalle del pedido",
+    "product":"Producto",
+    "quantity":"Cantidad",
+    "resume":"Resumen",
+    "subtotal":"Subtotal",
+    "tax":"Impuesto",
+    "total":"Total",
+    "save":"Guardar pedido",
+    "add":"Agregar producto"
+  },
+  "order-detail":{
+    "title":"Detalle del pedido",
+    "text":"Detalles del pedido",
+    "button":"Volver a la lista de pedidos",
+    "delete":"Eliminar pedido",
+    "deleting":"Eliminando pedido...",
+    "customer":"Datos del cliente",
+    "delivery":"Información de entrega",
+    "expected":"Fecha de entrega",
+    "status":"Estado",
+    "summary":"Resumen",
+    "subtotal":"Subtotal",
+    "tax":"Impuesto",
+    "total":"Total",
+    "items":"Detalle del pedido",
+    "table":{
+      "reference":"Referencia",
+      "varietal":"Varietal",
+      "vintage":"Viñedo",
+      "quantity":"Cantidad",
+      "unitPrice":"Precio unitario",
+      "total":"Total"
+    }
+  },
+  "alert":{ 
+    "title": "Reabastecimiento urgente", 
+    "text": "No hay alertas de reabastecimiento urgente disponibles", 
+    "expire-title": "Proximamente vencimiento", 
+    "expire-text": "No hay alertas de proximamente vencimiento disponibles" 
+  }
 }

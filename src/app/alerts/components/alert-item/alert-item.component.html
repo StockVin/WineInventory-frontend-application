@@ -1,1 +1,22 @@
-<p>alert-item works!</p>
+<div class="alert-item backend-alert">
+  <div class="alert-header">
+    <span class="severity-icon" [style.color]="getSeverityColor(alert.severity)">
+      {{ getSeverityIcon(alert.severity) }}
+    </span>
+    <span class="alert-title">{{ alert.title }}</span>
+  </div>
+  <p class="alert-message">{{ alert.message }}</p>
+  <span class="stock-info" *ngIf="alert.type === 'PRODUCTLOWSTOCK'">
+    Minimum stock: <strong>{{ getMinimumStock(alert.productId) ?? '?' }}</strong>
+  </span>
+  <p class="alert-severity" [style.color]="getSeverityColor(alert.severity)">
+    Severity: {{ alert.severity }}
+  </p>
+  <mat-divider></mat-divider>
+</div>
+
+<div class="alert-item" *ngIf="expiration">
+  <p class="product-name">{{ expiration.name }}</p>
+  <p class="expiration">Expires in {{ expiration.days }} days!</p>
+  <mat-divider></mat-divider>
+</div>

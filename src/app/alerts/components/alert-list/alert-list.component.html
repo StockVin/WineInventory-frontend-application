@@ -1,1 +1,50 @@
-<p>alert-list works!</p>
+<div class="alerts-container">
+  <!-- Backend Error Message -->
+  <div *ngIf="backendErrorMsg" class="error-msg">{{ backendErrorMsg }}</div>
+
+  <div class="alerts-row">
+    <!-- Urgent Restock Alerts (PRODUCTLOWSTOCK) -->
+    <mat-card class="alert-card">
+      <mat-card-title>{{ 'alert.title' | translate }}</mat-card-title>
+      <mat-divider></mat-divider>
+      <div *ngIf="backendLoading" class="loading">Loading alerts...</div>
+      <ng-container *ngIf="!backendLoading && stockAlerts.length > 0; else noStockAlerts">
+        <app-alert-item
+          *ngFor="let alert of displayedStockAlerts"
+          [alert]="alert"
+          [getMinimumStock]="getMinimumStock"
+          [getSeverityColor]="getSeverityColor"
+          [getSeverityIcon]="getSeverityIcon"
+        ></app-alert-item>
+        <a class="link" *ngIf="stockAlerts.length > 3" (click)="toggleRestocks()">
+          {{ showAllRestocks ? 'Show less' : 'See all alerts' }}
+        </a>
+      </ng-container>
+      <ng-template #noStockAlerts>
+        <p>{{ 'alert.text' | translate }}</p>
+      </ng-template>
+    </mat-card>
+
+    <!-- Expiration Alerts (EXPIRATION_WARNING) -->
+    <mat-card class="alert-card">
+      <mat-card-title>{{ 'alert.expire-title' | translate }}</mat-card-title>
+      <mat-divider></mat-divider>
+      <div *ngIf="backendLoading" class="loading">Loading alerts...</div>
+      <ng-container *ngIf="!backendLoading && expirationAlerts.length > 0; else noExpirationAlerts">
+        <app-alert-item
+          *ngFor="let alert of displayedExpirationAlerts"
+          [alert]="alert"
+          [getMinimumStock]="getMinimumStock"
+          [getSeverityColor]="getSeverityColor"
+          [getSeverityIcon]="getSeverityIcon"
+        ></app-alert-item>
+        <a class="link" *ngIf="expirationAlerts.length > 3" (click)="toggleExpirations()">
+          {{ showAllExpirations ? 'Show less' : 'See all alerts' }}
+        </a>
+      </ng-container>
+      <ng-template #noExpirationAlerts>
+        <p>{{ 'alert.expire-text' | translate }}</p>
+      </ng-template>
+    </mat-card>
+  </div>
+</div>

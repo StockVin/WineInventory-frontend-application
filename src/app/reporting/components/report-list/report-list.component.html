@@ -1,1 +1,24 @@
-<p>report-list works!</p>
+<div class="report-list">
+  <div class="report-header">
+    <div class="header-date">{{ 'report.tableHeaders.date' | translate }}</div>
+    <div class="header-products">{{ 'report.tableHeaders.product' | translate }}</div>
+    <div class="header-type">{{ 'report.tableHeaders.type' | translate }}</div>
+    <div class="header-price">{{ 'report.tableHeaders.price' | translate }}</div>
+    <div class="header-amount">{{ 'report.tableHeaders.amount' | translate }}</div>
+    <div class="header-lost">{{ 'report.tableHeaders.lost' | translate }}</div>
+    <div class="header-actions">{{ 'report.tableHeaders.actions' | translate }}</div>
+  </div>
+  
+  <div class="report-items">
+    <app-report-item 
+      *ngFor="let report of reports" 
+      [report]="report"
+      (delete)="onDelete($event)">
+    </app-report-item>
+  </div>
+
+  <div *ngIf="reports.length === 0" class="no-reports">
+    <mat-icon>search_off</mat-icon>
+    <p>{{ 'report.noResults' | translate }}</p>
+  </div>
+</div>

@@ -1,1 +1,122 @@
-<p>profile-edit works!</p>
+<div class="profile-edit-layout">
+  <app-side-navbar></app-side-navbar>
+  <div class="profile-edit-main">
+    <app-language-switcher></app-language-switcher>
+    <div class="profile-edit-container">
+      <!-- Profile Header -->
+      <div class="profile-edit__header">
+        <div class="profile-edit__avatar">
+          <ng-container *ngIf="shouldShowAvatarImage; else initialsAvatar">
+            <img
+              class="avatar-image"
+              [src]="profile?.avatarUrl"
+              [alt]="'Foto de ' + profile?.fullName"
+              (error)="handleAvatarError()"
+            />
+          </ng-container>
+          <ng-template #initialsAvatar>
+            <div class="avatar-initials">{{ avatarInitials }}</div>
+          </ng-template>
+        </div>
+        <div class="profile-edit__info">
+          <h2>{{ profile?.fullName }}</h2>
+          <p class="profile-role">{{ profile?.role }}</p>
+        </div>
+      </div>
+
+      <!-- Edit Form -->
+      <form class="profile-edit__form" [formGroup]="profileForm" (ngSubmit)="submit()">
+        <div class="form-grid">
+          <!-- Personal Information -->
+          <div class="form-section">
+            <h3>Información Personal</h3>
+
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('fullName')">
+              <label for="fullName">Nombre completo</label>
+              <input id="fullName" type="text" formControlName="fullName" placeholder="Ingresa tu nombre completo" />
+              <span class="field-error" *ngIf="isFieldInvalid('fullName')">
+                Debe contener al menos 3 caracteres.
+              </span>
+            </div>
+
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('email')">
+              <label for="email">Correo electrónico</label>
+              <input id="email" type="email" formControlName="email" placeholder="correo@empresa.com" />
+              <span class="field-error" *ngIf="isFieldInvalid('email')">
+                Ingresa un correo electrónico válido.
+              </span>
+            </div>
+
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('username')">
+              <label for="username">Nombre de usuario</label>
+              <input id="username" type="text" formControlName="username" placeholder="usuario" />
+              <span class="field-error" *ngIf="isFieldInvalid('username')">
+                Debe contener al menos 4 caracteres.
+              </span>
+            </div>
+          </div>
+
+          <!-- Contact Information -->
+          <div class="form-section">
+            <h3>Información de Contacto</h3>
+
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('phone')">
+              <label for="phone">Teléfono</label>
+              <input id="phone" type="tel" formControlName="phone" placeholder="Ingresa un número de contacto" />
+              <span class="field-error" *ngIf="isFieldInvalid('phone')">
+                Ingresa un teléfono válido.
+              </span>
+            </div>
+
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('location')">
+              <label for="location">Ubicación</label>
+              <input id="location" type="text" formControlName="location" placeholder="Ciudad, País" />
+              <span class="field-error" *ngIf="isFieldInvalid('location')">
+                Ingresa una ubicación válida.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Password Section -->
+        <div class="password-section">
+          <h3>Cambiar Contraseña</h3>
+          <div class="password-fields">
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('currentPassword')">
+              <label for="currentPassword">Contraseña actual</label>
+              <input id="currentPassword" type="password" formControlName="currentPassword" placeholder="••••••" />
+            </div>
+
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('newPassword')">
+              <label for="newPassword">Nueva contraseña</label>
+              <input id="newPassword" type="password" formControlName="newPassword" placeholder="••••••" />
+              <span class="field-error" *ngIf="isFieldInvalid('newPassword')">
+                La contraseña debe tener al menos 6 caracteres.
+              </span>
+            </div>
+
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('confirmPassword')">
+              <label for="confirmPassword">Confirmar contraseña</label>
+              <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="••••••" />
+              <span class="field-error" *ngIf="isFieldInvalid('confirmPassword')">
+                Las contraseñas deben coincidir.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button type="button" class="ghost-button" [disabled]="saving" (click)="return()" >
+            Cancelar
+          </button>
+          <button type="submit" class="primary-button" [disabled]="saving">
+            {{ saving ? 'Guardando…' : 'Guardar cambios' }}
+          </button>
+        </div>
+
+        <p class="form-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </form>
+    </div>
+  </div>
+</div>
