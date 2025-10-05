@@ -4,6 +4,7 @@ import {MatDivider} from '@angular/material/divider';
 import {MatCard, MatCardTitle} from '@angular/material/card';
 import {NgForOf, NgIf} from '@angular/common';
 import {AlertItemComponent} from '../alert-item/alert-item.component';
+import {TranslateModule} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-alert-list',
@@ -14,7 +15,8 @@ import {AlertItemComponent} from '../alert-item/alert-item.component';
     MatCard,
     NgForOf,
     NgIf,
-    AlertItemComponent
+    AlertItemComponent,
+    TranslateModule
   ],
   styleUrls: ['./alert-list.component.css']
 })

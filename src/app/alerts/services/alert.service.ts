@@ -54,8 +54,6 @@ export class AlertService {
     );
   }
 
-  // Legacy methods for backward compatibility
-  // These will be deprecated once the new backend integration is fully implemented
   private getProducts(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/products`).pipe(
       map(products => {

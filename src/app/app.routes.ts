@@ -11,6 +11,7 @@ const ReportsComponent = () => import('./reporting/pages/report-dashboard/report
 const ReportCreateComponent = () => import('./reporting/pages/report-create/report-create.component').then(m => m.ReportCreateComponent);
 const CareGuidesComponent = () => import('./reporting/pages/careguide-dashboard/careguide-dashboard.component').then(m => m.CareguideDashboardComponent);
 const CareGuidesCreateComponent = () => import('./reporting/pages/careguide-create/careguide-create.component').then(m => m.CareguideCreateComponent);
+const AlertsComponent = () => import('./alerts/pages/alerts/alerts.component').then(m => m.AlertsComponent);
 const baseTitle = 'WineInventory';
 
 export const routes: Routes = [
@@ -29,5 +30,8 @@ export const routes: Routes = [
     { path:'new',loadComponent: NewOrderComponent,},
     { path:':id/details',loadComponent: OrderDetailComponent,}
   ], data: { title: `${baseTitle} | Orders` } },
+  { path: 'alerts', children:[
+    { path:'',loadComponent: AlertsComponent,}
+  ], data: { title: `${baseTitle} | Alerts` } },
   { path: '**', loadComponent: PageNotFoundComponent, data: { title: `${baseTitle} | Page Not Found` } }
 ];

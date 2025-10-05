@@ -1,26 +1,21 @@
 <div class="alerts-bg">
 
-  <app-side-navbar/>
+  <app-side-navbar></app-side-navbar>
 
   <div class="alerts-main">
-
-    <app-tool-bar [titleKey]="'alerts.title'"></app-tool-bar>
+    <app-language-switcher></app-language-switcher>
 
     <div class="alerts-container mat-typography">
-      <div class="cards-wrapper">
-        <app-alert-list
-          [stockAlerts]="stockAlerts"
-          [expirationAlerts]="expirationAlerts"
-          [backendLoading]="backendLoading"
-          [backendErrorMsg]="backendErrorMsg"
-          [getSeverityColor]="getSeverityColor.bind(this)"
-          [getSeverityIcon]="getSeverityIcon.bind(this)"
-          [getMinimumStock]="getMinimumStock"
-        >
-        </app-alert-list>
-      </div>
+      <app-alert-list
+        [stockAlerts]="stockAlerts"
+        [expirationAlerts]="expirationAlerts"
+        [backendLoading]="backendLoading"
+        [backendErrorMsg]="backendErrorMsg"
+        [getSeverityColor]="getSeverityColor.bind(this)"
+        [getSeverityIcon]="getSeverityIcon.bind(this)"
+        [getMinimumStock]="getMinimumStock"
+      ></app-alert-list>
     </div>
-
   </div>
 
 </div>

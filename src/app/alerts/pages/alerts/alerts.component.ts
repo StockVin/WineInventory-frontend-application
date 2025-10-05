@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AlertService } from '../../services/alert.service';
 import { AlertEntity } from '../../models/alert.entity';
 import { AlertListComponent } from '../../components/alert-list/alert-list.component';
-import { ProductService } from '../../../inventory/services/product.service';
-import { Product } from '../../../inventory-management/model/product.entity';
 import { FormsModule } from '@angular/forms';
-import { ToolBarComponent } from '../../../public/services/components/tool-bar/tool-bar.component';
-import { SideNavbarComponent } from '../../../public/services//side-navbar.component';
+import { SideNavbarComponent } from '../../../shared/presentation/components/side-navbar/side-navbar.component';
+import { LanguageSwitcher } from '../../../shared/presentation/components/language-switcher/language-switcher.component';
 
 @Component({
   selector: 'app-alerts-and-notifications',
@@ -14,33 +12,23 @@ import { SideNavbarComponent } from '../../../public/services//side-navbar.compo
   imports: [
     AlertListComponent,
     FormsModule,
-    ToolBarComponent,
-    SideNavbarComponent
-  ],
+    SideNavbarComponent,
+    LanguageSwitcher
+],
   styleUrls: ['./alerts.component.css']
 })
 export class AlertsComponent implements OnInit {
-  stockAlerts: BackendAlert[] = [];
-  expirationAlerts: BackendAlert[] = [];
+  stockAlerts: AlertEntity[] = [];
+  expirationAlerts: AlertEntity[] = [];
   backendLoading = false;
   backendErrorMsg = '';
-  products: Product[] = [];
 
   constructor(
-    private alertService: AlertService,
-    private productService: ProductService
+    private alertService: AlertService
   ) {}
 
   ngOnInit(): void {
-    this.loadProducts();
     this.loadBackendAlerts();
-  }
-
-  loadProducts() {
-    this.productService.getProductsByAccountId().subscribe({
-      next: (products) => this.products = products,
-      error: () => this.products = []
-    });
   }
 
   loadBackendAlerts() {
@@ -68,8 +56,7 @@ export class AlertsComponent implements OnInit {
    * Returns the minimum stock for a given productId
    */
   getMinimumStock = (productId: string): number | null => {
-    const product = this.products.find(p => p.id.toString() === productId);
-    return product ? product.minimumStock : null;
+    return null;
   };
 
   getSeverityColor(severity: string): string {

@@ -4,7 +4,7 @@
 
 .product-name {
   font-weight: 500;
-  color: #4E4E4E;
+  color: #333;
 }
 
 .stock-actual {
@@ -14,11 +14,11 @@
 
 .stock-minimo {
   font-weight: 500;
-  color: #4E4E4E;
+  color: #333;
 }
 
 .expiration {
-  color: #FB8C00;
+  color: #E65100;
   font-weight: bold;
   display: inline-block;
   margin-top: 4px;
