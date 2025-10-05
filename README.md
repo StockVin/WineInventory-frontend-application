@@ -123,20 +123,20 @@ json-server --watch server/db.json --port 3000 --routes server/routes.json
 
 The API will be available at `http://localhost:3000/api/v1` with the following resources:
 
-- `http://localhost:3000/users` - User management
-- `http://localhost:3000/reporting` - Reporting system
-- `http://localhost:3000/careguides` - Care guides
-- `http://localhost:3000/product` - Product catalog
-- `http://localhost:3000/warehouses` - Warehouse management
-- `http://localhost:3000/zones` - Zone management
-- `http://localhost:3000/purchase-orders` - Purchase orders
-- `http://localhost:3000/settings` - Settings
-- `http://localhost:3000/accounts` - Accounts
-- `http://localhost:3000/catalog` - Catalog
-- `http://localhost:3000/orders` - Orders
-- `http://localhost:3000/subscriptionPlans` - Subscription plans
-- `http://localhost:3000/premiumBenefits` - Premium benefits
-- `http://localhost:3000/inventory` - Inventory
+- `http://localhost:3000/api/v1/users` - User management
+- `http://localhost:3000/api/v1/reporting` - Reporting system
+- `http://localhost:3000/api/v1/careguides` - Care guides
+- `http://localhost:3000/api/v1/product` - Product catalog
+- `http://localhost:3000/api/v1/warehouses` - Warehouse management
+- `http://localhost:3000/api/v1/zones` - Zone management
+- `http://localhost:3000/api/v1/purchase-orders` - Purchase orders
+- `http://localhost:3000/api/v1/settings` - Settings
+- `http://localhost:3000/api/v1/accounts` - Accounts
+- `http://localhost:3000/api/v1/catalog` - Catalog
+- `http://localhost:3000/api/v1/orders` - Orders
+- `http://localhost:3000/api/v1/subscriptionPlans` - Subscription plans
+- `http://localhost:3000/api/v1/premiumBenefits` - Premium benefits
+- `http://localhost:3000/api/v1/inventory` - Inventory
 
 ## Development
 
