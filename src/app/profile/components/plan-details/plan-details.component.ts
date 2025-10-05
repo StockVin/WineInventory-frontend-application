@@ -1,7 +1,9 @@
+
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { SubscriptionPlan } from '../../models/profile.entity';
+
 
 @Component({
   selector: 'app-plan-details',

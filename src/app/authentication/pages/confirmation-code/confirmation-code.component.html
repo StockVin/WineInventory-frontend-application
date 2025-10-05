@@ -1,1 +1,15 @@
 <p>confirmation-code works!</p>
+
+<div class="container">
+  <div class="header">
+    <h2>Confirmation Code</h2>
+  </div>
+  <div class="content">
+    <p>Enter the verification code sent to your email.</p>
+    <div class="code-inputs">
+      <input matInput maxlength="1" *ngFor="let digit of codeArray; let i = index"
+             [(ngModel)]="code[i]" (input)="autoFocusNext($event, i)" />
+    </div>
+    <button mat-raised-button color="primary" class="send-button" (click)="goToLogin()">Send</button>
+  </div>
+</div>
