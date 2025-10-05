@@ -1,3 +1,159 @@
+<div class="profile-layout">
+  <section class="workspace" [class.workspace--settings]="isSettingsView()">
+    <header class="workspace__header">
+      <div class="header__title">
+        <div class="header__icon material-symbols-outlined">badge</div>
+        <div>
+          <h1>{{ isSettingsView() ? 'Ajustes' : 'Perfil' }}</h1>
+          <p *ngIf="!isSettingsView()">Gestiona tu información personal, credenciales y plan de suscripción.</p>
+          <p *ngIf="isSettingsView()">Actualiza tus datos personales y preferencias de acceso.</p>
+        </div>
+      </div>
+
+      <div class="header__status-chip" *ngIf="accountStatus() as status">
+        <span class="material-symbols-outlined">verified</span>
+        {{ status.statusLabel }}
+      </div>
+    </header>
+
+    <p class="workspace__error" *ngIf="loadError() as errorMessage">{{ errorMessage }}</p>
+
+    <ng-container *ngIf="!isLoading(); else loading">
+      <ng-container *ngIf="profile() as currentProfile; else emptyProfile">
+        <ng-container *ngIf="isSettingsView(); else summaryView">
+          <div class="settings-view">
+            <div class="settings-view__header">
+              <button type="button" class="ghost-button settings-view__back" (click)="goToProfile()">
+                <span class="material-symbols-outlined">arrow_back</span>
+                Volver al perfil
+              </button>
+              <div>
+                <h2>Editar perfil</h2>
+                <p>Actualiza tus datos personales y preferencias de acceso.</p>
+              </div>
+            </div>
+            <div class="settings-view__panel">
+              <app-profile-edit
+                [profile]="currentProfile"
+                [saving]="isSaving()"
+                [errorMessage]="updateError()"
+                (saveProfile)="handleProfileSave($event)"
+                (cancelEdit)="handleCancelEdit()"
+              ></app-profile-edit>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #summaryView>
+          <div class="summary-grid">
+            <article class="card profile-overview">
+              <div class="profile-overview__header">
+                <div class="profile-overview__avatar">
+                  <ng-container *ngIf="currentProfile.avatarUrl && !overviewAvatarError(); else overviewInitials">
+                    <img
+                      [src]="currentProfile.avatarUrl"
+                      [alt]="'Foto de ' + currentProfile.fullName"
+                      (error)="handleOverviewAvatarError()"
+                    />
+                  </ng-container>
+                  <ng-template #overviewInitials>
+                    <div class="profile-overview__initials">
+                      {{ computeInitials(currentProfile.fullName) }}
+                    </div>
+                  </ng-template>
+                </div>
+                <div>
+                  <div class="profile-overview__id">{{ currentProfile.id }}</div>
+                  <h2>{{ currentProfile.fullName }}</h2>
+                  <p>{{ currentProfile.role }}</p>
+                </div>
+              </div>
+              <dl class="profile-overview__details">
+                <div>
+                  <dt class="material-symbols-outlined">mail</dt>
+                  <dd>{{ currentProfile.email }}</dd>
+                </div>
+                <div>
+                  <dt class="material-symbols-outlined">call</dt>
+                  <dd>{{ currentProfile.phone }}</dd>
+                </div>
+                <div>
+                  <dt class="material-symbols-outlined">location_on</dt>
+                  <dd>{{ currentProfile.location }}</dd>
+                </div>
+                <div>
+                  <dt class="material-symbols-outlined">person</dt>
+                  <dd>&#64;{{ currentProfile.username }}</dd>
+                </div>
+              </dl>
+              <div class="profile-overview__actions">
+                <button type="button" class="primary-button" (click)="goToSettings()">
+                  Editar perfil
+                </button>
+              </div>
+            </article>
+
+            <article class="card account-card" *ngIf="accountStatus() as status">
+              <header class="card__header">
+                <h2>Tipo de cuenta</h2>
+                <span class="status-chip status-chip--active">
+                  <span class="material-symbols-outlined">workspace_premium</span>
+                  {{ status.statusLabel }}
+                </span>
+              </header>
+              <div class="account-card__body">
+                <p class="account-card__plan">{{ status.planName }}</p>
+                <p class="account-card__subtitle">
+                  Tu plan se renovará automáticamente el {{ status.renewalDate | date: 'dd MMMM yyyy' }}.
+                </p>
+                <div class="account-card__actions">
+                  <button
+                    type="button"
+                    class="primary-button"
+                    (click)="selectedPlanId() && handlePlanSelected(selectedPlanId()!)"
+                    [disabled]="isSaving() || !selectedPlanId()"
+                  >
+                    Mantener plan actual
+                  </button>
+                  <button type="button" class="ghost-button" [disabled]="isSaving()">
+                    Contactar soporte
+                  </button>
+                </div>
+                <p class="account-card__support">
+                  ¿Necesitas ayuda? Escríbenos a
+                  <a [href]="'mailto:' + status.supportContact">{{ status.supportContact }}</a>.
+                </p>
+              </div>
+            </article>
+
+            <app-plan-details
+              class="summary-grid__plans"
+              [plans]="plans()"
+              [selectedPlanId]="selectedPlanId()"
+              [disabled]="isSaving()"
+              (planSelected)="handlePlanSelected($event)"
+            ></app-plan-details>
+
+            <app-plan-benefits class="summary-grid__benefits" [benefits]="premiumBenefits()"></app-plan-benefits>
+          </div>
+        </ng-template>
+      </ng-container>
+    </ng-container>
+  </section>
+</div>
+
+<ng-template #loading>
+  <div class="workspace__loading">
+    <span class="material-symbols-outlined">hourglass_empty</span>
+    Cargando información del perfil…
+  </div>
+</ng-template>
+
+<ng-template #emptyProfile>
+  <div class="workspace__empty">
+    <span class="material-symbols-outlined">person_off</span>
+    No encontramos información del perfil para mostrar.
+  </div>
+</ng-template>
 <div class="profile-bg">
 
   <app-side-navbar/>

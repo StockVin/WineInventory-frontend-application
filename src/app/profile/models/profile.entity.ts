@@ -1,12 +1,41 @@
+
+export interface AccountStatus {
+  planName: string;
+  renewalDate: string;
+  supportContact: string;
+  statusLabel: string;
+}
+
 export interface Profile {
-  profileId: number;
-  name: string;
-  email: string;
-  businessName: string;
-  businessAddress: string;
+  id: string;
+  fullName: string;
   role: string;
+  email: string;
   phone: string;
-  currentPassword?: string;
-  newPassword?: string;
-  confirmPassword?: string;
+  location: string;
+  username: string;
+  avatarUrl?: string;
+  accountStatus: AccountStatus;
+  selectedPlanId: string;
+  lastUpdated?: string;
+}
+
+export interface SubscriptionPlan {
+  id: string;
+  name: string;
+  price: string;
+  shortDescription: string;
+  benefits: string[];
+}
+
+export interface ProfileUpdateInput {
+  fullName?: string;
+  email?: string;
+  username?: string;
+  phone?: string;
+  location?: string;
+  avatarUrl?: string;
+  accountStatus?: Partial<AccountStatus>;
+  selectedPlanId?: string;
+  lastUpdated?: string;
 }

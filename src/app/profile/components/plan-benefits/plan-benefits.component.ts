@@ -1,10 +1,17 @@
 
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-plan-benefits',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './plan-benefits.component.html',
-  styleUrls: ['./plan-benefits.component.css']
+  styleUrl: './plan-benefits.component.css',
+  host: {
+    class: 'card benefits-card'
+  }
 })
-
-export class PlanBenefitsComponent {}
+export class PlanBenefitsComponent {
+  @Input() benefits: string[] = [];
+}

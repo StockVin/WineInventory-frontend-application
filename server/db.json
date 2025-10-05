@@ -252,6 +252,49 @@
   ],
   "orders": [
     {
+      "id": "ord-0001",
+      "code": "WI-2025-001",
+      "customerName": "Restaurante La Vid",
+      "customerEmail": "compras@lavid.com",
+      "status": "pending",
+      "createdAt": "2025-02-20T09:30:00.000Z",
+      "expectedDelivery": "2025-02-24T09:30:00.000Z",
+      "notes": "Entrega en horario matutino.",
+      "items": [
+        {
+          "id": "ord-0001-item-1",
+          "catalogItem": {
+            "id": "cab-2018",
+            "name": "Gran Reserva Cabernet Sauvignon",
+            "varietal": "Cabernet Sauvignon",
+            "vintage": 2018,
+            "origin": "Napa Valley, USA",
+            "price": 58
+          },
+          "quantity": 6,
+          "unitPrice": 58,
+          "lineTotal": 348
+        },
+        {
+          "id": "ord-0001-item-2",
+          "catalogItem": {
+            "id": "cha-2020",
+            "name": "Costa Dorada Chardonnay",
+            "varietal": "Chardonnay",
+            "vintage": 2020,
+            "origin": "Casablanca, Chile",
+            "price": 36
+          },
+          "quantity": 3,
+          "unitPrice": 36,
+          "lineTotal": 108
+        }
+      ],
+      "subtotal": 456,
+      "tax": 86.64,
+      "total": 542.64
+    },
+    {
       "id": "ord-0002",
       "code": "WI-2025-002",
       "customerName": "Bodega El Roble",
@@ -299,7 +342,7 @@
       "code": "WI-2025-003",
       "customerName": "Wine Lovers Club",
       "customerEmail": "compras@wineloversclub.es",
-      "status": "pending",
+      "status": "cancelled",
       "createdAt": "2025-02-22T15:45:00.000Z",
       "expectedDelivery": "2025-02-27T15:45:00.000Z",
       "notes": "Confirmar disponibilidad del Malbec 2019.",
@@ -354,6 +397,67 @@
       "customerEmail": "sdfdsfs@f",
       "notes": "sdvsvsdvsv"
     }
+  ],
+  "profiles": [
+    {
+      "id": "us-001",
+      "fullName": "Juan Pérezsdf",
+      "role": "Administrador General",
+      "email": "juanperez@email.com",
+      "phone": "+52 55 1234 5678",
+      "location": "Ciudad de México, MX",
+      "username": "jperez",
+      "accountStatus": {
+        "planName": "Starter",
+        "renewalDate": "2025-03-15T00:00:00.000Z",
+        "supportContact": "soporte@wineinventory.com",
+        "statusLabel": "Activo"
+      },
+      "selectedPlanId": "starter",
+      "lastUpdated": "2025-10-04T23:24:03.936Z"
+    }
+  ],
+  "subscriptionPlans": [
+    {
+      "id": "starter",
+      "name": "Starter",
+      "price": "$0",
+      "shortDescription": "Gestión básica para bodegas pequeñas.",
+      "benefits": [
+        "Inventario limitado",
+        "Reportes básicos",
+        "1 usuario"
+      ]
+    },
+    {
+      "id": "premium",
+      "name": "Premium",
+      "price": "$18",
+      "shortDescription": "Herramientas avanzadas para crecer tu negocio.",
+      "benefits": [
+        "Inventario ilimitado",
+        "Reportes inteligentes",
+        "Soporte prioritario"
+      ]
+    },
+    {
+      "id": "enterprise",
+      "name": "Enterprise",
+      "price": "$39",
+      "shortDescription": "Automatización total y conexión con ERP.",
+      "benefits": [
+        "Integraciones avanzadas",
+        "Roles personalizados",
+        "Gerente de cuenta dedicado"
+      ]
+    }
+  ],
+  "premiumBenefits": [
+    "Acceso a promociones exclusivas de distribuidores aliados",
+    "Alertas inteligentes sobre stock crítico y rotación de productos",
+    "Paneles personalizados para equipos de ventas y marketing",
+    "Integración directa con herramientas de facturación y CRM",
+    "Soporte prioritario 24/7 con especialistas en enología"
   ]
 }
 

@@ -1,3 +1,15 @@
+
+:host button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.plan-details__empty {
+  margin: 0;
+  color: #5c6270;
+  font-size: 0.95rem;
+}
+
 .plans-container {
   background-color: #f4ede3;
   padding: 40px 20px;
@@ -63,3 +75,4 @@
   font-weight: bold;
   margin: 10px 0 20px;
 }
+

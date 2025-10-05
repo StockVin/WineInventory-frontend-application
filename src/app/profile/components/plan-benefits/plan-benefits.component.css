@@ -1,4 +1,10 @@
 
+.benefits-card__empty {
+  margin: 0;
+  color: #5c6270;
+  font-size: 0.95rem;
+
+
 .plan-benefits-container {
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
