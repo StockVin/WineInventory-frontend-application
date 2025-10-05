@@ -14,32 +14,40 @@ const CareGuidesComponent = () => import('./reporting/pages/careguide-dashboard/
 const CareGuidesCreateComponent = () => import('./reporting/pages/careguide-create/careguide-create.component').then(m => m.CareguideCreateComponent);
 const AlertsComponent = () => import('./alerts/pages/alerts/alerts.component').then(m => m.AlertsComponent);
 const ProfileEditComponent = () => import('./profile/components/profile-edit/profile-edit.component').then(m => m.ProfileEditComponent);
+const InventoryComponent = () => import('./inventory/pages/inventory/inventory.component').then(m => m.InventoryComponent);
+const AuthGuard = () => import('./authentication/services/auth.guard').then(m => m.AuthGuard);
+
 const baseTitle = 'WineInventory';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'sign-in', pathMatch: 'full' },
   { path: 'sign-in', loadComponent: SignInComponent, data: { title: `${baseTitle} | Sign In` } },
   { path: 'sign-up', loadComponent: SignUpComponent, data: { title: `${baseTitle} | Sign Up` } },
-  { path: 'dashboard',loadComponent: DashboardComponent,children: [{ path: '', redirectTo: 'home', pathMatch: 'full' },]},
-  { path: 'reports', children: [
+  { path: 'dashboard', loadComponent: DashboardComponent, canActivate: [AuthGuard], children: [{ path: '', redirectTo: 'home', pathMatch: 'full' },] },
+  { path: 'reports', canActivate: [AuthGuard], children: [
     { path: '', loadComponent: ReportsComponent },
     { path: 'report-create', loadComponent: ReportCreateComponent },
     { path: 'careguides', loadComponent: CareGuidesComponent },
     { path: 'careguides/create', loadComponent: CareGuidesCreateComponent },
   ], data: { title: `${baseTitle} | Reports` } },
-  { path: 'orders', children:[
-    { path:'',loadComponent: OrdersComponent,},
-    { path:'new',loadComponent: NewOrderComponent,},
-    { path:':id/details',loadComponent: OrderDetailComponent,}
+  { path: 'orders', canActivate: [AuthGuard], children: [
+    { path: '', loadComponent: OrdersComponent },
+    { path: 'new', loadComponent: NewOrderComponent },
+    { path: ':id/details', loadComponent: OrderDetailComponent }
   ], data: { title: `${baseTitle} | Orders` } },
-  { path: 'alerts', children:[
-    { path:'',loadComponent: AlertsComponent,}
+  { path: 'alerts', canActivate: [AuthGuard], children: [
+    { path: '', loadComponent: AlertsComponent }
   ], data: { title: `${baseTitle} | Alerts` } },
-  { path: 'profile',children:[
-    { path:'',loadComponent: ProfileComponent, data: { title: `${baseTitle} | Profile` } },
-    { path:'edit',loadComponent: ProfileEditComponent, data: { title: `${baseTitle} | Profile Edit` } },
-    { path:'account',loadComponent: ProfileComponent, data: { title: `${baseTitle} | Profile Account` } },
-    { path:'benefits',loadComponent: ProfileComponent, data: { title: `${baseTitle} | Profile Benefits` } },
-  ],data: { title: `${baseTitle} | Profile` } },
+  { path: 'profile', canActivate: [AuthGuard], children: [
+    { path: '', loadComponent: ProfileComponent, data: { title: `${baseTitle} | Profile` } },
+    { path: 'edit', loadComponent: ProfileEditComponent, data: { title: `${baseTitle} | Profile Edit` } },
+    { path: 'account', loadComponent: ProfileComponent, data: { title: `${baseTitle} | Profile Account` } },
+    { path: 'benefits', loadComponent: ProfileComponent, data: { title: `${baseTitle} | Profile Benefits` } },
+  ], data: { title: `${baseTitle} | Profile` } },
+  { path: 'inventory', canActivate: [AuthGuard], children: [
+    { path: '', loadComponent: InventoryComponent, data: { title: `${baseTitle} | Inventory` } },
+    { path: 'create', loadComponent: InventoryComponent, data: { title: `${baseTitle} | Inventory Create` } },
+    { path: ':id/details', loadComponent: InventoryComponent, data: { title: `${baseTitle} | Inventory Details` } },
+  ], data: { title: `${baseTitle} | Inventory` } },
   { path: '**', loadComponent: PageNotFoundComponent, data: { title: `${baseTitle} | Page Not Found` } }
 ];

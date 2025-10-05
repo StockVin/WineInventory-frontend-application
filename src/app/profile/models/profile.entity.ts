@@ -34,6 +34,7 @@ export interface ProfileUpdateInput {
   username?: string;
   phone?: string;
   location?: string;
+  role?: string;
   avatarUrl?: string;
   accountStatus?: Partial<AccountStatus>;
   selectedPlanId?: string;

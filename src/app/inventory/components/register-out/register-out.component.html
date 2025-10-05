@@ -1,60 +1,60 @@
 <div class="register-out-container">
     <div class="header">
-        <h2 class="title">Registrar Salida</h2>
+        <h2 class="title">{{ 'inventory.register.title' | translate }}</h2>
     </div>
 
     <form [formGroup]="registerOutForm" (ngSubmit)="onSubmit()">
 
         <mat-form-field appearance="outline" class="form-field">
-            <mat-label>Producto a retirar</mat-label>
-            <mat-select formControlName="productId" placeholder="Selecciona un producto">
+            <mat-label>{{ 'inventory.register.product' | translate }}</mat-label>
+            <mat-select formControlName="productId" placeholder="Select a product">
                 <mat-option *ngFor="let product of products" [value]="product.id">
                     {{ product.name }} (Stock: {{ product.currentStock }})
                 </mat-option>
             </mat-select>
             <mat-error *ngIf="registerOutForm.get('productId')?.hasError('required')">
-                El producto es requerido.
+                The product is required.
             </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-field">
-            <mat-label>Tipo de salida</mat-label>
-            <mat-select formControlName="outputType" placeholder="Selecciona el tipo de movimiento">
+            <mat-label>{{ 'inventory.register.type' | translate }}</mat-label>
+            <mat-select formControlName="outputType" placeholder="Select the type of movement">
                 <mat-option *ngFor="let type of outputTypes" [value]="type">
                     {{ type }}
                 </mat-option>
             </mat-select>
             <mat-error *ngIf="registerOutForm.get('outputType')?.hasError('required')">
-                El tipo de salida es requerido.
+                The output type is required.
             </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-field">
-            <mat-label>Cantidad</mat-label>
-            <input matInput type="number" formControlName="quantity" placeholder="Ingrese la cantidad a retirar">
+            <mat-label>{{ 'inventory.register.quantity' | translate }}</mat-label>
+            <input matInput type="number" formControlName="quantity" placeholder="Enter the quantity to withdraw">
 
             <mat-hint *ngIf="registerOutForm.get('productId')?.value">
-                Stock actual: **{{ maxQuantity }}** unidades.
+                Stock available: **{{ maxQuantity }}** units.
             </mat-hint>
 
             <mat-error *ngIf="registerOutForm.get('quantity')?.hasError('required')">
-                La cantidad es requerida.
+                The quantity is required.
             </mat-error>
             <mat-error *ngIf="registerOutForm.get('quantity')?.hasError('min')">
-                La cantidad mínima es 1.
+                The minimum quantity is 1.
             </mat-error>
             <mat-error *ngIf="registerOutForm.get('quantity')?.hasError('max')">
-                ⚠️ Solo quedan {{ maxQuantity }} unidades en stock.
+                Only {{ maxQuantity }} units are available in stock.
             </mat-error>
         </mat-form-field>
 
         <div class="actions">
             <button mat-flat-button type="button" class="cancel-btn" (click)="onCancel()">
-                Cancelar
+                {{ 'inventory.register.cancel' | translate }}
             </button>
 
             <button mat-flat-button type="submit" class="register-btn" [disabled]="registerOutForm.invalid">
-                Registrar
+                {{ 'inventory.register.save' | translate }}
             </button>
         </div>
 

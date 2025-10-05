@@ -9,7 +9,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslateModule } from '@ngx-translate/core';
+
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -24,6 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MatCheckboxModule,
     MatIconModule,
     MatSelectModule,
+    MatSnackBarModule,
     TranslateModule
   ],
   templateUrl: './sign-up.component.html',
@@ -42,7 +46,9 @@ export class SignUpComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private userService: UserService,
+    private snackBar: MatSnackBar
   ) {
     this.signupForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -62,8 +68,28 @@ export class SignUpComponent {
 
   onSubmit() {
     if (this.signupForm.valid) {
-      console.log('Signup form submitted', this.signupForm.value);
-      // Handle signup logic here
+      const formData = this.signupForm.value;
+
+      this.userService.register({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role
+      }).subscribe({
+        next: (response) => {
+          console.log('Usuario registrado exitosamente:', response);
+          this.snackBar.open('Usuario registrado exitosamente', 'Cerrar', {
+            duration: 3000
+          });
+          this.router.navigate(['/sign-in']);
+        },
+        error: (error) => {
+          console.error('Error en el registro:', error);
+          this.snackBar.open('Error al registrar usuario. Inténtalo de nuevo.', 'Cerrar', {
+            duration: 3000
+          });
+        }
+      });
     }
   }
 

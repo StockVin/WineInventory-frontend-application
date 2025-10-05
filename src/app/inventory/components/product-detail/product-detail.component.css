@@ -1,42 +1,59 @@
-/* inventory/components/product-detail/product-detail.component.css */
-
-/* El fondo del modal y el contenedor principal */
 .product-detail-container {
-    background-color: #FFFFFF;
-    /* Fondo Blanco como en la imagen */
-    color: #20181F;
-    /* Texto principal oscuro */
-    padding: 24px;
-    border-radius: 12px;
-    max-width: 650px;
-    /* Ancho del modal */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #FFF8F7 0%, #FEEED4 100%);
+    color: #2C2129;
+    padding: 28px;
+    border-radius: 16px;
+    max-width: 700px;
+    box-shadow: 0 8px 32px rgba(44, 33, 41, 0.15);
+    border: 2px solid rgba(204, 136, 17, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.product-detail-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent 0%, #CC8811 50%, transparent 100%);
+    opacity: 0.7;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(204, 136, 17, 0.2);
+    padding-bottom: 18px;
+    margin-bottom: 24px;
 }
 
 .title {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 700;
     margin: 0;
+    color: #2C2129;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .close-btn mat-icon {
-    color: #20181F;
-    /* Ícono de cerrar oscuro */
+    color: #6B6B6B;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 8px;
+    border-radius: 50%;
 }
 
-/* Contenido Principal (Texto + Imagen) */
+.close-btn mat-icon:hover {
+    color: #C81D33;
+    background-color: rgba(200, 29, 51, 0.1);
+}
+
 .content {
     display: flex;
-    gap: 30px;
+    gap: 32px;
 }
 
 .details-left {
@@ -44,74 +61,119 @@
     max-width: 60%;
 }
 
-/* Nombre del producto repetido debajo del header */
 .product-name {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 600;
     margin-top: 0;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    color: #2C2129;
 }
 
-/* Estilos para cada fila de datos */
 .data-row {
-    margin-bottom: 10px;
-    font-size: 0.95rem;
-    line-height: 1.4;
+    margin-bottom: 14px;
+    font-size: 1rem;
+    line-height: 1.5;
+    display: flex;
+    gap: 12px;
 }
 
 .label {
-    font-weight: 400;
-    color: #666;
-    /* Color gris suave para la etiqueta */
+    font-weight: 500;
+    color: #6B6B6B;
     display: inline-block;
     min-width: 140px;
-    /* Asegura que las etiquetas se alineen */
+    flex-shrink: 0;
 }
 
 .value {
     font-weight: 500;
-    color: #20181F;
+    color: #2C2129;
 }
 
 .price-tag {
-    font-weight: 600;
-    color: #DBA736;
-    /* Color dorado para el precio */
+    font-weight: 700;
+    color: #C81D33;
+    font-size: 1.1em;
 }
 
-/* Estilos para la sección de la imagen */
+.status-stock {
+    padding: 8px 0;
+}
+
+.actual-stock {
+    font-weight: 700;
+    color: #2C2129;
+}
+
+.min-stock {
+    font-weight: 500;
+    color: #6B6B6B;
+}
+
+.location-row {
+    margin-top: 16px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(204, 136, 17, 0.2);
+}
+
+.location-value {
+    font-style: italic;
+    color: #6B0F0F;
+}
+
 .image-right {
     display: flex;
     align-items: flex-start;
     justify-content: center;
     width: 40%;
+    padding-top: 8px;
 }
 
 .product-image {
     width: 100%;
-    max-width: 150px;
+    max-width: 180px;
     height: auto;
-    border-radius: 8px;
+    border-radius: 12px;
     object-fit: contain;
-    /* Borde de la imagen: un borde sutil para que se destaque */
-    border: 1px solid #f0f0f0;
-    padding: 5px;
+    border: 3px solid rgba(204, 136, 17, 0.2);
+    padding: 8px;
+    background-color: rgba(255, 248, 247, 0.5);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
 }
 
-/* Estilos para el enlace a guías */
+.product-image:hover {
+    border-color: #CC8811;
+    transform: scale(1.02);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
 .guide-link-section {
-    margin-top: 30px;
-    padding-top: 15px;
-    border-top: 1px solid #e0e0e0;
-    font-size: 0.85rem;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 2px solid rgba(204, 136, 17, 0.2);
+    font-size: 0.9rem;
     text-align: center;
+    background-color: rgba(204, 136, 17, 0.05);
+    border-radius: 8px;
+    padding: 16px;
 }
 
 .guide-link {
-    color: #007bff;
-    /* Azul o tu color de enlace principal */
+    color: #C81D33;
     text-decoration: none;
     font-weight: 600;
     display: block;
-    margin-top: 5px;
+    margin-top: 8px;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.85rem;
+}
+
+.guide-link:hover {
+    color: #2C2129;
+    background-color: rgba(200, 29, 51, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
 }

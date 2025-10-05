@@ -50,7 +50,7 @@
     "options": {
       "dashboard": "Inicio",
       "wine": "Ordenes",
-      "order": "Lista de pedidos",
+      "inventory": "Inventario",
       "report": "Reportes",
       "alert": "Alertas",
       "configuration": "Configuración"
@@ -120,7 +120,7 @@
       "uploadImage": "Subir Imagen"
     }
   },
-  "orders":{
+  "orders": {
     "title": "Ordenes",
     "text": "Administra el ciclo completo de ventas y el estado de cada pedido",
     "button": "Agregar nuevo pedido",
@@ -152,56 +152,178 @@
       "button": "Crear pedido"
     }
   },
-  "order-create":{
-    "title":"Nuevo Pedido",
-    "texto":"Completa la información del cliente y selecciona los vinos que formarán parte del pedido.",
-    "button":"Volver a la lista de pedidos",
-    "data":"Datos del cliente",
-    "name":"Nombre del cliente",
-    "email":"Correo electrónico",
-    "notes":"Notas adicionales",
-    "information":"Información del pedido",
-    "date":"Fecha de creación",
-    "expectedDelivery":"Fecha de entrega",
-    "status":"Estado",
-    "details":"Detalle del pedido",
-    "product":"Producto",
-    "quantity":"Cantidad",
-    "resume":"Resumen",
-    "subtotal":"Subtotal",
-    "tax":"Impuesto",
-    "total":"Total",
-    "save":"Guardar pedido",
-    "add":"Agregar producto"
+  "order-create": {
+    "title": "Nuevo Pedido",
+    "texto": "Completa la información del cliente y selecciona los vinos que formarán parte del pedido.",
+    "button": "Volver a la lista de pedidos",
+    "data": "Datos del cliente",
+    "name": "Nombre del cliente",
+    "email": "Correo electrónico",
+    "notes": "Notas adicionales",
+    "information": "Información del pedido",
+    "date": "Fecha de creación",
+    "expectedDelivery": "Fecha de entrega",
+    "status": "Estado",
+    "details": "Detalle del pedido",
+    "product": "Producto",
+    "quantity": "Cantidad",
+    "resume": "Resumen",
+    "subtotal": "Subtotal",
+    "tax": "Impuesto",
+    "total": "Total",
+    "save": "Guardar pedido",
+    "add": "Agregar producto"
   },
-  "order-detail":{
-    "title":"Detalle del pedido",
-    "text":"Detalles del pedido",
-    "button":"Volver a la lista de pedidos",
-    "delete":"Eliminar pedido",
-    "deleting":"Eliminando pedido...",
-    "customer":"Datos del cliente",
-    "delivery":"Información de entrega",
-    "expected":"Fecha de entrega",
-    "status":"Estado",
-    "summary":"Resumen",
-    "subtotal":"Subtotal",
-    "tax":"Impuesto",
-    "total":"Total",
-    "items":"Detalle del pedido",
-    "table":{
-      "reference":"Referencia",
-      "varietal":"Varietal",
-      "vintage":"Viñedo",
-      "quantity":"Cantidad",
-      "unitPrice":"Precio unitario",
-      "total":"Total"
+  "order-detail": {
+    "title": "Detalle del pedido",
+    "text": "Detalles del pedido",
+    "button": "Volver a la lista de pedidos",
+    "delete": "Eliminar pedido",
+    "deleting": "Eliminando pedido...",
+    "customer": "Datos del cliente",
+    "delivery": "Información de entrega",
+    "expected": "Fecha de entrega",
+    "status": "Estado",
+    "summary": "Resumen",
+    "subtotal": "Subtotal",
+    "tax": "Impuesto",
+    "total": "Total",
+    "items": "Detalle del pedido",
+    "table": {
+      "reference": "Referencia",
+      "varietal": "Varietal",
+      "vintage": "Viñedo",
+      "quantity": "Cantidad",
+      "unitPrice": "Precio unitario",
+      "total": "Total"
     }
   },
-  "alert":{ 
-    "title": "Reabastecimiento urgente", 
-    "text": "No hay alertas de reabastecimiento urgente disponibles", 
-    "expire-title": "Proximamente vencimiento", 
-    "expire-text": "No hay alertas de proximamente vencimiento disponibles" 
+  "alert": {
+    "title": "Reabastecimiento urgente",
+    "text": "No hay alertas de reabastecimiento urgente disponibles",
+    "expire-title": "Proximamente vencimiento",
+    "expire-text": "No hay alertas de proximamente vencimiento disponibles",
+    "showAll": "Mostrar todo",
+    "hideAll": "Ocultar todo",
+    "stock": "Stock actual",
+    "minStock": "Stock mínimo",
+    "expiration": "Fecha de expiración",
+    "daysUntilExpiration": "Días hasta expiración",
+    "severity": "Severidad"
+  },
+  "inventory": {
+    "title": "Inventario",
+    "buttons": {
+      "create": "Agregar producto",
+      "return": "Registrar salida de producto",
+      "details": "Ver detalles"
+    },
+    "searchPlaceholder": "Buscar producto...",
+    "tableHeaders": {
+      "name": "Nombre",
+      "type": "Tipo",
+      "expireDate": "Fecha de caducidad",
+      "quantity": "Stock actual",
+      "minQuantity": "Stock mínimo",
+      "price": "Precio"
+    },
+    "new": {
+      "title": "Nuevo Producto",
+      "name": "Nombre",
+      "type": "Tipo",
+      "expireDate": "Fecha de caducidad",
+      "quantity": "Stock actual",
+      "minQuantity": "Stock mínimo",
+      "price": "Precio",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "uploadImage": "Subir Imagen",
+      "highlight": "Destacar producto",
+      "duplicate": "Duplicar producto",
+      "delete": "Borrar producto",
+      "moreOptions": "Más opciones"
+    },
+    "register": {
+      "title": "Registrar Salida de Producto",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "product": "Producto",
+      "type": "Tipo de salida",
+      "quantity": "Cantidad"
+    },
+    "details": {
+      "type": "Tipo de licor",
+      "price": "Precio",
+      "expirationDate": "Fecha de caducidad",
+      "currentStock": "Stock actual",
+      "minStockLevel": "Stock mínimo",
+      "location": "Asignado a"
+    }
+  },
+  "dashboard": {
+    "title": "Inicio",
+    "subtitle": "Resumen general de tu inventario de vinos",
+    "stats": {
+      "totalProducts": "Total de Productos",
+      "productsStockLow": "Stock Bajo",
+      "expiringProducts": "Próximos a Vencer",
+      "pendingOrders": "Órdenes Pendientes"
+    },
+    "content": {
+      "recentProducts": "Productos Recientes",
+      "recentOrders": "Órdenes Recientes"
+    }
+  },
+  "profile": {
+    "title": "Perfil",
+    "subtitle": "Gestiona tu información personal y datos de contacto.",
+    "email": "Email",
+    "username": "Usuario",
+    "role": "Rol",
+    "buttons": {
+      "edit": "Editar Perfil",
+      "selectedPlan": "Plan Actual",
+      "plans": "Seleccionar Plan"
+    },
+    "planDetails": {
+      "title": "Selecciona tu Plan",
+      "subtitle": "Elige el plan que mejor se adapte al crecimiento de tu bodega",
+      "mounth": "Mes",
+      "free": "Free",
+      "plus": "Plus",
+      "Pro": "Pro",
+      "now":"Plan actual",
+      "subtitle1": "Gestión básica para bodegas pequeñas.",
+      "subtitle2": "Herramientas avanzadas para crecer tu negocio.",
+      "subtitle3": "Automatización total y conexión con ERP.",
+      "details": {
+        "feature1": "Seguimiento del inventario",
+        "feature2": "Guías de almacenamiento",
+        "feature3": "Alertas básicas",
+        "feature4": "Soporte prioritario",
+        "feature5": "Alertas personalizadas",
+        "feature6": "Seguimiento ilimitado, con integración a sistemas de distribución y rastreo en tiempo real.",
+        "feature7": "Prioritario 24/7 con atención personalizada."
+      }
+    },
+    "edit": {
+      "title": "Información Personal",
+      "name": "Nombre completo",
+      "nameError": "Debe contener al menos 3 caracteres.",
+      "email": "Correo electrónico",
+      "emailError": "Debe contener al menos 3 caracteres.",
+      "username": "Nombre de usuario",
+      "usernameError": "Debe contener al menos 3 caracteres.",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "saving": "Guardando...",
+      "changePassword": "Cambiar contraseña",
+      "currentPassword": "Contraseña actual",
+      "currentPasswordError": "Debe contener al menos 3 caracteres.",
+      "newPassword": "Nueva contraseña",
+      "newPasswordError": "Debe contener al menos 3 caracteres.",
+      "confirmPassword": "Confirmar contraseña",
+      "confirmPasswordError": "Las contraseñas deben coincidir."
+    }
   }
 }

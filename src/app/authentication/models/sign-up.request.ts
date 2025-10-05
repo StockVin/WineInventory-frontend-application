@@ -3,21 +3,24 @@
  */
 export class SignUpRequest {
     public username: string;
+    public email: string;
     public password: string;
     public validatePassword: string;
-    public businessName: string;
     public accountRole: string;
   
     /**
      * Constructor.
      * @param username The username.
      * @param password The password.
+     * @param email The email.
+     * @param validatePassword The validate password.
+     * @param accountRole The account role.
      */
-    constructor(username: string, password: string, validatePassword: string, businessName: string, accountRole: string) {
+    constructor(username: string, password: string, email: string, validatePassword: string, accountRole: string) {
       this.password = password;
       this.username = username;
+      this.email = email;
       this.validatePassword = validatePassword;
-      this.businessName = businessName;
       this.accountRole = accountRole;
     }
   }

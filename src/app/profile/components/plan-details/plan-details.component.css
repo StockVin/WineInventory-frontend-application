@@ -128,8 +128,7 @@
   overflow: hidden;
 }
 
-.plan-card--current::after {
-  content: 'Plan Actual';
+.plan-card__current-badge {
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -139,13 +138,13 @@
   border-radius: 12px;
   font-size: 0.8rem;
   font-weight: 600;
+  z-index: 1;
 }
 
 .plan-card--popular {
   border: 2px solid var(--color-accent-gold);
   background: linear-gradient(145deg, rgba(204, 136, 17, 0.05), #fef6f5);
 }
-
 .plan-card--popular::after {
   content: 'Más Popular';
   position: absolute;

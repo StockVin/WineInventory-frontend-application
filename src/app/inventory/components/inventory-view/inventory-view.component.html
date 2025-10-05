@@ -1,0 +1,72 @@
+<div class="inventory-table-container">
+    <table mat-table [dataSource]="(inventory$ | async) || []">
+
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox></mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-checkbox></mat-checkbox>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> {{ 'inventory.tableHeaders.name' | translate }} </th>
+            <td mat-cell *matCellDef="let element">
+                <span class="product-name-link" (click)="onViewDetail(element.id)">
+                    {{ element.name }}
+                </span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef> {{ 'inventory.tableHeaders.type' | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{ element.type }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expirationDate">
+            <th mat-header-cell *matHeaderCellDef> {{ 'inventory.tableHeaders.expireDate' | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{ element.expirationDate | date:'dd-MM-yyyy' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="currentStock">
+            <th mat-header-cell *matHeaderCellDef> {{ 'inventory.tableHeaders.quantity' | translate }} </th>
+            <td mat-cell *matCellDef="let element">
+                <span [class.low-stock]="element.currentStock <= element.minStockLevel">
+                    {{ element.currentStock }}
+                </span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="minStockLevel">
+            <th mat-header-cell *matHeaderCellDef> {{ 'inventory.tableHeaders.minQuantity' | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{ element.minStockLevel }} </td>
+        </ng-container>
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef> {{ 'inventory.tableHeaders.price' | translate }} </th>
+            <td mat-cell *matCellDef="let element"> S/.{{ element.price | number:'1.2-2' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button [matMenuTriggerFor]="productMenu" class="action-icon">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #productMenu="matMenu">
+                    <button mat-menu-item (click)="onViewDetail(element.id)">
+                        <mat-icon>visibility</mat-icon>
+                        <span>{{ 'inventory.buttons.details' | translate }}</span>
+                    </button>
+                </mat-menu>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <div *ngIf="!(inventory$ | async)?.length" class="no-data-message">
+        No products were found in inventory.
+    </div>
+</div>

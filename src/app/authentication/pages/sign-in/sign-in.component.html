@@ -59,12 +59,16 @@
 
           <!-- Submit Button -->
           <div class="submit-button">
-            <button 
+            <button
               type="submit"
-              mat-raised-button 
+              mat-raised-button
               color="primary"
-              [disabled]="!loginForm.valid">
-              {{ 'sign-in.submit' | translate }}
+              [disabled]="!loginForm.valid || isLoading">
+              <span *ngIf="!isLoading">{{ 'sign-in.submit' | translate }}</span>
+              <span *ngIf="isLoading">
+                <mat-spinner diameter="20"></mat-spinner>
+                {{ 'sign-in.signing-in' | translate }}
+              </span>
             </button>
           </div>
         </form>

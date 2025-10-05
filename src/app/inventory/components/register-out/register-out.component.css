@@ -1,95 +1,161 @@
-/* inventory/components/register-out/register-out.component.css */
-
-/* NOTA: El fondo principal del modal se aplica globalmente en styles.css con .custom-dark-dialog-container */
-
 .register-out-container {
+    background: linear-gradient(135deg, #2C2129 0%, #20181F 100%);
     color: #FFFFFF;
-    padding: 30px;
-    border-radius: 12px;
-    width: 450px;
+    padding: 32px;
+    border-radius: 16px;
+    width: 600px;
+    max-width: 90vw;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(204, 136, 17, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.register-out-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, #CC8811 50%, transparent 100%);
+    opacity: 0.6;
 }
 
 .header {
-    border-bottom: 1px solid #3c323b;
-    padding-bottom: 15px;
-    margin-bottom: 25px;
+    border-bottom: 2px solid rgba(204, 136, 17, 0.2);
+    padding-bottom: 20px;
+    margin-bottom: 28px;
 }
 
 .title {
-    font-size: 1.8rem;
+    font-size: 1.9rem;
     font-weight: 700;
     margin: 0;
-    color: black;
+    color: #FEEED4;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .form-field {
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
-/* --- Estilos para Angular Material (Para tema oscuro) --- */
-
-/* Fondo del input/select: Más claro que el fondo del modal */
 :host ::ng-deep .mat-form-field-wrapper .mat-form-field-flex {
-    background-color: #3C323B !important;
-    border-radius: 8px !important;
+    background: linear-gradient(135deg, rgba(255, 248, 247, 0.05) 0%, rgba(255, 248, 247, 0.02) 100%) !important;
+    border-radius: 10px !important;
+    border: 2px solid rgba(204, 136, 17, 0.2) !important;
+    transition: all 0.2s ease;
 }
 
-/* Color del texto (lo que el usuario escribe/selecciona) */
+:host ::ng-deep .mat-form-field-wrapper:hover .mat-form-field-flex {
+    border-color: #CC8811 !important;
+    box-shadow: 0 0 0 3px rgba(204, 136, 17, 0.1);
+}
+
 :host ::ng-deep .mat-input-element,
 :host ::ng-deep .mat-select-value {
     color: #FFFFFF !important;
+    font-size: 1rem;
 }
 
-/* Color de la etiqueta/placeholder */
 :host ::ng-deep .mat-form-field-label {
-    color: rgba(255, 255, 255, 0.7) !important;
+    color: #6B6B6B !important;
+    font-size: 0.9rem;
 }
 
-/* Color del borde del campo (Outline) en foco */
+:host ::ng-deep .mat-form-field-label.mat-focused {
+    color: #FEEED4 !important;
+}
+
 :host ::ng-deep .mat-form-field-outline-thick {
-    color: #DBA736 !important;
-    /* Dorado */
+    color: #CC8811 !important;
 }
 
-/* Color del hint (Stock actual) */
 :host ::ng-deep .mat-form-field-hint {
-    color: rgba(255, 255, 255, 0.6) !important;
+    color: rgba(254, 238, 212, 0.7) !important;
+    font-size: 0.85rem;
 }
 
+:host ::ng-deep .mat-select-panel {
+    background-color: #2C2129 !important;
+    border: 1px solid #CC8811 !important;
+}
 
-/* --- Estilos de Botones --- */
+:host ::ng-deep .mat-option {
+    color: #FFFFFF !important;
+    background-color: #2C2129 !important;
+}
+
+:host ::ng-deep .mat-option:hover {
+    background-color: rgba(204, 136, 17, 0.1) !important;
+}
+
+:host ::ng-deep .mat-option.mat-selected {
+    background-color: rgba(200, 29, 51, 0.2) !important;
+    color: #FEEED4 !important;
+}
+
 .actions {
     display: flex;
     justify-content: flex-end;
-    gap: 15px;
-    margin-top: 30px;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(204, 136, 17, 0.2);
 }
 
-/* Botón Primario: Registrar (Dorado) */
 .register-btn {
-    background-color: #DBA736;
-    color: #20181F;
-    font-weight: 600;
-    height: 48px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s;
-}
-
-.register-btn[disabled] {
-    background-color: #5a4f41 !important;
-    /* Dorado atenuado */
-    color: #b3a89a !important;
-    cursor: not-allowed;
-}
-
-/* Botón Secundario: Cancelar (Oscuro) */
-.cancel-btn {
-    background-color: #554854;
+    background: linear-gradient(135deg, #C81D33 0%, #a31729 100%);
     color: #FFFFFF;
     font-weight: 600;
     height: 48px;
-    border-radius: 8px;
-    box-shadow: none;
+    padding: 0 28px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(200, 29, 51, 0.3);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+.register-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(200, 29, 51, 0.4);
+    background: linear-gradient(135deg, #d6223a 0%, #b81a2e 100%);
+}
+
+.register-btn:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(200, 29, 51, 0.3);
+}
+
+.register-btn[disabled] {
+    background: linear-gradient(135deg, #6B6B6B 0%, #555555 100%) !important;
+    color: #999999 !important;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.cancel-btn {
+    background: linear-gradient(135deg, rgba(107, 107, 107, 0.2) 0%, rgba(107, 107, 107, 0.1) 100%);
+    border: 2px solid #6B6B6B;
+    color: #6B6B6B;
+    font-weight: 600;
+    height: 48px;
+    padding: 0 24px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+.cancel-btn:hover {
+    background: linear-gradient(135deg, rgba(107, 107, 107, 0.3) 0%, rgba(107, 107, 107, 0.2) 100%);
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+    transform: translateY(-1px);
 }

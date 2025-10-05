@@ -5,12 +5,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field'; // ¡Faltaba para mat-form-field, mat-label, mat-error!
-import { MatOptionModule } from '@angular/material/core';          // ¡Faltaba para mat-option!
+import { MatFormFieldModule } from '@angular/material/form-field'; 
+import { MatOptionModule } from '@angular/material/core';         
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InventoryService } from '../../services/inventory.service';
 import { InventoryItem, InventoryItemProps, LiquorType } from '../../models/inventory.entity';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-new-product',
@@ -18,33 +19,30 @@ import { InventoryItem, InventoryItemProps, LiquorType } from '../../models/inve
   imports: [
     CommonModule, 
     ReactiveFormsModule, 
-    // Módulos de Material
     MatButtonModule, 
     MatInputModule, 
     MatSelectModule, 
     MatIconModule,
-    MatFormFieldModule, // <== AGREGADO
-    MatOptionModule     // <== AGREGADO
+    MatFormFieldModule, 
+    MatOptionModule,     
+    TranslateModule
   ],
   templateUrl: './new-product.component.html',
   styleUrls: ['./new-product.component.css']
 })
 export class NewProductComponent {
-    // 💡 La propiedad 'dialogRef' DEBE ser pública para que el template HTML pueda acceder a ella.
     public dialogRef: MatDialogRef<NewProductComponent>; 
     
-    // 💡 La propiedad 'productForm' DEBE ser pública para que el template HTML pueda acceder a ella.
     public productForm: FormGroup;
     public liquorTypes: LiquorType[] = ['Vino', 'Destilado', 'Cerveza', 'Licores', 'Licor Anisado'];
     
     constructor(
         private fb: FormBuilder,
         private inventoryService: InventoryService,
-        // Asignación de MatDialogRef
-        dialogRef: MatDialogRef<NewProductComponent>, // <== QUITADO el 'public' temporalmente
+        dialogRef: MatDialogRef<NewProductComponent>, 
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
-        this.dialogRef = dialogRef; // <== ASIGNADO A LA PROPIEDAD PÚBLICA
+        this.dialogRef = dialogRef; 
 
         this.productForm = this.fb.group({
             name: ['Ejemplo de Licor', Validators.required],
@@ -56,7 +54,6 @@ export class NewProductComponent {
         });
     }
 
-    // 💡 El método 'onSave' DEBE ser público para que el template HTML (ngSubmit) pueda acceder a él.
     public onSave(): void {
         if (this.productForm.invalid) {
             this.productForm.markAllAsTouched();

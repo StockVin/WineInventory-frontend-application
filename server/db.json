@@ -2,29 +2,48 @@
   "users": [
     {
       "id": 1,
-      "username": "admin@admin.com",
+      "username": "admin",
       "password": "admin",
-      "role": "ADMIN"
-    }
-  ],
-  "profile": [
+      "email": "admin@admin.com",
+      "role": "ADMIN",
+      "profileId": 1,
+      "createdAt": "2025-10-05T00:00:00.000Z",
+      "updatedAt": "2025-10-05T00:00:00.000Z",
+      "isActive": true
+    },
     {
-      "id": 1,
-      "username": "admin@admin.com",
-      "password": "admin",
-      "role": "ADMIN"
+      "username": "prueba",
+      "password": "prueba",
+      "email": "prueba@gmail.com",
+      "role": "Distributor",
+      "createdAt": "2025-10-05T17:06:43.945Z",
+      "updatedAt": "2025-10-05T17:06:43.945Z",
+      "isActive": true,
+      "id": 2
+    },
+    {
+      "username": "prueba2",
+      "password": "prueba2",
+      "email": "prueba2@gmail.com",
+      "role": "Productor",
+      "createdAt": "2025-10-05T17:17:49.570Z",
+      "updatedAt": "2025-10-05T17:17:49.570Z",
+      "isActive": true,
+      "id": 3
+    },
+    {
+      "username": "prueba3",
+      "password": "prueba3",
+      "email": "prueba3@gmail.com",
+      "role": "Distributor",
+      "createdAt": "2025-10-05T17:19:33.486Z",
+      "updatedAt": "2025-10-05T17:19:33.486Z",
+      "isActive": true,
+      "id": 4,
+      "profileId": 4
     }
   ],
   "reporting": [
-    {
-      "id": 1,
-      "products": "Vinos",
-      "type": "destilado",
-      "price": 20,
-      "amount": 2,
-      "date": "2025/05/13",
-      "lost": 40
-    },
     {
       "id": 2,
       "products": "Ron",
@@ -198,6 +217,39 @@
       "role": "ADMIN",
       "businessName": "Licorería San Borja",
       "email": "admin@admin.com"
+    },
+    {
+      "id": 2,
+      "userOwnerId": 2,
+      "role": "Distributor",
+      "businessName": "prueba Business",
+      "name": "prueba",
+      "email": "prueba@gmail.com",
+      "createdAt": "2025-10-05T17:06:43.994Z",
+      "updatedAt": "2025-10-05T17:06:43.994Z",
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "userOwnerId": 3,
+      "role": "Productor",
+      "businessName": "prueba2 Business",
+      "name": "prueba2",
+      "email": "prueba2@gmail.com",
+      "createdAt": "2025-10-05T17:17:49.609Z",
+      "updatedAt": "2025-10-05T17:17:49.609Z",
+      "isActive": true
+    },
+    {
+      "id": 4,
+      "userOwnerId": 4,
+      "role": "Distributor",
+      "businessName": "prueba3 Business",
+      "name": "prueba3",
+      "email": "prueba3@gmail.com",
+      "createdAt": "2025-10-05T17:19:33.486Z",
+      "updatedAt": "2025-10-05T17:19:33.486Z",
+      "isActive": true
     }
   ],
   "catalog": [
@@ -400,65 +452,136 @@
       "notes": "sdvsvsdvsv"
     }
   ],
-  "profiles": [
-    {
-      "id": "us-001",
-      "fullName": "Juan Pérezsdf",
-      "role": "Administrador General",
-      "email": "juanperez@email.com",
-      "phone": "+52 55 1234 5678",
-      "location": "Ciudad de México, MX",
-      "username": "jperez",
-      "accountStatus": {
-        "planName": "Starter",
-        "renewalDate": "2025-03-15T00:00:00.000Z",
-        "supportContact": "soporte@wineinventory.com",
-        "statusLabel": "Activo"
-      },
-      "selectedPlanId": "starter",
-      "lastUpdated": "2025-10-05T05:31:42.702Z"
-    }
-  ],
   "subscriptionPlans": [
     {
-      "id": "starter",
-      "name": "Starter",
+      "id": "Free",
+      "name": "Free",
       "price": "$0",
-      "shortDescription": "Gestión básica para bodegas pequeñas.",
+      "shortDescription": "Basic management for small wineries.",
       "benefits": [
-        "Inventario limitado",
-        "Reportes básicos",
-        "1 usuario"
+        "Limited inventory",
+        "Basic reports",
+        "1 user"
       ]
     },
     {
-      "id": "premium",
-      "name": "Premium",
+      "id": "Plus",
+      "name": "Plus",
       "price": "$18",
-      "shortDescription": "Herramientas avanzadas para crecer tu negocio.",
+      "shortDescription": "Advanced tools to grow your business.",
       "benefits": [
-        "Inventario ilimitado",
-        "Reportes inteligentes",
-        "Soporte prioritario"
+        "Unlimited inventory",
+        "Intelligent reports",
+        "Priority support"
       ]
     },
     {
-      "id": "enterprise",
-      "name": "Enterprise",
+      "id": "Pro",
+      "name": "Pro",
       "price": "$39",
-      "shortDescription": "Automatización total y conexión con ERP.",
+      "shortDescription": "Full automation and ERP connection.",
       "benefits": [
-        "Integraciones avanzadas",
-        "Roles personalizados",
-        "Gerente de cuenta dedicado"
+        "Advanced integrations",
+        "Custom roles",
+        "Dedicated account manager"
       ]
     }
   ],
   "premiumBenefits": [
-    "Acceso a promociones exclusivas de distribuidores aliados",
-    "Alertas inteligentes sobre stock crítico y rotación de productos",
-    "Paneles personalizados para equipos de ventas y marketing",
-    "Integración directa con herramientas de facturación y CRM",
-    "Soporte prioritario 24/7 con especialistas en enología"
+    "Access to exclusive promotions from allied distributors",
+    "Intelligent alerts about critical stock and product rotation",
+    "Customized panels for sales and marketing teams",
+    "Direct integration with invoicing and CRM tools",
+    "24/7 priority support with enology specialists"
+  ],
+  "inventory": [
+    {
+      "id": "1",
+      "name": "Whiskey Escocés",
+      "type": "Destilado",
+      "expirationDate": "2024-04-24",
+      "currentStock": 20,
+      "minStockLevel": 20,
+      "price": 40,
+      "location": "Almacén 1A",
+      "imageUrl": "assets/images/whiskey.png"
+    },
+    {
+      "id": "2",
+      "name": "Vino Blanco Chardonnay",
+      "type": "Vino",
+      "expirationDate": "2023-07-23",
+      "currentStock": 10,
+      "minStockLevel": 10,
+      "price": 50,
+      "location": "Almacén 2B",
+      "imageUrl": "assets/images/vino-blanco.png"
+    },
+    {
+      "id": "3",
+      "name": "Vino Tinto Malbec",
+      "type": "Destilado",
+      "expirationDate": "2023-05-12",
+      "currentStock": 20,
+      "minStockLevel": 15,
+      "price": 55,
+      "location": "Almacén 1A",
+      "imageUrl": "assets/images/vino-tinto.png"
+    },
+    {
+      "id": "4",
+      "name": "Cerveza Artesanal IPA",
+      "type": "Cerveza",
+      "expirationDate": "2023-05-12",
+      "currentStock": 20,
+      "minStockLevel": 15,
+      "price": 60,
+      "location": "Almacén 3C",
+      "imageUrl": "assets/images/cerveza.png"
+    },
+    {
+      "id": "5",
+      "name": "Vodka Ruso Premium",
+      "type": "Destilado",
+      "expirationDate": "2023-05-12",
+      "currentStock": 20,
+      "minStockLevel": 15,
+      "price": 45,
+      "location": "Almacén 3C",
+      "imageUrl": "assets/images/vodka.png"
+    },
+    {
+      "id": "6",
+      "name": "Whiskey Japonés",
+      "type": "Destilado",
+      "expirationDate": "2023-05-12",
+      "currentStock": 20,
+      "minStockLevel": 15,
+      "price": 68,
+      "location": "Almacén 2B",
+      "imageUrl": "assets/images/whiskey.png"
+    },
+    {
+      "id": "SLWdXgH",
+      "name": "Ejemplo de Licor",
+      "type": "Licor Anisado",
+      "price": 36,
+      "expirationDate": "2025-10-04",
+      "currentStock": 20,
+      "minStockLevel": 8,
+      "location": "Almacén general",
+      "imageUrl": "assets/images/placeholder.png"
+    },
+    {
+      "id": "GSapssa",
+      "name": "Ejemplo de Licor",
+      "type": "Destilado",
+      "price": 30,
+      "expirationDate": "2025-10-05",
+      "currentStock": 20,
+      "minStockLevel": 8,
+      "location": "Almacén general",
+      "imageUrl": "assets/images/placeholder.png"
+    }
   ]
 }
