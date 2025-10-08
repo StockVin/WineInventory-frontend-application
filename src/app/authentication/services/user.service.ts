@@ -24,44 +24,25 @@ export class UserService {
     const url = `${this.baseUrl}${this.usersEndpoint}?email=${email}&password=${password}`;
 
     return this.http.get<any[]>(url).pipe(
-      switchMap(users => {
-        if (users.length === 0) return of(false).pipe(delay(500));
+      map(users => {
+        if (users.length === 0) return false;
 
         const user = users[0];
         const token = user.token || 'mock-token-' + Date.now();
 
-        return this.http
-          .get<Account[]>(`${this.baseUrl}${this.accountsEndpoint}?userOwnerId=${user.id}`)
-          .pipe(
-            switchMap(profiles => {
-              if (profiles.length === 0) return throwError(() => new Error('Perfil no encontrado'));
-              const profile = profiles[0];
+        this.currentUser = {
+          ...user,
+          account: null,
+          profileId: null,
+          role: user.role
+        };
 
-              return this.http
-                .get<Account[]>(`${this.baseUrl}${this.accountsEndpoint}?userOwnerId=${user.id}`)
-                .pipe(
-                  map(accounts => {
-                    const account = accounts[0] ?? null;
-
-                    this.currentUser = {
-                      ...user,
-                      profile,
-                      account,
-                      profileId: profile.id,
-                      role: account?.role || profile.role
-                    };
-
-                    localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-                    localStorage.setItem('token', token);
-                    return true;
-                  })
-                );
-            })
-          );
+        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+        localStorage.setItem('token', token);
+        return true;
       })
     );
   }
-
   register(data: { name: string; email: string; password: string; role: string }): Observable<any> {
     const currentDate = new Date().toISOString();
     const userPayload = {
@@ -74,47 +55,18 @@ export class UserService {
       isActive: true
     };
 
-    return this.http.post<any>(`${this.baseUrl}${this.usersEndpoint}`, userPayload).pipe(
-      switchMap(newUser =>
-        this.http.post<Profile>(`${this.baseUrl}${this.profilesEndpoint}`, {
-          id: newUser.id,
-          profileId: newUser.id,
-          name: data.name,
-          email: data.email,
-          role: data.role,
-          createdAt: currentDate,
-          updatedAt: currentDate
-        }).pipe(
-          switchMap(() =>
-            this.http.patch<any>(`${this.baseUrl}${this.usersEndpoint}/${newUser.id}`, {
-              profileId: newUser.id
-            })
-          ),
-          switchMap(() =>
-            this.http.post<Account>(`${this.baseUrl}${this.accountsEndpoint}`, {
-              id: newUser.id,
-              userOwnerId: newUser.id,
-              role: data.role,
-              businessName: data.name + ' Business',
-              name: data.name,
-              email: data.email,
-              createdAt: currentDate,
-              updatedAt: currentDate,
-              isActive: true
-            })
-          )
-        )
-      )
+    const checkUrl = `${this.baseUrl}${this.usersEndpoint}?email=${encodeURIComponent(data.email)}`;
+    return this.http.get<any[]>(checkUrl).pipe(
+      switchMap(existing => {
+        if (existing && existing.length > 0) {
+          return throwError(() => ({ status: 409, message: 'Email already exists' }));
+        }
+        return this.http.post<any>(`${this.baseUrl}${this.usersEndpoint}`, userPayload);
+      })
     );
   }
 
-  logout() {
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('token');
-    this.currentUser = null;
-  }
-
-  private loadCurrentUser() {
+  loadCurrentUser() {
     const currentUserData = localStorage.getItem('currentUser');
     const token = localStorage.getItem('token');
 
@@ -146,7 +98,7 @@ export class UserService {
     return {
       id: account.id,
       fullName: account.name || user.username,
-      role: account.role,
+      role: user.role,
       email: account.email,
       phone: '',
       location: '',

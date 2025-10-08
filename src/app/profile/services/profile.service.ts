@@ -35,6 +35,48 @@ export class ProfileService {
     (this as any).profileId = profileId;
   }
 
+  private getStoredUserId(): number | null {
+    try {
+      const raw = localStorage.getItem('currentUser');
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      return typeof parsed?.id === 'number' ? parsed.id : null;
+    } catch {
+      return null;
+    }
+  }
+
+  private getStoredUser(): any | null {
+    try {
+      const raw = localStorage.getItem('currentUser');
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch {
+      return null;
+    }
+  }
+
+  private buildProfileFromUser(userData: any, fallbackId: string): Profile {
+    return {
+      id: (userData?.id ?? fallbackId).toString(),
+      fullName: userData?.username || '',
+      email: userData?.email || '',
+      username: userData?.username || '',
+      phone: '',
+      location: '',
+      role: userData?.role || '',
+      avatarUrl: '',
+      accountStatus: {
+        planName: 'Free',
+        renewalDate: new Date().toISOString(),
+        supportContact: 'soporte@wineinventory.com',
+        statusLabel: 'Activo'
+      },
+      selectedPlanId: 'Free',
+      lastUpdated: new Date().toISOString()
+    };
+  }
+
   getProfile(): Observable<Profile | null> {
     return this.profileSubject.asObservable();
   }
@@ -48,35 +90,27 @@ export class ProfileService {
   }
 
   refreshProfile(): Observable<Profile> {
-    const currentProfileId = (this as any).profileId || 'us-001';
-    return this.http.get<any>(`${this.profileEndpoint}/${currentProfileId}`).pipe(
+    const resolvedId = this.getStoredUserId() || (this as any).profileId || '1';
+    return this.http.get<any>(`${this.profileEndpoint}/${resolvedId}`).pipe(
       tap({
         next: (userData: any) => {
-          const profile: Profile = {
-            id: userData.id?.toString() || currentProfileId,
-            fullName: userData.username || '',
-            email: userData.email || '',
-            username: userData.username || '',
-            phone: '',
-            location: '',
-            role: userData.role || '',
-            avatarUrl: '',
-            accountStatus: {
-              planName: 'Free',
-              renewalDate: new Date().toISOString(),
-              supportContact: 'soporte@wineinventory.com',
-              statusLabel: 'Activo'
-            },
-            selectedPlanId: 'Free',
-            lastUpdated: new Date().toISOString()
-          };
-
+          const profile: Profile = this.buildProfileFromUser(userData, resolvedId.toString());
           this.profileSubject.next(profile);
         },
         error: (error: any) => console.error('No se pudo cargar el perfil.', error)
       }),
       catchError((error: any) => {
-        console.error('Error en refreshProfile:', error);
+        if (error?.status === 404) {
+          const fallbackUser = this.getStoredUser();
+          if (fallbackUser) {
+            const profile = this.buildProfileFromUser(fallbackUser, (fallbackUser.id ?? resolvedId).toString());
+            this.profileSubject.next(profile);
+            return new Observable<Profile>(subscriber => {
+              subscriber.next(profile);
+              subscriber.complete();
+            });
+          }
+        }
         return throwError(() => error);
       })
     );

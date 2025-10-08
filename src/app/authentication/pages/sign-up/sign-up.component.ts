@@ -38,7 +38,6 @@ export class SignUpComponent {
   hidePassword = true;
   hideConfirmPassword = true;
   
-  //provisionally 
   roles = [
     { value: 'Distributor', viewValue: 'Distributor' },
     { value: 'Productor', viewValue: 'Productor' },
@@ -85,6 +84,13 @@ export class SignUpComponent {
         },
         error: (error) => {
           console.error('Error en el registro:', error);
+          if (error && error.status === 409) {
+            this.signupForm.get('email')?.setErrors({ emailTaken: true });
+            this.snackBar.open('El correo ya está registrado. Usa otro correo o inicia sesión.', 'Cerrar', {
+              duration: 3500
+            });
+            return;
+          }
           this.snackBar.open('Error al registrar usuario. Inténtalo de nuevo.', 'Cerrar', {
             duration: 3000
           });

@@ -1,46 +1,54 @@
 {
   "users": [
     {
-      "id": 1,
-      "username": "admin",
-      "password": "admin",
-      "email": "admin@admin.com",
-      "role": "ADMIN",
-      "profileId": 1,
-      "createdAt": "2025-10-05T00:00:00.000Z",
-      "updatedAt": "2025-10-05T00:00:00.000Z",
-      "isActive": true
+      "username": "Matias",
+      "password": "prueba",
+      "email": "sdiaz4519@gmail.com",
+      "role": "Productor",
+      "createdAt": "2025-10-08T01:35:10.030Z",
+      "updatedAt": "2025-10-08T01:35:10.030Z",
+      "isActive": true,
+      "id": 1
     },
     {
-      "username": "prueba",
+      "username": "giovany",
       "password": "prueba",
       "email": "prueba@gmail.com",
-      "role": "Distributor",
-      "createdAt": "2025-10-05T17:06:43.945Z",
-      "updatedAt": "2025-10-05T17:06:43.945Z",
+      "role": "Productor",
+      "createdAt": "2025-10-08T01:36:16.435Z",
+      "updatedAt": "2025-10-08T01:36:16.435Z",
       "isActive": true,
       "id": 2
     },
     {
-      "username": "prueba2",
-      "password": "prueba2",
-      "email": "prueba2@gmail.com",
+      "username": "Bryan",
+      "password": "prueba",
+      "email": "bryam@gmail.com",
       "role": "Productor",
-      "createdAt": "2025-10-05T17:17:49.570Z",
-      "updatedAt": "2025-10-05T17:17:49.570Z",
+      "createdAt": "2025-10-08T01:41:15.879Z",
+      "updatedAt": "2025-10-08T01:41:15.879Z",
       "isActive": true,
       "id": 3
     },
     {
-      "username": "prueba3",
-      "password": "prueba3",
-      "email": "prueba3@gmail.com",
+      "username": "Didier",
+      "password": "prueba",
+      "email": "didier@gmail.com",
       "role": "Distributor",
-      "createdAt": "2025-10-05T17:19:33.486Z",
-      "updatedAt": "2025-10-05T17:19:33.486Z",
+      "createdAt": "2025-10-08T01:45:58.650Z",
+      "updatedAt": "2025-10-08T01:45:58.650Z",
       "isActive": true,
-      "id": 4,
-      "profileId": 4
+      "id": 4
+    },
+    {
+      "username": "Anaely Burga",
+      "password": "prueba",
+      "email": "anaely@gmail.com",
+      "role": "Distributor",
+      "createdAt": "2025-10-08T01:49:30.529Z",
+      "updatedAt": "2025-10-08T01:49:30.529Z",
+      "isActive": true,
+      "id": 5
     }
   ],
   "reporting": [
@@ -208,48 +216,6 @@
     {
       "expirationAlertMargin": 7,
       "id": 1
-    }
-  ],
-  "accounts": [
-    {
-      "id": "1",
-      "userOwnerId": 1,
-      "role": "ADMIN",
-      "businessName": "Licorería San Borja",
-      "email": "admin@admin.com"
-    },
-    {
-      "id": 2,
-      "userOwnerId": 2,
-      "role": "Distributor",
-      "businessName": "prueba Business",
-      "name": "prueba",
-      "email": "prueba@gmail.com",
-      "createdAt": "2025-10-05T17:06:43.994Z",
-      "updatedAt": "2025-10-05T17:06:43.994Z",
-      "isActive": true
-    },
-    {
-      "id": 3,
-      "userOwnerId": 3,
-      "role": "Productor",
-      "businessName": "prueba2 Business",
-      "name": "prueba2",
-      "email": "prueba2@gmail.com",
-      "createdAt": "2025-10-05T17:17:49.609Z",
-      "updatedAt": "2025-10-05T17:17:49.609Z",
-      "isActive": true
-    },
-    {
-      "id": 4,
-      "userOwnerId": 4,
-      "role": "Distributor",
-      "businessName": "prueba3 Business",
-      "name": "prueba3",
-      "email": "prueba3@gmail.com",
-      "createdAt": "2025-10-05T17:19:33.486Z",
-      "updatedAt": "2025-10-05T17:19:33.486Z",
-      "isActive": true
     }
   ],
   "catalog": [

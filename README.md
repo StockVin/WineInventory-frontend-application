@@ -70,14 +70,9 @@ cd wineinventory-front-end-application
 ng add @angular/material
 ```
 
-#### Install ngx-translate
+#### Install ngx-translate and ngx-translate/http-loader
 ```bash
-ng add @ngx-translate/core
-```
-
-#### Install ngx-translate/http-loader
-```bash
-ng add @ngx-translate/http-loader
+npm install @ngx-translate/core @ngx-translate/http-loader --save
 ```
 
 3. Start the development server:
