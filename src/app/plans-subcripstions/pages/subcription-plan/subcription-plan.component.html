@@ -1,1 +1,52 @@
-<p>subcription-plan works!</p>
+<app-tool-bar [titleKey]="'subscription.title'"></app-tool-bar>
+<div class="plans-subscription-container">
+  <div class="plan-free-container">
+    <div class="plan-free-header">
+      <h1 class="title-plan">{{ 'subscription.plan-free.title' | translate }}</h1>
+    </div>
+    <div class="plan-free-description">
+      <p class="description-plan">{{ 'subscription.plan-free.description' | translate }}</p>
+    </div>
+    <div class="plan-free-content">
+      <div class="content-plan">
+        <ul>
+          <li>{{ 'subscription.plan-free.benefit1' | translate }}</li>
+          <li>{{ 'subscription.plan-free.benefit2' | translate }}</li>
+          <li>{{ 'subscription.plan-free.benefit3' | translate }}</li>
+          <li>{{ 'subscription.plan-free.benefit4' | translate }}</li>
+          <li>{{ 'subscription.plan-free.benefit5' | translate }}</li>
+          <li>{{ 'subscription.plan-free.benefit6' | translate }}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="plan-free-price">
+      <h1 class="price-plan">{{ 'subscription.plan-free.price' | translate }}</h1>
+
+    </div>
+  </div>
+  <div class="plan-premium-container">
+    <div class="plan-premium-header">
+      <h1 class="title-plan">{{ 'subscription.plan-premium.title' | translate }}</h1>
+    </div>
+    <div class="plan-premium-description">
+      <p class="description-plan">{{ 'subscription.plan-premium.description' | translate }}</p>
+    </div>
+    <div class="plan-premium-content">
+      <div class="content-plan">
+        <ul>
+          <li>{{ 'subscription.plan-premium.benefit1' | translate }}</li>
+          <li>{{ 'subscription.plan-premium.benefit2' | translate }}</li>
+          <li>{{ 'subscription.plan-premium.benefit3' | translate }}</li>
+          <li>{{ 'subscription.plan-premium.benefit4' | translate }}</li>
+          <li>{{ 'subscription.plan-premium.benefit5' | translate }}</li>
+          <li>{{ 'subscription.plan-premium.benefit6' | translate }}</li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="plan-premium-price">
+      <h1 class="price-plan">{{ 'subscription.plan-premium.price' | translate }}</h1>
+
+    </div>
+  </div>
+</div>

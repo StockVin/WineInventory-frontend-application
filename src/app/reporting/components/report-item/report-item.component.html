@@ -1,1 +1,32 @@
-<p>report-item works!</p>
+<div class="report-item">
+    <div class="report-date">{{report.date}}</div>
+    <div class="report-products">
+      <ng-container *ngIf="report.products; else noProducts">
+        <div class="product">
+          {{ report.products }}
+        </div>
+      </ng-container>
+      <ng-template #noProducts>
+        <div class="product">Sin productos</div>
+      </ng-template>
+    </div>
+    <div class="report-type">
+      <span class="type-badge" [ngClass]="report.type">
+        {{ report.type | titlecase }}
+      </span>
+    </div>
+    <div class="report-price">S/ {{ report.price | number:'1.2-2' }}</div>
+    <div class="report-amount">{{ report.amount }}</div>
+    <div class="report-lost" [class.lost]="report.lost > 0">
+      <span *ngIf="report.lost > 0">-S/ {{ report.lost | number:'1.2-2' }}</span>
+      <span *ngIf="!report.lost || report.lost === 0">-</span>
+    </div>
+    <div class="report-actions">
+      <button class="delete-button"
+              (click)="$event.stopPropagation(); onDelete()"
+              matTooltip="Eliminar registro"
+              aria-label="Eliminar">
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+    </div>
+</div>
