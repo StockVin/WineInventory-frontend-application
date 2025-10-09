@@ -3,13 +3,16 @@
     display: block;
     background: linear-gradient(135deg, #2C2129 0%, #20181F 100%);
     min-height: 100vh;
-    padding: 30px;
+    padding: 30px 30px 30px 280px;
     color: #FFFFFF;
+    box-sizing: border-box;
 }
 
 .inventory-page-container {
     max-width: 1400px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .header {
@@ -165,4 +168,76 @@
     height: 1px;
     background: linear-gradient(90deg, transparent 0%, #CC8811 50%, transparent 100%);
     opacity: 0.3;
+}
+
+@media (max-width: 1200px) {
+  :host {
+    padding: 24px 24px 24px 280px;
+  }
+}
+
+@media (max-width: 1024px) {
+  :host {
+    padding: 24px 24px 24px 24px;
+  }
+
+  .header h1 {
+    font-size: 2.2rem;
+  }
+
+  .action-bar {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .search-field {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+
+  .new-product-btn,
+  .register-out-btn {
+    height: 44px;
+    padding: 0 16px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  :host {
+    padding: 16px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .user-profile {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .action-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .new-product-btn,
+  .register-out-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .action-bar {
+    padding: 12px;
+  }
 }
