@@ -5,18 +5,24 @@
     </span>
     <span class="alert-title">{{ alert.title }}</span>
   </div>
-  <p class="alert-message">{{ alert.message }}</p>
-  <span class="stock-info" *ngIf="alert.type === 'PRODUCTLOWSTOCK'">
-    Minimum stock: <strong>{{ getMinimumStock(alert.productId) ?? '?' }}</strong>
-  </span>
-  <p class="alert-severity" [style.color]="getSeverityColor(alert.severity)">
-    Severity: {{ alert.severity }}
-  </p>
-  <mat-divider></mat-divider>
-</div>
 
-<div class="alert-item" *ngIf="expiration">
-  <p class="product-name">{{ expiration.name }}</p>
-  <p class="expiration">Expires in {{ expiration.days }} days!</p>
-  <mat-divider></mat-divider>
+  <div class="alert-content">
+    <p class="alert-message">{{ alert.message }}</p>
+
+    <div class="stock-info" *ngIf="alert.type === 'PRODUCTLOWSTOCK'">
+      <p><strong>{{ 'alert.stock' | translate }}:</strong> {{ getCurrentStock(alert.productId) ?? '?' }}</p>
+      <p><strong>{{ 'alert.minStock' | translate }}:</strong> {{ getMinimumStock(alert.productId) ?? '?' }}</p>
+    </div>
+
+    <div class="expiration-info" *ngIf="alert.type === 'EXPIRATION_WARNING'">
+      <p><strong>{{ 'alert.expiration' | translate }}:</strong> {{ getExpirationDate(alert.productId) ?? '?' }}</p>
+      <p><strong>{{ 'alert.daysUntilExpiration' | translate }}:</strong> {{ getDaysUntilExpiration(alert.productId) ?? '?' }}</p>
+    </div>
+
+    <p class="alert-severity" [style.color]="getSeverityColor(alert.severity)">
+      {{ 'alert.severity' | translate }}: {{ alert.severity }}
+    </p>
+  </div>
+
+  <mat-divider *ngIf="!isLast"></mat-divider>
 </div>

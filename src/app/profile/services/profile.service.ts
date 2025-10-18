@@ -1,17 +1,28 @@
 
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, forkJoin, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, forkJoin, throwError, catchError, map } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { AccountStatus, Profile, ProfileUpdateInput, SubscriptionPlan } from '../models/profile.entity';
 
+export interface UserProfile {
+  id: number;
+  username: string;
+  email: string;
+  role: string;
+  businessName?: string;
+  businessAddress?: string;
+  phone?: string;
+  profileId?: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ProfileService {
   private readonly http = inject(HttpClient);
 
-  private readonly profileEndpoint = `${environment.apiUrl}/profiles`;
+  private readonly profileEndpoint = `${environment.apiUrl}/users`;
   private readonly plansEndpoint = `${environment.apiUrl}/subscriptionPlans`;
   private readonly benefitsEndpoint = `${environment.apiUrl}/premiumBenefits`;
   private readonly profileId = 'us-001';
@@ -19,6 +30,52 @@ export class ProfileService {
   private readonly profileSubject = new BehaviorSubject<Profile | null>(null);
   private readonly plansSubject = new BehaviorSubject<SubscriptionPlan[]>([]);
   private readonly benefitsSubject = new BehaviorSubject<string[]>([]);
+
+  setProfileId(profileId: string): void {
+    (this as any).profileId = profileId;
+  }
+
+  private getStoredUserId(): number | null {
+    try {
+      const raw = localStorage.getItem('currentUser');
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      return typeof parsed?.id === 'number' ? parsed.id : null;
+    } catch {
+      return null;
+    }
+  }
+
+  private getStoredUser(): any | null {
+    try {
+      const raw = localStorage.getItem('currentUser');
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch {
+      return null;
+    }
+  }
+
+  private buildProfileFromUser(userData: any, fallbackId: string): Profile {
+    return {
+      id: (userData?.id ?? fallbackId).toString(),
+      fullName: userData?.username || '',
+      email: userData?.email || '',
+      username: userData?.username || '',
+      phone: '',
+      location: '',
+      role: userData?.role || '',
+      avatarUrl: '',
+      accountStatus: {
+        planName: 'Free',
+        renewalDate: new Date().toISOString(),
+        supportContact: 'soporte@wineinventory.com',
+        statusLabel: 'Activo'
+      },
+      selectedPlanId: 'Free',
+      lastUpdated: new Date().toISOString()
+    };
+  }
 
   getProfile(): Observable<Profile | null> {
     return this.profileSubject.asObservable();
@@ -33,10 +90,28 @@ export class ProfileService {
   }
 
   refreshProfile(): Observable<Profile> {
-    return this.http.get<Profile>(`${this.profileEndpoint}/${this.profileId}`).pipe(
+    const resolvedId = this.getStoredUserId() || (this as any).profileId || '1';
+    return this.http.get<any>(`${this.profileEndpoint}/${resolvedId}`).pipe(
       tap({
-        next: profile => this.profileSubject.next(profile),
-        error: error => console.error('No se pudo cargar el perfil.', error)
+        next: (userData: any) => {
+          const profile: Profile = this.buildProfileFromUser(userData, resolvedId.toString());
+          this.profileSubject.next(profile);
+        },
+        error: (error: any) => console.error('No se pudo cargar el perfil.', error)
+      }),
+      catchError((error: any) => {
+        if (error?.status === 404) {
+          const fallbackUser = this.getStoredUser();
+          if (fallbackUser) {
+            const profile = this.buildProfileFromUser(fallbackUser, (fallbackUser.id ?? resolvedId).toString());
+            this.profileSubject.next(profile);
+            return new Observable<Profile>(subscriber => {
+              subscriber.next(profile);
+              subscriber.complete();
+            });
+          }
+        }
+        return throwError(() => error);
       })
     );
   }
@@ -72,10 +147,37 @@ export class ProfileService {
       return throwError(() => new Error('Los cambios proporcionados no son válidos.'));
     }
 
-    return this.http.patch<Profile>(`${this.profileEndpoint}/${this.profileId}`, changes).pipe(
+    const currentProfileId = (this as any).profileId || 'us-001';
+    return this.http.patch<any>(`${this.profileEndpoint}/${currentProfileId}`, changes).pipe(
       tap({
-        next: profile => this.profileSubject.next(profile),
-        error: error => console.error('No se pudo actualizar el perfil.', error)
+        next: (profile: any) => {
+          const currentProfile = this.profileSubject.getValue();
+          const normalizedProfile: Profile = {
+            id: profile.id || currentProfileId,
+            fullName: profile.fullName || (currentProfile?.fullName || ''),
+            email: profile.email || (currentProfile?.email || ''),
+            username: profile.username || (currentProfile?.username || ''),
+            phone: profile.phone || (currentProfile?.phone || ''),
+            location: profile.location || (currentProfile?.location || ''),
+            role: profile.role || (currentProfile?.role || ''),
+            avatarUrl: profile.avatarUrl || (currentProfile?.avatarUrl || ''),
+            accountStatus: profile.accountStatus || (currentProfile?.accountStatus || {
+              planName: 'Free',
+              renewalDate: new Date().toISOString(),
+              supportContact: 'soporte@wineinventory.com',
+              statusLabel: 'Activo'
+            }),
+            selectedPlanId: profile.selectedPlanId || (currentProfile?.selectedPlanId || 'Free'),
+            lastUpdated: new Date().toISOString()
+          };
+
+          this.profileSubject.next(normalizedProfile);
+        },
+        error: (error: any) => console.error('No se pudo actualizar el perfil.', error)
+      }),
+      catchError((error: any) => {
+        console.error('Error en updateProfile:', error);
+        return throwError(() => error);
       })
     );
   }
@@ -110,43 +212,12 @@ export class ProfileService {
       statusLabel: profile.accountStatus.statusLabel || 'Activo'
     };
   }
-}
-
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, catchError, map, throwError } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { Profile } from '../models/profile.entity';
-
-export interface UserProfile {
-  profileId: number;
-  name: string;
-  email: string;
-  role: string;
-  businessName?: string;
-  businessAddress?: string;
-  phone?: string;
-}
-
-@Injectable({
-  providedIn: 'root',
-})
-export class ProfileService {
-  private apiUrl = environment.apiUrl;
-
-  constructor(private http: HttpClient) {}
 
   getProfileById(profileId: number): Observable<UserProfile> {
-    const url = `${this.apiUrl}/profiles?profileId=${profileId}`;
+    const url = `${environment.apiUrl}/users/${profileId}`;
     console.log('URL llamada API getProfileById:', url);
-    return this.http.get<UserProfile[]>(url).pipe(
-      map(profiles => {
-        if (profiles.length === 0) {
-          throw new Error('Profile not found');
-        }
-        return profiles[0];
-      }),
-      catchError(err => {
+    return this.http.get<UserProfile>(url).pipe(
+      catchError((err: any) => {
         console.error('Error fetching profile:', err);
         return throwError(() => err);
       })
@@ -154,7 +225,6 @@ export class ProfileService {
   }
 
   editProfile(profile: Profile): Observable<Profile> {
-    return this.http.put<Profile>(`${this.apiUrl}/profiles/${profile.profileId}`, profile);
+    return this.http.put<Profile>(`${environment.apiUrl}/users/${profile.id}`, profile);
   }
 }
-

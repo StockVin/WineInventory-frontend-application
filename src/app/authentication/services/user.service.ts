@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
-import {Observable, of, delay, switchMap, map, throwError, catchError} from 'rxjs';
-
+import { Observable, of, delay, switchMap, map, throwError, catchError, tap } from 'rxjs';
 
 import { Profile } from '../../profile/models/profile.entity';
 import { Account } from '../../plans-subcripstions/models/account.entity';
@@ -14,115 +13,107 @@ export class UserService {
   private readonly usersEndpoint = environment.userEndpointPath;
   private readonly profilesEndpoint = environment.profileEndpointPath;
   private readonly accountsEndpoint = environment.accountsEndpointPath;
+  private readonly httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   private currentUser: any = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loadCurrentUser();
+  }
 
-  login(username: string, password: string): Observable<boolean> {
-    const url = `${this.baseUrl}${this.usersEndpoint}?username=${username}&password=${password}`;
+  login(email: string, password: string): Observable<boolean> {
+    const payload = {
+      username: email,
+      password
+    };
 
-    return this.http.get<any[]>(url).pipe(
-      switchMap(users => {
-        if (users.length === 0) return of(false).pipe(delay(500));
+    return this.http.post<any>(`${this.backendApi}/sign-in`, payload, this.httpOptions).pipe(
+      tap(response => {
+        const userData = response?.data ?? response ?? {};
+        const token = userData?.token ?? response?.token;
 
-        const user = users[0];
-        const token = user.token;
+        this.currentUser = userData;
 
-        return this.http
-          .get<Profile[]>(`${this.baseUrl}${this.profilesEndpoint}?id=${user.profileId}`)
-          .pipe(
-            switchMap(profiles => {
-              if (profiles.length === 0) return throwError(() => new Error('Perfil no encontrado'));
-              const profile = profiles[0];
-
-              return this.http
-                .get<Account[]>(`${this.baseUrl}${this.accountsEndpoint}?userOwnerId=${user.id}`)
-                .pipe(
-                  map(accounts => {
-                    const account = accounts[0] ?? null;
-
-                    this.currentUser = {
-                      ...user,
-                      profile,
-                      account,
-                      role: account?.role || profile.role
-                    };
-
-                    localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-                    localStorage.setItem('token', token); // Se guarda el token ya existente
-                    return true;
-                  })
-                );
-            })
-          );
-      })
+        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+        if (token) {
+          localStorage.setItem('token', token);
+        }
+      }),
+      map(() => true)
     );
   }
+  register(data: { name: string; email: string; password: string; confirmPassword: string; role: string }): Observable<any> {
+    const userPayload = {
+      username: data.name,
+      email: data.email,
+      password: data.password,
+      validationPassword: data.confirmPassword,
+      role: data.role
+    };
 
-  register(data: { name: string; email: string; password: string; role: string }): Observable<any> {
-    const userPayload = { username: data.email, password: data.password };
-
-    return this.http.post<any>(`${this.baseUrl}${this.usersEndpoint}`, userPayload).pipe(
-      switchMap(newUser =>
-        this.http.post<Profile>(`${this.baseUrl}${this.profilesEndpoint}`, {
-          id: newUser.id,
-          profileId: newUser.id,
-          name: data.name,
-          email: data.email,
-          role: data.role
-        }).pipe(
-          switchMap(() =>
-            this.http.patch<any>(`${this.baseUrl}${this.usersEndpoint}/${newUser.id}`, {
-              profileId: newUser.id
-            })
-          ),
-          switchMap(() =>
-            this.http.post<Account>(`${this.baseUrl}${this.accountsEndpoint}`, {
-              id: newUser.id,
-              userOwnerId: newUser.id,
-              role: data.role,
-              businessName: data.name + ' Business',
-              name: data.name,
-              email: data.email
-            })
-          )
-        )
-      )
-    );
+    return this.http.post<any>(`${this.backendApi}/sign-up`, userPayload);
   }
 
-  logout() {
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('token');
-    this.currentUser = null;
-  }
+  loadCurrentUser() {
+    const currentUserData = localStorage.getItem('currentUser');
+    const token = localStorage.getItem('token');
 
-  private initFromStorage(): void {
-    if (!this.currentUser) {
-      const saved = localStorage.getItem('currentUser');
-      this.currentUser = saved ? JSON.parse(saved) : null;
+    if (token && currentUserData) {
+      try {
+        const user = JSON.parse(currentUserData);
+        this.currentUser = user;
+        console.log('Usuario cargado desde localStorage:', user);
+      } catch (error) {
+        console.error('Error parsing currentUser from localStorage:', error);
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('token');
+        this.currentUser = null;
+      }
+    } else {
+      this.currentUser = null;
     }
   }
 
   getCurrentUser() {
-    this.initFromStorage();
     return this.currentUser;
   }
 
   getCurrentUserProfile(): Profile | null {
-    return this.getCurrentUser()?.profile ?? null;
+    const user = this.getCurrentUser();
+    if (!user || !user.account) return null;
+
+    const account = user.account;
+    return {
+      id: account.id,
+      fullName: account.name || user.username,
+      role: user.role,
+      email: account.email,
+      phone: '',
+      location: '',
+      username: user.username,
+      avatarUrl: '',
+      accountStatus: {
+        planName: 'Free',
+        renewalDate: new Date().toISOString(),
+        supportContact: 'soporte@wineinventory.com',
+        statusLabel: 'Activo'
+      },
+      selectedPlanId: 'Free',
+      lastUpdated: new Date().toISOString()
+    };
   }
 
   getCurrentUserAccount(): Account | null {
     return this.getCurrentUser()?.account ?? null;
   }
 
-  getProfileByEmail(email: string): Observable<Profile | null> {
+  getProfileByEmail(email: string): Observable<Account | null> {
     const params = new HttpParams().set('email', email);
     return this.http
-      .get<Profile[]>(`${this.baseUrl}${this.profilesEndpoint}`, { params })
-      .pipe(map(p => p[0] ?? null));
+      .get<Account[]>(`${this.baseUrl}${this.accountsEndpoint}`, { params })
+      .pipe(map(a => a[0] ?? null));
   }
 
   getAccountByEmail(email: string): Observable<Account | null> {
@@ -138,36 +129,38 @@ export class UserService {
       );
   }
 
-  getAccountById(accountId: number): Observable<Account | null> {
-    return this.http
-      .get<Account>(`${this.baseUrl}${this.accountsEndpoint}/${accountId}`)
-      .pipe(map(a => a ?? null));
-  }
-  private readonly userEndpointPath = environment.userEndpointPath;
-  private currentUser: any = null;
+  /**
+   *  Test method to verify user registration
+   */
+  testRegistration(): Observable<any> {
+    const testData = {
+      name: 'Usuario de Prueba',
+      email: 'test@example.com',
+      password: 'test123',
+      confirmPassword: 'test123',
+      role: 'PRODUCER'
+    };
 
-  constructor(private http: HttpClient) {
-    this.loadCurrentUser();
-  }
-
-  private loadCurrentUser() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.http.get(`${this.backendApi}/${this.userEndpointPath}/current-user`, {
-        headers: new HttpHeaders({
-          'Authorization': `Bearer ${token}`
-        })
+    return this.register(testData).pipe(
+      tap(result => console.log('Usuario registrado exitosamente:', result)),
+      catchError(error => {
+        console.error('Error en el registro:', error);
+        return throwError(() => error);
       })
-        .subscribe((user: any) => { 
-          this.currentUser = user;
-        });
-    }
-    else {
-      this.currentUser = null;
-    }
+    );
   }
 
-  getCurrentUser(): any {
-    return this.currentUser;
+  /**
+   * Test method to verify user registration
+   */
+  getUserById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}${this.usersEndpoint}/${id}`);
+  }
+
+  /**
+   * Test method to verify user registration
+   */
+  getAllUsers(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}${this.usersEndpoint}`);
   }
 }

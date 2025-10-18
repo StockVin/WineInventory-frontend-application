@@ -1,60 +1,57 @@
+<div class="plan-details-container">
+  <h2 class="plan-details__title">{{ 'profile.planDetails.title' | translate }}</h2>
+  <p class="plan-details__subtitle">{{ 'profile.planDetails.subtitle' | translate }}</p>
 
-<header class="card__header">
-  <h2>Planes</h2>
-  <p>Selecciona el plan que mejor se adapte al crecimiento de tu bodega.</p>
-</header>
+  <ng-container *ngIf="plans?.length; else emptyState">
+    <div class="plan-details__grid">
+      <div
+        *ngFor="let plan of plans; index as planIndex"
+        class="plan-card"
+        [class.plan-card--current]="plan.id === selectedPlanId"
+      >
+        <div class="plan-card__header">
+          <div class="plan-card__current-badge" *ngIf="plan.id === selectedPlanId">
+            {{ 'profile.planDetails.now' | translate }}
+          </div>
+          <h3 class="plan-card__name">{{ plan.name }}</h3>
+          <div class="plan-card__price">
+            {{ plan.price }}<small> / {{ 'profile.planDetails.mounth' | translate }}</small>
+          </div>
+          <p class="plan-card__description">
+            {{ getPlanDescription(planIndex) }}
+          </p>
+        </div>
 
-<ng-container *ngIf="plans?.length; else emptyState">
-  <div class="plans-card__grid">
-    <button
-      *ngFor="let plan of plans"
-      type="button"
-      class="plan"
-      [class.plan--selected]="plan.id === selectedPlanId"
-      (click)="onSelectPlan(plan.id)"
-      [disabled]="disabled"
-    >
-      <div class="plan__header">
-        <h3>{{ plan.name }}</h3>
-        <span class="plan__price">{{ plan.price }}<small>/mes</small></span>
+        <ul class="plan-card__features">
+          <li *ngFor="let benefit of plan.benefits; index as benefitIndex" class="plan-card__feature">
+            <mat-icon class="plan-card__feature-icon">check_circle</mat-icon>
+            {{ getBenefitTranslation(planIndex, benefitIndex) }}
+          </li>
+        </ul>
+
+        <div class="plan-card__actions">
+          <button
+            type="button"
+            class="plan-card__button"
+            [class.plan-card__button--current]="plan.id === selectedPlanId"
+            (click)="onSelectPlan(plan.id)"
+            [disabled]="disabled || plan.id === selectedPlanId"
+          >
+            {{ plan.id === selectedPlanId ? ('profile.buttons.selectedPlan' | translate) : ('profile.buttons.plans' | translate) }}
+          </button>
+        </div>
       </div>
-      <p class="plan__description">{{ plan.shortDescription }}</p>
-      <ul class="plan__benefits">
-        <li *ngFor="let benefit of plan.benefits">
-          <span class="material-symbols-outlined">check_circle</span>
-          {{ benefit }}
-        </li>
-      </ul>
-      <span class="plan__cta">{{ plan.id === selectedPlanId ? 'Plan actual' : 'Elegir este plan' }}</span>
-    </button>
-  </div>
-</ng-container>
-
-<ng-template #emptyState>
-  <p class="plan-details__empty">No hay planes disponibles en este momento.</p>
-</ng-template>
-
-<section class="plans-container">
-  <h2 class="plans-title">Plans</h2>
-  <div class="plans">
-    <div class="plan-card free">
-      <h3>Free</h3>
-
-      <ul>
-        <li>Seguimiento del inventario</li>
-        <li>Guías de almacenamiento</li>
-        <li>Alertas básicas</li>
-      </ul>
     </div>
+  </ng-container>
 
-    <div class="plan-card premium">
-      <h3>Premium</h3>
-      <p class="price">S/. 19.90</p>
-      <ul>
-        <li>Soporte prioritario</li>
-        <li>Alertas personalizadas</li>
-      </ul>
+  <ng-template #emptyState>
+    <div class="plan-details__empty">
+      <span class="material-symbols-outlined plan-details__empty-icon">info</span>
+      <h3 class="plan-details__empty-title">Plans Not Available</h3>
+      <p class="plan-details__empty-message">
+        There are no plans available to display at this time. Please try again later.
+      </p>
     </div>
-  </div>
-</section>
+  </ng-template>
+</div>
 

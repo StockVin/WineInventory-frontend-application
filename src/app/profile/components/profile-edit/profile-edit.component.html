@@ -1,193 +1,101 @@
-
-<div class="profile-card__user" *ngIf="profile as profileData">
-  <div class="profile-card__avatar">
-    <ng-container *ngIf="shouldShowAvatarImage; else initialsAvatar">
-      <img
-        class="avatar-image"
-        [src]="profileData.avatarUrl"
-        [alt]="'Foto de ' + profileData.fullName"
-        (error)="handleAvatarError()"
-      />
-    </ng-container>
-    <ng-template #initialsAvatar>
-      <div class="avatar">{{ avatarInitials }}</div>
-    </ng-template>
-  </div>
-  <h2>{{ profileData.fullName }}</h2>
-  <p class="profile-card__role">{{ profileData.role }}</p>
-
-  <dl class="profile-card__details">
-    <div>
-      <dt class="material-symbols-outlined">mail</dt>
-      <dd>{{ profileData.email }}</dd>
-    </div>
-    <div>
-      <dt class="material-symbols-outlined">call</dt>
-      <dd>{{ profileData.phone }}</dd>
-    </div>
-    <div>
-      <dt class="material-symbols-outlined">location_on</dt>
-      <dd>{{ profileData.location }}</dd>
-    </div>
-  </dl>
-</div>
-
-<form class="profile-card__form" [formGroup]="profileForm" (ngSubmit)="submit()">
-  <div class="form-field" [class.form-field--error]="isFieldInvalid('fullName')">
-    <label for="fullName">Nombre</label>
-    <input id="fullName" type="text" formControlName="fullName" placeholder="Ingresa tu nombre completo" />
-    <span class="field-error" *ngIf="isFieldInvalid('fullName')">
-      Debe contener al menos 3 caracteres.
-    </span>
-  </div>
-
-  <div class="form-field" [class.form-field--error]="isFieldInvalid('email')">
-    <label for="email">Correo electrónico</label>
-    <input id="email" type="email" formControlName="email" placeholder="correo@empresa.com" />
-    <span class="field-error" *ngIf="isFieldInvalid('email')">
-      Ingresa un correo electrónico válido.
-    </span>
-  </div>
-
-  <div class="form-field" [class.form-field--error]="isFieldInvalid('username')">
-    <label for="username">Nombre de usuario</label>
-    <input id="username" type="text" formControlName="username" placeholder="usuario" />
-    <span class="field-error" *ngIf="isFieldInvalid('username')">
-      Debe contener al menos 4 caracteres.
-    </span>
-  </div>
-
-  <div class="form-field" [class.form-field--error]="isFieldInvalid('phone')">
-    <label for="phone">Teléfono</label>
-    <input id="phone" type="tel" formControlName="phone" placeholder="Ingresa un número de contacto" />
-    <span class="field-error" *ngIf="isFieldInvalid('phone')">
-      Ingresa un teléfono válido.
-    </span>
-  </div>
-
-  <div class="form-field" [class.form-field--error]="isFieldInvalid('location')">
-    <label for="location">Ubicación</label>
-    <input id="location" type="text" formControlName="location" placeholder="Ciudad, País" />
-    <span class="field-error" *ngIf="isFieldInvalid('location')">
-      Ingresa una ubicación válida.
-    </span>
-  </div>
-
-  <div class="form-field password-group" [class.form-field--error]="isFieldInvalid('currentPassword')">
-    <label for="currentPassword">Contraseña actual</label>
-    <input id="currentPassword" type="password" formControlName="currentPassword" placeholder="••••••" />
-  </div>
-
-  <div class="form-field password-group" [class.form-field--error]="isFieldInvalid('newPassword')">
-    <label for="newPassword">Nueva contraseña</label>
-    <input id="newPassword" type="password" formControlName="newPassword" placeholder="••••••" />
-    <span class="field-error" *ngIf="isFieldInvalid('newPassword')">
-      La contraseña debe tener al menos 6 caracteres.
-    </span>
-  </div>
-
-  <div class="form-field password-group" [class.form-field--error]="isFieldInvalid('confirmPassword')">
-    <label for="confirmPassword">Confirmar contraseña</label>
-    <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="••••••" />
-    <span class="field-error" *ngIf="isFieldInvalid('confirmPassword')">
-      Las contraseñas deben coincidir.
-    </span>
-  </div>
-
-  <div class="form-actions">
-    <button type="button" class="secondary-button" (click)="resetForm()" [disabled]="saving">
-      Cancelar
-    </button>
-    <button type="submit" class="primary-button" [disabled]="saving">
-      {{ saving ? 'Guardando…' : 'Guardar cambios' }}
-    </button>
-  </div>
-
-  <p class="field-error" *ngIf="errorMessage">{{ errorMessage }}</p>
-</form>
-<div class="profile-container" [formGroup]="form">
-  <div class="profile-left">
-    <mat-card class="password-section">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Current password</mat-label>
-        <input matInput [type]="hideActual ? 'password' : 'text'" formControlName="currentPassword" />
-        <button mat-icon-button matSuffix (click)="hideActual = !hideActual" type="button">
-          <mat-icon>{{ hideActual ? 'visibility_off' : 'visibility' }}</mat-icon>
-        </button>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>New password</mat-label>
-        <input matInput [type]="hideNew ? 'password' : 'text'" formControlName="newPassword" />
-        <button mat-icon-button matSuffix (click)="hideNew = !hideNew" type="button">
-          <mat-icon>{{ hideNew ? 'visibility_off' : 'visibility' }}</mat-icon>
-        </button>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Confirm password</mat-label>
-        <input matInput [type]="hideConfirm ? 'password' : 'text'" formControlName="confirmPassword" />
-        <button mat-icon-button matSuffix (click)="hideConfirm = !hideConfirm" type="button">
-          <mat-icon>{{ hideConfirm ? 'visibility_off' : 'visibility' }}</mat-icon>
-        </button>
-        <mat-error *ngIf="form.hasError('passwordMismatch')">
-          Passwords do not match
-        </mat-error>
-      </mat-form-field>
-
-      <div class="actions">
-        <button mat-raised-button class="save" (click)="save()">Save</button>
-        <button mat-button class="cancel" (click)="cancel()">Cancel</button>
+<div class="profile-edit-layout">
+  <app-side-navbar></app-side-navbar>
+  <div class="profile-edit-main">
+    <app-language-switcher></app-language-switcher>
+    <div class="profile-edit-container">
+      <!-- Profile Header -->
+      <div class="profile-edit__header">
+        <div class="profile-edit__avatar">
+          <ng-container *ngIf="shouldShowAvatarImage; else initialsAvatar">
+            <img
+              class="avatar-image"
+              [src]="profile?.avatarUrl"
+              [alt]="'Foto de ' + profile?.fullName"
+              (error)="handleAvatarError()"
+            />
+          </ng-container>
+          <ng-template #initialsAvatar>
+            <div class="avatar-initials">{{ avatarInitials }}</div>
+          </ng-template>
+        </div>
+        <div class="profile-edit__info">
+          <h2>{{ profile?.fullName }}</h2>
+          <p class="profile-role">{{ profile?.role }}</p>
+        </div>
       </div>
-    </mat-card>
-  </div>
 
-  <div class="profile-right">
-    <mat-card class="profile-section">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Name</mat-label>
-        <input matInput formControlName="name" />
-        <mat-icon matSuffix>edit</mat-icon>
-      </mat-form-field>
+      <!-- Edit Form -->
+      <form class="profile-edit__form" [formGroup]="profileForm" (ngSubmit)="submit()">
+        <div class="form-grid">
+          <!-- Personal Information -->
+          <div class="form-section">
+            <h3>{{ 'profile.edit.title' | translate }}</h3>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" />
-        <mat-icon matSuffix>edit</mat-icon>
-      </mat-form-field>
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('fullName')">
+              <label for="fullName">{{ 'profile.edit.name' | translate }}</label>
+              <input id="fullName" type="text" formControlName="fullName" placeholder="Ingresa tu nombre completo" />
+              <span class="field-error" *ngIf="isFieldInvalid('fullName')">
+                {{ 'profile.edit.nameError' | translate }}
+              </span>
+            </div>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Role</mat-label>
-        <input matInput formControlName="role" />
-        <mat-icon matSuffix>role</mat-icon>
-      </mat-form-field>
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('email')">
+              <label for="email">{{ 'profile.edit.email' | translate }}</label>
+              <input id="email" type="email" formControlName="email" placeholder="correo@empresa.com" />
+              <span class="field-error" *ngIf="isFieldInvalid('email')">
+                {{ 'profile.edit.emailError' | translate }}
+              </span>
+            </div>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Business</mat-label>
-        <input matInput formControlName="businessName" />
-        <mat-icon matSuffix>edit</mat-icon>
-      </mat-form-field>
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('username')">
+              <label for="username">{{ 'profile.edit.username' | translate }}</label>
+              <input id="username" type="text" formControlName="username" placeholder="usuario" />
+              <span class="field-error" *ngIf="isFieldInvalid('username')">
+                {{ 'profile.edit.usernameError' | translate }}
+              </span>
+            </div>
+          </div>          
+        </div>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Phone</mat-label>
-        <input matInput formControlName="phone" />
-        <mat-icon matSuffix>edit</mat-icon>
-      </mat-form-field>
+        <!-- Password Section -->
+        <div class="password-section">
+          <h3>{{ 'profile.edit.changePassword' | translate }}</h3>
+          <div class="password-fields">
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('currentPassword')">
+              <label for="currentPassword">{{ 'profile.edit.currentPassword' | translate }}</label>
+              <input id="currentPassword" type="password" formControlName="currentPassword" placeholder="••••••" />
+            </div>
 
-      <!-- Nuevo campo: Dirección del negocio -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Business address</mat-label>
-        <input matInput formControlName="businessAddress" />
-        <button mat-icon-button matSuffix (click)="openMap()" type="button">
-          <mat-icon>edit_location</mat-icon>
-        </button>
-      </mat-form-field>
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('newPassword')">
+              <label for="newPassword">{{ 'profile.edit.newPassword' | translate }}</label>
+              <input id="newPassword" type="password" formControlName="newPassword" placeholder="••••••" />
+              <span class="field-error" *ngIf="isFieldInvalid('newPassword')">
+                {{ 'profile.edit.newPasswordError' | translate }}
+              </span>
+            </div>
 
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('confirmPassword')">
+              <label for="confirmPassword">{{ 'profile.edit.confirmPassword' | translate }}</label>
+              <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="••••••" />
+              <span class="field-error" *ngIf="isFieldInvalid('confirmPassword')">
+                {{ 'profile.edit.confirmPasswordError' | translate }}
+              </span>
+            </div>
+          </div>
+        </div>
 
-      <div class="actions">
-        <button mat-raised-button class="save" (click)="save()">Save</button>
-        <button mat-button class="cancel" (click)="cancel()">Cancel</button>
-      </div>
-    </mat-card>
+        <!-- Actions -->
+        <div class="form-actions">
+          <button type="button" class="ghost-button" [disabled]="saving" (click)="return()" >
+            {{ 'profile.edit.cancel' | translate }}
+          </button>
+          <button type="submit" class="primary-button" [disabled]="saving">
+            {{ saving ? 'profile.edit.saving' : 'profile.edit.save' | translate }}
+          </button>
+        </div>
+
+        <p class="form-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </form>
+    </div>
   </div>
 </div>

@@ -1,9 +1,14 @@
-
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
+import { Component, EventEmitter, Input, Output, inject, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Profile } from '../../models/profile.entity';
+import { ProfileService, UserProfile } from '../../services/profile.service';
+import { UserService } from '../../../authentication/services/user.service';
+import { SideNavbarComponent } from "../../../shared/presentation/components/side-navbar/side-navbar.component";
+import { LanguageSwitcher } from "../../../shared/presentation/components/language-switcher/language-switcher.component";
+import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 export interface ProfileFormValue {
   fullName: string;
@@ -11,22 +16,7 @@ export interface ProfileFormValue {
   username: string;
   phone: string;
   location: string;
-
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import {ProfileService, UserProfile} from '../../services/profile.service';
-import { Profile } from '../../models/profile.entity';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCardModule } from '@angular/material/card';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
-import { MapDialogComponent } from '../map-dialog/map-dialog.component';
-import { UserService } from '../../../authentication/services/user.service';
+}
 
 function passwordMatchValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -41,27 +31,31 @@ function passwordMatchValidator(): ValidatorFn {
 @Component({
   selector: 'app-profile-edit',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './profile-edit.component.html',
-  styleUrl: './profile-edit.component.css',
-  host: {
-    class: 'card profile-card'
-  }
-  templateUrl: './profile-edit.component.html',
-  styleUrls: ['./profile-edit.component.css'],
-  standalone: true,
   imports: [
-    MatIconModule,
-    MatInputModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatCardModule,
-    ReactiveFormsModule,
     CommonModule,
+    ReactiveFormsModule,
+    SideNavbarComponent,
+    LanguageSwitcher,
+    TranslateModule
   ],
+  templateUrl: './profile-edit.component.html',
+  styleUrls: ['./profile-edit.component.css']
 })
-export class ProfileEditComponent implements OnChanges {
-  @Input({ required: true }) profile!: Profile;
+export class ProfileEditComponent implements OnInit, OnDestroy {
+  private _profile?: Profile;
+
+  @Input()
+  set profile(value: Profile | undefined) {
+    this._profile = value;
+    if (value) {
+      this.updateFormWithProfile();
+    }
+  }
+
+  get profile(): Profile | undefined {
+    return this._profile;
+  }
+
   @Input() saving = false;
   @Input() errorMessage: string | null = null;
 
@@ -69,7 +63,11 @@ export class ProfileEditComponent implements OnChanges {
   @Output() cancelEdit = new EventEmitter<void>();
 
   private readonly formBuilder = inject(FormBuilder);
+  private readonly profileService = inject(ProfileService);
+  private readonly userService = inject(UserService);
   private avatarHasError = false;
+  private readonly router = inject(Router);
+  private destroy$ = new Subject<void>();
 
   readonly profileForm: FormGroup = this.formBuilder.group({
     fullName: ['', [Validators.required, Validators.minLength(3)]],
@@ -80,21 +78,52 @@ export class ProfileEditComponent implements OnChanges {
     currentPassword: ['', []],
     newPassword: ['', [Validators.minLength(6)]],
     confirmPassword: ['', [Validators.minLength(6)]]
-  });
+  }, { validators: passwordMatchValidator() });
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['profile'] && this.profile) {
-      this.avatarHasError = false;
-      this.patchFormWithProfile(this.profile);
+  ngOnInit(): void {
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state as { profile?: Profile };
+    if (state?.profile) {
+      this.profile = state.profile;
+    }
+
+    if (!this.profile) {
+      const currentProfile = this.profileService.getProfileSnapshot();
+      if (currentProfile) {
+        this.profile = currentProfile;
+      }
+    }
+
+    this.updateFormWithProfile();
+
+    this.profileService.getProfile()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(profile => {
+        if (profile) {
+          this.profile = profile;
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private updateFormWithProfile(): void {
+    if (this._profile) {
+      this.profileForm.patchValue({
+        fullName: this._profile.fullName,
+        email: this._profile.email,
+        username: this._profile.username,
+        phone: this._profile.phone,
+        location: this._profile.location
+      });
     }
   }
 
-  get avatarInitials(): string {
-    return this.computeInitials(this.profile?.fullName ?? '');
-  }
-
   submit(): void {
-    if (this.profileForm.invalid || !this.ensurePasswordsMatch()) {
+    if (this.profileForm.invalid) {
       this.profileForm.markAllAsTouched();
       return;
     }
@@ -102,11 +131,11 @@ export class ProfileEditComponent implements OnChanges {
     const { fullName, email, username, phone, location } = this.profileForm.value as ProfileFormValue;
     this.saveProfile.emit({ fullName, email, username, phone, location });
   }
-
+  return(): void {
+    this.router.navigate(['/profile']);
+  }
   resetForm(): void {
-    if (this.profile) {
-      this.patchFormWithProfile(this.profile);
-    }
+    this.updateFormWithProfile();
     this.profileForm.get('currentPassword')?.reset('');
     this.profileForm.get('newPassword')?.reset('');
     this.profileForm.get('confirmPassword')?.reset('');
@@ -118,22 +147,19 @@ export class ProfileEditComponent implements OnChanges {
     return !!control && control.invalid && (control.dirty || control.touched);
   }
 
-  private patchFormWithProfile(profile: Profile): void {
-    this.profileForm.patchValue({
-      fullName: profile.fullName,
-      email: profile.email,
-      username: profile.username,
-      phone: profile.phone,
-      location: profile.location
-    });
+  get shouldShowAvatarImage(): boolean {
+    return !!this.profile?.avatarUrl && !this.avatarHasError;
+  }
+
+  get avatarInitials(): string {
+    if (!this.profile?.fullName) {
+      return 'US';
+    }
+    return this.computeInitials(this.profile.fullName);
   }
 
   handleAvatarError(): void {
     this.avatarHasError = true;
-  }
-
-  get shouldShowAvatarImage(): boolean {
-    return !!this.profile?.avatarUrl && !this.avatarHasError;
   }
 
   private computeInitials(fullName: string): string {
@@ -150,115 +176,4 @@ export class ProfileEditComponent implements OnChanges {
 
     return initials || fullName.charAt(0).toUpperCase();
   }
-
-  private ensurePasswordsMatch(): boolean {
-    const newPassword = this.profileForm.get('newPassword')?.value?.trim();
-    const confirmPassword = this.profileForm.get('confirmPassword')?.value?.trim();
-
-    if (!newPassword && !confirmPassword) {
-      this.profileForm.get('confirmPassword')?.setErrors(null);
-      return true;
-    }
-
-    if (newPassword !== confirmPassword) {
-      this.profileForm.get('confirmPassword')?.setErrors({ mismatch: true });
-      return false;
-    }
-    this.profileForm.get('confirmPassword')?.setErrors(null);
-    return true;
-  }
 }
-  form: FormGroup;
-  hideActual = true;
-  hideNew = true;
-  hideConfirm = true;
-
-  constructor(
-    private fb: FormBuilder,
-    private snackBar: MatSnackBar,
-    private profileService: ProfileService,
-    private dialog: MatDialog,
-    private userService: UserService,
-
-  ) {
-    this.form = this.fb.group(
-      {
-        profileId: [null],
-        name: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        businessName: ['', Validators.required],
-        businessAddress: [''],
-        phone: [''],
-        role: [''],
-      },
-      { validators: passwordMatchValidator() }
-    );
-  }
-
-  ngOnInit(): void {
-    const currentUser = this.userService.getCurrentUser();
-
-    if (!currentUser || !currentUser.profile || !currentUser.profile.profileId) {
-      console.error('No profileId found in currentUser');
-      return;
-    }
-
-    const profileId = currentUser.profile.profileId;
-
-    this.profileService.getProfileById(profileId).subscribe({
-      next: (userProfile) => {
-        const profile: Profile = {
-          profileId: userProfile.profileId,
-          name: userProfile.name,
-          email: userProfile.email,
-          businessName: '',
-          businessAddress: '',
-          phone: '',
-          role: userProfile.role
-        };
-        this.form.patchValue(profile);
-      },
-      error: (err) => {
-        console.error('Error loading profile:', err);
-        this.snackBar.open('Error al cargar el perfil', 'Cerrar', { duration: 3000 });
-      }
-    });
-  }
-
-
-
-  save(): void {
-
-    if (this.form.hasError('passwordMismatch')) {
-      this.snackBar.open('Las contraseñas no coinciden', 'Cerrar', {
-        duration: 3000
-      });
-      return;
-    }
-
-    if (this.form.valid) {
-      const profile: Profile = this.form.value;
-      this.profileService.editProfile(profile).subscribe(() => {
-        this.snackBar.open('Perfil guardado correctamente', 'Cerrar', {
-          duration: 3000
-        });
-        this.form.reset();
-      });
-    } else {
-      this.form.markAllAsTouched();
-    }
-  }
-
-  cancel(): void {
-    this.form.reset();
-  }
-
-  openMap(): void {
-    const address = this.form.get('businessAddress')?.value || '';
-    this.dialog.open(MapDialogComponent, {
-      data: address,
-      width: '600px'
-    });
-  }
-}
-

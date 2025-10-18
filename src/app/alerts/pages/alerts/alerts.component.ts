@@ -5,6 +5,8 @@ import { AlertListComponent } from '../../components/alert-list/alert-list.compo
 import { FormsModule } from '@angular/forms';
 import { SideNavbarComponent } from '../../../shared/presentation/components/side-navbar/side-navbar.component';
 import { LanguageSwitcher } from '../../../shared/presentation/components/language-switcher/language-switcher.component';
+import { InventoryService } from '../../../inventory/services/inventory.service';
+import { InventoryItemProps } from '../../../inventory/models/inventory.entity';
 
 @Component({
   selector: 'app-alerts-and-notifications',
@@ -14,7 +16,7 @@ import { LanguageSwitcher } from '../../../shared/presentation/components/langua
     FormsModule,
     SideNavbarComponent,
     LanguageSwitcher
-],
+  ],
   styleUrls: ['./alerts.component.css']
 })
 export class AlertsComponent implements OnInit {
@@ -22,32 +24,39 @@ export class AlertsComponent implements OnInit {
   expirationAlerts: AlertEntity[] = [];
   backendLoading = false;
   backendErrorMsg = '';
+  inventoryItems: InventoryItemProps[] = [];
 
   constructor(
-    private alertService: AlertService
+    private alertService: AlertService,
+    private inventoryService: InventoryService
   ) {}
 
   ngOnInit(): void {
-    this.loadBackendAlerts();
+    this.loadInventoryAlerts();
   }
 
-  loadBackendAlerts() {
-    const accountId = localStorage.getItem('accountId');
-    if (!accountId) {
-      console.warn('No account ID found in localStorage');
-      return;
-    }
+  loadInventoryAlerts() {
     this.backendLoading = true;
     this.backendErrorMsg = '';
-    this.alertService.getAlerts(accountId).subscribe({
-      next: (alerts) => {
-        this.stockAlerts = alerts.filter(alert => alert.type === 'PRODUCTLOWSTOCK');
-        this.expirationAlerts = alerts.filter(alert => alert.type === 'EXPIRATION_WARNING' && alert.state === 'ACTIVE');
+
+    this.alertService.generateInventoryAlerts().subscribe({
+      next: (alertData) => {
+        this.stockAlerts = alertData.stockAlerts;
+        this.expirationAlerts = alertData.expirationAlerts;
         this.backendLoading = false;
       },
       error: () => {
-        this.backendErrorMsg = 'Error loading backend alerts.';
+        this.backendErrorMsg = 'Error loading inventory alerts.';
         this.backendLoading = false;
+      }
+    });
+
+    this.inventoryService.getAllProps().subscribe({
+      next: (items: InventoryItemProps[]) => {
+        this.inventoryItems = items;
+      },
+      error: (error: any) => {
+        console.error('Error loading inventory items:', error);
       }
     });
   }
@@ -56,7 +65,8 @@ export class AlertsComponent implements OnInit {
    * Returns the minimum stock for a given productId
    */
   getMinimumStock = (productId: string): number | null => {
-    return null;
+    const item = this.inventoryItems.find(item => item.id === productId);
+    return item ? item.minStockLevel : null;
   };
 
   getSeverityColor(severity: string): string {
@@ -71,11 +81,11 @@ export class AlertsComponent implements OnInit {
 
   getSeverityIcon(severity: string): string {
     switch (severity) {
-      case 'WARNING': return '⚠️';
+      case 'WARNING': return '⚠';
       case 'HIGH': return '🔴';
       case 'MEDIUM': return '🟡';
       case 'LOW': return '🟢';
-      default: return 'ℹ️';
+      default: return 'ℹ';
     }
   }
 }

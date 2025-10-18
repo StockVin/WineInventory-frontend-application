@@ -1,0 +1,29 @@
+<div class="inventory-page-container">
+    <div class="inventory-main-layout">
+    <app-side-navbar></app-side-navbar>  
+    </div>
+    <div class="header">
+        <h1>{{ 'inventory.title' | translate }}</h1>
+        <div class="user-profile">
+            <div class="language-switcher">
+                <app-language-switcher></app-language-switcher>
+            </div>
+        </div>
+    </div>
+    <div class="action-bar">
+        <mat-form-field appearance="outline" class="search-field">
+            <input matInput placeholder="{{ 'inventory.searchPlaceholder' | translate }}" [(ngModel)]="searchTerm"
+                (ngModelChange)="onSearchChange()" aria-label="Buscar inventario">
+        </mat-form-field>
+        <button mat-flat-button class="new-product-btn" (click)="openNewProductModal()">
+            {{ 'inventory.buttons.create' | translate }}
+        </button>
+        <button mat-flat-button class="register-out-btn" (click)="openRegisterOutModal()">
+            {{ 'inventory.buttons.return' | translate }}
+        </button>
+    </div>
+    <div class="inventory-list-wrapper">
+        <app-inventory-view [inventory$]="inventory$" (productDetail)="openProductDetailModal($event)">
+        </app-inventory-view>
+    </div>
+</div>

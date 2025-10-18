@@ -5,11 +5,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { filter } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
+import { UserService } from '../../../../authentication/services/user.service';
 
 export interface NavItem {
   icon: string;
   label: string;
-  route: string[];
+  route: string;
   isActive?: boolean;
 }
 
@@ -29,15 +30,20 @@ export interface NavItem {
 export class SideNavbarComponent implements OnInit {
   isExpanded = true;
   navItems: NavItem[] = [
-    { icon: 'home', label: 'side-navbar.options.dashboard', route: ['/dashboard'] },
-    { icon: 'inventory_2', label: 'side-navbar.options.wine', route: ['/orders'] },
-    { icon: 'shopping_cart', label: 'side-navbar.options.order', route: ['/products'] },
-    { icon: 'assessment', label: 'side-navbar.options.report', route: ['/reports'] },
-    { icon: 'notifications', label: 'side-navbar.options.alert', route: ['/alerts'] },
-    { icon: 'settings', label: 'side-navbar.options.configuration', route: ['/settings'] }
+    { icon: 'home', label: 'side-navbar.options.dashboard', route: '/dashboard' },
+    { icon: 'wine_bar', label: 'side-navbar.options.wine', route: '/orders' },
+    { icon: 'inventory', label: 'side-navbar.options.inventory', route: '/inventory' },
+    { icon: 'assessment', label: 'side-navbar.options.report', route: '/reports' },
+    { icon: 'notifications', label: 'side-navbar.options.alert', route: '/alerts' },
+    { icon: 'settings', label: 'side-navbar.options.configuration', route: '/profile' }
   ];
 
   unreadAlerts = 3;
+
+  get currentUser() {
+    const userData = localStorage.getItem('currentUser');
+    return userData ? JSON.parse(userData) : null;
+  }
 
   constructor(private router: Router) {}
 
@@ -52,18 +58,19 @@ export class SideNavbarComponent implements OnInit {
   setActiveItem() {
     const currentRoute = this.router.url;
     this.navItems.forEach(item => {
-      item.isActive = item.route.some(route => currentRoute.includes(route));
+      item.isActive = currentRoute.includes(item.route);
     });
   }
 
   onNavItemClick(item: NavItem) {
     this.navItems.forEach(i => i.isActive = false);
     item.isActive = true;
-    this.router.navigate([item.route[0]]);
+    this.router.navigate([item.route]);
   }
-  logout() {
 
-    console.log('Cerrando sesión...');
+  logout() {
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
     this.router.navigate(['/sign-in']);
   }
 }

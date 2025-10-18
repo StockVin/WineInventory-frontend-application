@@ -5,12 +5,12 @@ import {MatCard, MatCardTitle} from '@angular/material/card';
 import {NgForOf, NgIf} from '@angular/common';
 import {AlertItemComponent} from '../alert-item/alert-item.component';
 import {TranslateModule} from '@ngx-translate/core';
+import { InventoryItemProps } from '../../../inventory/models/inventory.entity';
 
 @Component({
   selector: 'app-alert-list',
   templateUrl: './alert-list.component.html',
   imports: [
-    MatDivider,
     MatCardTitle,
     MatCard,
     NgForOf,
@@ -49,6 +49,10 @@ export class AlertListComponent {
    * Function to get the minimum stock for a productId
    */
   @Input() getMinimumStock: (productId: string) => number | null = () => null;
+  /**
+   * Inventory items data
+   */
+  @Input() inventoryItems: InventoryItemProps[] = [];
 
   showAllRestocks = false;
   showAllExpirations = false;

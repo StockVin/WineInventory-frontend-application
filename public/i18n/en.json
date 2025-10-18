@@ -2,6 +2,8 @@
   "title": "WineInventory",
   "sign-in": {
     "title": "Sign In",
+    "username": "Username",
+    "username-required": "Username is required",
     "email": "Email",
     "email-required": "Email is required",
     "email-invalid": "Please enter a valid email",
@@ -17,6 +19,8 @@
   },
   "sign-up": {
     "title": "Create Account",
+    "username": "Username",
+    "username-required": "Username is required",
     "name": "Full Name",
     "name-required": "Name is required",
     "email": "Email",
@@ -50,7 +54,7 @@
     "options": {
       "dashboard": "Home",
       "wine": "Orders",
-      "order": "Order List",
+      "inventory": "Inventory",
       "report": "Reports",
       "alert": "Alerts",
       "configuration": "Settings"
@@ -198,10 +202,132 @@
       "total": "Total"
     }
   },
-  "alert":{
-    "title":"Urgent restock",
-    "text":"No urgent restock alerts available.",
-    "expire-title":"Next to expire",
-    "expire-text":"No expiration alerts available."
+  "alert": {
+    "title": "Urgent restock",
+    "text": "No urgent restock alerts available.",
+    "expire-title": "Next to expire",
+    "expire-text": "No expiration alerts available.",
+    "showAll": "Show all",
+    "hideAll": "Hide all",
+    "stock": "Current stock",
+    "minStock": "Minimum stock",
+    "expiration": "Expiration date",
+    "daysUntilExpiration": "Days until expiration",
+    "severity": "Severity"
+  },
+  "inventory": {
+    "title": "Inventory",
+    "buttons": {
+      "create": "Add product",
+      "return": "Check out product",
+      "details": "View details"
+    },
+    "searchPlaceholder": "Search product...",
+    "tableHeaders": {
+      "name": "Name",
+      "type": "Type",
+      "expireDate": "Expiration date",
+      "quantity": "Current stock",
+      "minQuantity": "Minimum stock",
+      "price": "Price"
+    },
+    "new": {
+      "title": "New Product",
+      "name": "Name",
+      "type": "Type",
+      "expireDate": "Expiration date",
+      "quantity": "Current stock",
+      "minQuantity": "Minimum stock",
+      "price": "Price",
+      "cancel": "Cancel",
+      "save": "Save",
+      "uploadImage": "Upload Image",
+      "highlight": "Highlight product",
+      "duplicate": "Duplicate product",
+      "delete": "Delete product",
+      "moreOptions": "More options"
+    },
+    "register": {
+      "title": "Register Product Output",
+      "cancel": "Cancel",
+      "save": "Save",
+      "product": "Product",
+      "type": "Output Type",
+      "quantity": "Quantity"
+    },
+    "details": {
+      "type": "Liquor Type",
+      "price": "Price",
+      "expirationDate": "Expiration Date",
+      "currentStock": "Current Stock",
+      "minStockLevel": "Minimum Stock",
+      "location": "Assigned To"
+    }
+  },
+  "dashboard": {
+    "title": "Home",
+    "subtitle": "Overview of your wine inventory",
+    "stats": {
+      "totalProducts": "Total Products",
+      "productsStockLow": "Low Stock",
+      "expiringProducts": "Close to Expiring",
+      "pendingOrders": "Pending Orders"
+    },
+    "content": {
+      "recentProducts": "Recent Products",
+      "recentOrders": "Recent Orders"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "subtitle": "Manage your personal information and contact details.",
+    "email": "Email",
+    "username": "User",
+    "role": "Role",
+    "buttons": {
+      "edit": "Edit Profile",
+      "selectedPlan": "Current Plan",
+      "plans": "Select Plan"
+    },
+    "planDetails": {
+      "title": "Select your Plan",
+      "subtitle": "Choose the plan that best suits your winery's growth",
+      "mounth": "Month",
+      "free": "Free",
+      "plus": "Plus",
+      "Pro": "Pro",
+      "now": "Current plan",
+      "subtitle1": "Basic management for small wineries.",
+      "subtitle2": "Advanced tools to grow your business.",
+      "subtitle3": "Full automation and ERP connection.",
+      "details": {
+        "feature1": "Inventory Tracking",
+        "feature2": "Warehouse Guides",
+        "feature3": "Basic Alerts",
+        "feature4": "Priority Support",
+        "feature5": "Custom Alerts",
+        "feature6": "Unlimited tracking, with integration to distribution systems and real-time tracking.",
+        "feature7": "24/7 Priority Support with personalized attention."
+      }
+    },
+    "edit": {
+      "title": "Personal Information",
+      "name": "Full Name",
+      "nameError": "Must contain at least 3 characters.",
+      "email": "Email",
+      "emailError": "Must contain at least 3 characters.",
+      "username": "Username",
+      "usernameError": "Must contain at least 3 characters.",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving...",
+      "changePassword": "Change Password",
+      "currentPassword": "Current Password",
+      "currentPasswordError": "Must contain at least 3 characters.",
+      "newPassword": "New Password",
+      "newPasswordError": "Must contain at least 3 characters.",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordError": "Passwords must match."
+    }
   }
 }

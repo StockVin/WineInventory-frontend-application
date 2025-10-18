@@ -1,19 +1,19 @@
 export class SignInResponse {
     public id: number;
-    public username: string;
+    public email: string;
     public token: string;
     public accountId: number;
   
     /**
      * Constructor.
      * @param id The user id.
-     * @param username The username.
+     * @param email The email.
      * @param token The generated token.
      * @param accountId
      */
-    constructor(id: number, username: string, token: string, accountId: number) {
+    constructor(id: number, email: string, token: string, accountId: number) {
       this.token = token;
-      this.username = username;
+      this.email = email;
       this.id = id;
       this.accountId = accountId;
     }
