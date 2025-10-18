@@ -1,7 +1,7 @@
 
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, forkJoin, throwError, catchError, map } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Observable, forkJoin, throwError, catchError, map, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
@@ -22,9 +22,9 @@ export interface UserProfile {
 export class ProfileService {
   private readonly http = inject(HttpClient);
 
-  private readonly profileEndpoint = `${environment.apiUrl}/users`;
-  private readonly plansEndpoint = `${environment.apiUrl}/subscriptionPlans`;
-  private readonly benefitsEndpoint = `${environment.apiUrl}/premiumBenefits`;
+  private readonly profileEndpoint = `${environment.baseServerUrl}/profile`;
+  private readonly plansEndpoint = `${environment.baseServerUrl}/subscriptionPlans`;
+  private readonly benefitsEndpoint = `${environment.baseServerUrl}/premiumBenefits`;
   private readonly profileId = 'us-001';
 
   private readonly profileSubject = new BehaviorSubject<Profile | null>(null);
@@ -33,17 +33,6 @@ export class ProfileService {
 
   setProfileId(profileId: string): void {
     (this as any).profileId = profileId;
-  }
-
-  private getStoredUserId(): number | null {
-    try {
-      const raw = localStorage.getItem('currentUser');
-      if (!raw) return null;
-      const parsed = JSON.parse(raw);
-      return typeof parsed?.id === 'number' ? parsed.id : null;
-    } catch {
-      return null;
-    }
   }
 
   private getStoredUser(): any | null {
@@ -56,15 +45,22 @@ export class ProfileService {
     }
   }
 
-  private buildProfileFromUser(userData: any, fallbackId: string): Profile {
+  private buildProfileFromUser(userData: any): Profile {
+    const normalizedData = userData?.data ?? userData;
+    const account = normalizedData?.account ?? {};
+    const username = normalizedData?.username || account?.username || '';
+    const fullName = normalizedData?.fullName || normalizedData?.name || account?.name || username;
+    const email = normalizedData?.email || account?.email || '';
+    const role = normalizedData?.role || account?.role || '';
+    const resolvedId = normalizedData?.id ?? account?.id ?? (username || 'profile');
     return {
-      id: (userData?.id ?? fallbackId).toString(),
-      fullName: userData?.username || '',
-      email: userData?.email || '',
-      username: userData?.username || '',
+      id: resolvedId.toString(),
+      fullName,
+      email,
+      username,
       phone: '',
       location: '',
-      role: userData?.role || '',
+      role,
       avatarUrl: '',
       accountStatus: {
         planName: 'Free',
@@ -90,25 +86,31 @@ export class ProfileService {
   }
 
   refreshProfile(): Observable<Profile> {
-    const resolvedId = this.getStoredUserId() || (this as any).profileId || '1';
-    return this.http.get<any>(`${this.profileEndpoint}/${resolvedId}`).pipe(
+    const token = localStorage.getItem('token');
+    if (!token) {
+      const fallbackUser = this.getStoredUser();
+      if (fallbackUser) {
+        const profile = this.buildProfileFromUser(fallbackUser);
+        this.profileSubject.next(profile);
+        return of(profile);
+      }
+    }
+
+    const getOptions = token ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}`, Accept: 'application/json' }) } : {};
+    return this.http.get<any>(this.profileEndpoint, getOptions).pipe(
+      map((userData: any) => this.buildProfileFromUser(userData)),
       tap({
-        next: (userData: any) => {
-          const profile: Profile = this.buildProfileFromUser(userData, resolvedId.toString());
+        next: (profile: Profile) => {
           this.profileSubject.next(profile);
-        },
-        error: (error: any) => console.error('No se pudo cargar el perfil.', error)
+        }
       }),
       catchError((error: any) => {
-        if (error?.status === 404) {
+        if (error?.status === 404 || error?.status === 401 || error?.status === 403) {
           const fallbackUser = this.getStoredUser();
           if (fallbackUser) {
-            const profile = this.buildProfileFromUser(fallbackUser, (fallbackUser.id ?? resolvedId).toString());
+            const profile = this.buildProfileFromUser(fallbackUser);
             this.profileSubject.next(profile);
-            return new Observable<Profile>(subscriber => {
-              subscriber.next(profile);
-              subscriber.complete();
-            });
+            return of(profile);
           }
         }
         return throwError(() => error);
@@ -142,41 +144,74 @@ export class ProfileService {
     });
   }
 
-  updateProfile(changes: ProfileUpdateInput): Observable<Profile> {
+  updateProfile(changes: ProfileUpdateInput & { currentPassword?: string; newPassword?: string; confirmPassword?: string }): Observable<Profile> {
     if (!changes || typeof changes !== 'object') {
       return throwError(() => new Error('Los cambios proporcionados no son válidos.'));
     }
 
-    const currentProfileId = (this as any).profileId || 'us-001';
-    return this.http.patch<any>(`${this.profileEndpoint}/${currentProfileId}`, changes).pipe(
+    const currentProfile = this.profileSubject.getValue();
+
+    const username = (changes.username ?? currentProfile?.username ?? '').trim();
+    const email = (changes.email ?? currentProfile?.email ?? '').trim();
+    const role = (changes.role ?? currentProfile?.role ?? 'PRODUCER').trim();
+    const newPassword = changes.newPassword?.trim();
+    const confirmPassword = changes.confirmPassword?.trim();
+    const currentPassword = changes.currentPassword?.trim();
+
+    const payloadEntries = [
+      ['username', username],
+      ['email', email],
+      ['role', role]
+    ].filter(([_, value]) => value !== undefined && value !== null && value !== '');
+
+    if (newPassword || confirmPassword || currentPassword) {
+      payloadEntries.push(['password', newPassword || currentPassword || '']);
+      payloadEntries.push(['validationPassword', confirmPassword || newPassword || currentPassword || '']);
+    }
+
+    const payload = Object.fromEntries(payloadEntries);
+    console.log('PUT /profile payload:', payload, 'URL:', this.profileEndpoint);
+
+    const token = localStorage.getItem('token');
+    const options = token
+      ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }) }
+      : { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+
+    return this.http.put<any>(this.profileEndpoint, payload, options).pipe(
       tap({
-        next: (profile: any) => {
-          const currentProfile = this.profileSubject.getValue();
-          const normalizedProfile: Profile = {
-            id: profile.id || currentProfileId,
-            fullName: profile.fullName || (currentProfile?.fullName || ''),
-            email: profile.email || (currentProfile?.email || ''),
-            username: profile.username || (currentProfile?.username || ''),
-            phone: profile.phone || (currentProfile?.phone || ''),
-            location: profile.location || (currentProfile?.location || ''),
-            role: profile.role || (currentProfile?.role || ''),
-            avatarUrl: profile.avatarUrl || (currentProfile?.avatarUrl || ''),
-            accountStatus: profile.accountStatus || (currentProfile?.accountStatus || {
-              planName: 'Free',
-              renewalDate: new Date().toISOString(),
-              supportContact: 'soporte@wineinventory.com',
-              statusLabel: 'Activo'
-            }),
-            selectedPlanId: profile.selectedPlanId || (currentProfile?.selectedPlanId || 'Free'),
+        next: (response: any) => {
+          const updatedFromApi = this.buildProfileFromUser(response);
+          const merged: Profile = {
+            ...(currentProfile ?? updatedFromApi),
+            ...updatedFromApi,
+            username: (username || updatedFromApi.username || currentProfile?.username || '').trim(),
+            email: (email || updatedFromApi.email || currentProfile?.email || '').trim(),
+            role: (role || updatedFromApi.role || currentProfile?.role || 'PRODUCER').trim(),
+            fullName: ((changes.fullName ?? updatedFromApi.fullName ?? currentProfile?.fullName) ?? '').toString(),
+            phone: ((changes.phone ?? updatedFromApi.phone ?? currentProfile?.phone) ?? '').toString(),
+            location: ((changes.location ?? updatedFromApi.location ?? currentProfile?.location) ?? '').toString(),
             lastUpdated: new Date().toISOString()
           };
 
-          this.profileSubject.next(normalizedProfile);
+          this.profileSubject.next(merged);
+
+          try {
+            const raw = localStorage.getItem('currentUser');
+            const stored = raw ? JSON.parse(raw) : {};
+            const updatedStored = {
+              ...stored,
+              id: merged.id,
+              username: merged.username,
+              email: merged.email,
+              role: merged.role
+            };
+            localStorage.setItem('currentUser', JSON.stringify(updatedStored));
+          } catch {}
         },
         error: (error: any) => console.error('No se pudo actualizar el perfil.', error)
       }),
       catchError((error: any) => {
-        console.error('Error en updateProfile:', error);
+        console.error('Error en updateProfile (PUT /profile):', error);
         return throwError(() => error);
       })
     );

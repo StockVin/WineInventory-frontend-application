@@ -35,13 +35,13 @@
   </nav>
 
   <!-- User Profile -->
-  <div class="user-profile" *ngIf="isExpanded && currentUser">
+  <div class="user-profile" *ngIf="isExpanded && profileUsername">
     <div class="user-avatar">
       <mat-icon>account_circle</mat-icon>
     </div>
     <div class="user-info">
-      <div class="user-name">{{ currentUser.username}}</div>
-      <div class="user-email">{{ currentUser.email }}</div>
+      <div class="user-name">{{ profileUsername }}</div>
+      <div class="user-email">{{ profileEmail }}</div>
     </div>
   </div>
   <!-- Logout Button -->

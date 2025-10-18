@@ -122,9 +122,6 @@ export class ProfileComponent implements OnInit {
     const userProfile = this.userService.getCurrentUserProfile();
     if (userProfile) {
       this.profile.set(userProfile);
-      console.log('Perfil inicial establecido desde servicio de usuario:', userProfile);
-    } else {
-      console.error('No se pudo obtener el perfil del usuario desde el servicio');
     }
 
     const currentPlans = this.plans();

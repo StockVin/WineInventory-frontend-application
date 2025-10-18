@@ -9,13 +9,17 @@ import { SideNavbarComponent } from "../../../shared/presentation/components/sid
 import { LanguageSwitcher } from "../../../shared/presentation/components/language-switcher/language-switcher.component";
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 export interface ProfileFormValue {
-  fullName: string;
+  fullName?: string;
   email: string;
   username: string;
-  phone: string;
-  location: string;
+  phone?: string;
+  location?: string;
+  currentPassword?: string;
+  newPassword?: string;
+  confirmPassword?: string;
 }
 
 function passwordMatchValidator(): ValidatorFn {
@@ -73,8 +77,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     fullName: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
     username: ['', [Validators.required, Validators.minLength(4)]],
-    phone: ['', [Validators.required, Validators.minLength(7)]],
-    location: ['', [Validators.required, Validators.minLength(3)]],
+    phone: [''],
+    location: [''],
     currentPassword: ['', []],
     newPassword: ['', [Validators.minLength(6)]],
     confirmPassword: ['', [Validators.minLength(6)]]
@@ -128,8 +132,52 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const { fullName, email, username, phone, location } = this.profileForm.value as ProfileFormValue;
-    this.saveProfile.emit({ fullName, email, username, phone, location });
+    const {
+      fullName,
+      email,
+      username,
+      phone,
+      location,
+      currentPassword,
+      newPassword,
+      confirmPassword
+    } = this.profileForm.value as ProfileFormValue;
+
+    const payload: ProfileFormValue = {
+      fullName,
+      email,
+      username,
+      currentPassword,
+      newPassword,
+      confirmPassword
+    };
+
+    console.log('Submitting profile update payload', payload);
+
+    this.saving = true;
+    this.errorMessage = null;
+
+    this.profileService
+      .updateProfile({
+        username: payload.username,
+        email: payload.email,
+        role: this.profile?.role ?? 'PRODUCER',
+        currentPassword: payload.currentPassword,
+        newPassword: payload.newPassword,
+        confirmPassword: payload.confirmPassword,
+        fullName: payload.fullName
+      })
+      .pipe(finalize(() => (this.saving = false)))
+      .subscribe({
+        next: () => {
+          this.saveProfile.emit(payload);
+          this.router.navigate(['/profile']);
+        },
+        error: (err) => {
+          console.error('Error saving profile via PUT /profile', err);
+          this.errorMessage = 'No se pudo guardar tus cambios. Inténtalo nuevamente.';
+        }
+      });
   }
   return(): void {
     this.router.navigate(['/profile']);
