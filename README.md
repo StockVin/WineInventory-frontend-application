@@ -1,73 +1,175 @@
-# WineinventoryFrontEndApplication
+# WineInventory
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.10.
+WineInventory is a comprehensive inventory management solution designed specifically for wine store owners, distributors, and suppliers in the wine and spirits industry.
 
-## Development server
+## Project Overview
 
-To start a local development server, run:
+This project is a front-end application of WineInventory, a specialized inventory management system that provides detailed product care guidelines, smart stock tracking, and streamlined purchasing processes for wines, spirits, and related products.
+## Features
 
+### Core Functionality
+- **Product Care Guidelines**: Detailed storage, handling, and preservation instructions for wines and spirits
+- **Smart Stock Tracking**: Real-time inventory management for wines, spirits, and beers
+- **Supplier Integration**: Built-in purchasing system for direct ordering from suppliers
+- **Warehouse Management**: Multi-warehouse support with zone-based organization
+- **Reporting System**: Comprehensive analytics and reporting capabilities
+
+### Technical Features
+- **CRUD Operations**: Complete Create, Read, Update, Delete operations for warehouses, products, reports, and user management
+- **Domain-Driven Design (DDD)**: Architecture based on DDD principles for maintainable and scalable code
+- **Internationalization (i18n)**: Multi-language support with ngx-translate
+- **JSON Server Integration**: RESTful API integration with JSON Server for data persistence
+- **Responsive Navigation**: In-app navigation system with lazy loading
+- **Environment Configuration**: Multiple environment support (development, production)
+
+## Documentation
+
+The documentation is available in the `docs/` folder and includes:
+
+- **User Stories**: Available in `docs/user-stories.md`
+- **Software Architecture**: C4 Model documentation available in `docs/software-architecture.dsl`
+
+## Technology Stack
+
+This project was generated using **Angular CLI** version 19.2.11 and includes the following dependencies:
+
+### Core Framework
+- **Angular 19**: Modern Angular framework with standalone components
+- **TypeScript**: Type-safe development
+- **RxJS**: Reactive programming with observables
+
+### UI/UX Libraries
+- **Angular Material**: Material Design component library
+- **ngx-translate**: Internationalization framework
+- **ngx-translate/http-loader**: HTTP loader for translation files
+
+### Backend & Data
+- **JSON Server 0.17.4**: Fake REST API for development and testing
+- **In-Memory Data Storage**: JSON-based data persistence
+
+## Getting Started
+
+### Prerequisites
+
+- **Angular Material**
+- **ngx-translate**
+- **ngx-translate/http-loader**
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/StockVin/WineInventory-frontend-application.git
+cd wineinventory-front-end-application
+```
+
+2. Install dependencies:
+
+#### Install Angular Material
+```bash
+ng add @angular/material
+```
+
+#### Install ngx-translate and ngx-translate/http-loader
+```bash
+npm install @ngx-translate/core @ngx-translate/http-loader --save
+```
+
+3. Start the development server:
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+4. Navigate to `http://localhost:4200/`
 
-## Code scaffolding
+## Backend API Setup
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### JSON Server Configuration
 
+The application uses JSON Server as a fake REST API for development and testing.
+
+#### Installation
 ```bash
-ng generate component component-name
+npm install -g json-server@0.17.4
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+#### Running the API Server
 
+**For Windows:**
 ```bash
-ng generate --help
+cd server
+cmd start.cmd
+```
+```bash
+json-server --watch server/db.json --port 3000 --routes server/routes.json
 ```
 
-## Building
-
-To build the project run:
-
+**For macOS/Linux:**
 ```bash
-ng build
+cd server
+sh start.sh
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+```bash
+json-server --watch server/db.json --port 3000 --routes server/routes.json
+```
 
-## Running unit tests
+#### API Endpoints
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+The API will be available at `http://localhost:3000/api/v1` with the following resources:
 
+- `http://localhost:3000/api/v1/users` - User management
+- `http://localhost:3000/api/v1/reporting` - Reporting system
+- `http://localhost:3000/api/v1/careguides` - Care guides
+- `http://localhost:3000/api/v1/product` - Product catalog
+- `http://localhost:3000/api/v1/warehouses` - Warehouse management
+- `http://localhost:3000/api/v1/zones` - Zone management
+- `http://localhost:3000/api/v1/purchase-orders` - Purchase orders
+- `http://localhost:3000/api/v1/settings` - Settings
+- `http://localhost:3000/api/v1/accounts` - Accounts
+- `http://localhost:3000/api/v1/catalog` - Catalog
+- `http://localhost:3000/api/v1/orders` - Orders
+- `http://localhost:3000/api/v1/subscriptionPlans` - Subscription plans
+- `http://localhost:3000/api/v1/premiumBenefits` - Premium benefits
+- `http://localhost:3000/api/v1/inventory` - Inventory
+
+## Development
+
+### Development Server
+
+Run `ng serve` for a development server. Navigate to `http://localhost:4200/`. The application will automatically reload if you modify any of the source files.
+
+### Code Scaffolding
+
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+### Building
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+### Running Tests
+
+#### Unit Tests
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
+#### End-to-End Tests
 ```bash
 ng e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Internationalization
 
-## Additional Resources
+The application supports multiple languages using ngx-translate:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- **English (en)**: Primary language
+- **Spanish (es)**: Second language
 
 
-# Angular Material
-```bash
- 
- ng add @angular/material
- 
-```
+Translation files are located in `public/i18n/`.
 
-# i18n
-```bash
 
-npm install @ngx-translate/core @ngx-translate/http-loader --save
-```
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

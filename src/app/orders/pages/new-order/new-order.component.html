@@ -1,0 +1,134 @@
+<section class="new-order">
+  <app-side-navbar></app-side-navbar>
+  <header class="new-order__header">
+    <div>
+      <h1>{{ 'order-create.title' | translate }}</h1>
+      <p>{{ 'order-create.text' | translate }}</p>
+    </div>
+    <nav>
+      <a routerLink="/orders">{{ 'order-create.button' | translate }}</a>
+    </nav>
+    <app-language-switcher></app-language-switcher>
+  </header>
+
+  <form [formGroup]="orderForm" (ngSubmit)="submit()" class="new-order__form">
+    <section class="form-section">
+      <h2>{{ 'order-create.data' | translate }}</h2>
+      <div class="form-grid">
+        <label class="form-field">
+          <span>{{ 'order-create.name' | translate }} *</span>
+          <input type="text" formControlName="customerName" placeholder="Ej. Restaurante La Vid" />
+          <small class="error" *ngIf="orderForm.get('customerName')?.touched && orderForm.get('customerName')?.hasError('required')">
+            Este campo es obligatorio.
+          </small>
+        </label>
+        <label class="form-field">
+          <span>{{ 'order-create.email' | translate }}</span>
+          <input type="email" formControlName="customerEmail" placeholder="correo@cliente.com" />
+          <small class="error" *ngIf="orderForm.get('customerEmail')?.touched && orderForm.get('customerEmail')?.hasError('email')">
+            Ingresa un correo válido.
+          </small>
+        </label>
+        <label class="form-field form-field--full">
+          <span>{{ 'order-create.notes' | translate }}</span>
+          <textarea rows="3" formControlName="notes" placeholder="Indica instrucciones especiales de entrega"></textarea>
+        </label>
+      </div>
+    </section>
+
+    <section class="form-section">
+      <h2>{{ 'order-create.information' | translate }}</h2>
+      <div class="form-grid">
+        <label class="form-field">
+          <span>{{ 'order-create.date' | translate }} *</span>
+          <input type="datetime-local" formControlName="createdAt" />
+          <small class="error" *ngIf="orderForm.get('createdAt')?.touched && orderForm.get('createdAt')?.hasError('required')">
+            Este campo es obligatorio.
+          </small>
+        </label>
+        <label class="form-field">
+          <span>{{ 'order-create.expectedDelivery' | translate }} *</span>
+          <input type="datetime-local" formControlName="expectedDelivery" [min]="orderForm.get('createdAt')?.value || undefined" />
+          <small class="error" *ngIf="orderForm.get('expectedDelivery')?.touched && orderForm.get('expectedDelivery')?.hasError('required')">
+            Este campo es obligatorio.
+          </small>
+          <small class="error" *ngIf="orderForm.hasError('deliveryBeforeCreation') && orderForm.get('expectedDelivery')?.touched">
+            La fecha de entrega no puede ser anterior a la fecha de creación.
+          </small>
+        </label>
+        <label class="form-field">
+          <span>{{ 'order-create.status' | translate }} *</span>
+          <select formControlName="status">
+            <option [ngValue]="null" disabled>Selecciona un estado</option>
+            <option *ngFor="let status of statusOptions" [ngValue]="status">{{ statusLabels[status] }}</option>
+          </select>
+          <small class="error" *ngIf="orderForm.get('status')?.touched && orderForm.get('status')?.hasError('required')">
+            Selecciona un estado para el pedido.
+          </small>
+        </label>
+      </div>
+    </section>
+
+    <section class="form-section">
+      <div class="section-header">
+        <h2>{{ 'order-create.details' | translate }}</h2>
+        <button type="button" (click)="addItem()">{{ 'order-create.add' | translate }}</button>
+      </div>
+
+      <div class="order-items" formArrayName="items">
+        <div class="order-item" *ngFor="let item of items.controls; let i = index; trackBy: trackByIndex" [formGroupName]="i">
+          <label>
+            <span>{{ 'order-create.product' | translate }} *</span>
+            <select formControlName="catalogItemId">
+              <option [ngValue]="null" disabled>Selecciona una referencia</option>
+              <option *ngFor="let catalogItem of (catalogItems$ | async)" [ngValue]="catalogItem.id">
+                {{ catalogItem.name }} · {{ catalogItem.vintage }} · {{ catalogItem.price | currency:'USD':'symbol':'1.0-0' }}
+              </option>
+            </select>
+            <small class="error" *ngIf="item.get('catalogItemId')?.touched && item.get('catalogItemId')?.hasError('required')">
+              Selecciona un producto.
+            </small>
+          </label>
+
+          <label>
+            <span>{{ 'order-create.quantity' | translate }} *</span>
+            <input type="number" min="1" formControlName="quantity" />
+            <small class="error" *ngIf="item.get('quantity')?.touched && item.get('quantity')?.hasError('min')">
+              Debe ser al menos 1 unidad.
+            </small>
+          </label>
+
+          <button type="button" class="remove" (click)="removeItem(i)" *ngIf="items.length > 1">Eliminar</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="form-section" *ngIf="orderPreview$ | async as preview">
+      <h2>{{ 'order-create.resume' | translate }}</h2>
+      <ul class="preview-list">
+        <li *ngFor="let item of preview.items">
+          <span>{{ item.name }} · {{ item.quantity }} uds.</span>
+          <strong>{{ item.total | currency:'USD':'symbol':'1.0-0' }}</strong>
+        </li>
+      </ul>
+      <div class="preview-totals">
+        <div>
+          <span>{{ 'order-create.subtotal' | translate }}</span>
+          <strong>{{ preview.subtotal | currency:'USD':'symbol':'1.0-0' }}</strong>
+        </div>
+        <div>
+          <span>{{ 'order-create.tax' | translate }}</span>
+          <strong>{{ preview.tax | currency:'USD':'symbol':'1.0-0' }}</strong>
+        </div>
+        <div class="preview-totals__total">
+          <span>{{ 'order-create.total' | translate }}</span>
+          <strong>{{ preview.total | currency:'USD':'symbol':'1.0-0' }}</strong>
+        </div>
+      </div>
+    </section>
+
+    <footer class="form-actions">
+      <button type="submit">{{ 'order-create.save' | translate }}</button>
+    </footer>
+  </form>
+</section>

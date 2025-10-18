@@ -1,1 +1,67 @@
-<p>alert-list works!</p>
+<div class="alerts-container">
+  <!-- Backend Error Message -->
+  <div *ngIf="backendErrorMsg" class="error-msg">{{ backendErrorMsg }}</div>
+
+  <div class="alerts-row">
+    <mat-card class="alert-card">
+      <mat-card-title>{{ 'alert.title' | translate }}</mat-card-title>
+      <div class="card-content">
+        <div *ngIf="backendLoading" class="loading">Loading alerts...</div>
+        <ng-container *ngIf="!backendLoading && stockAlerts.length > 0; else noStockAlerts">
+          <div class="alert-items-container">
+            <app-alert-item
+              *ngFor="let alert of displayedStockAlerts; let last = last"
+              [alert]="alert"
+              [getMinimumStock]="getMinimumStock"
+              [getSeverityColor]="getSeverityColor"
+              [getSeverityIcon]="getSeverityIcon"
+              [inventoryItems]="inventoryItems"
+              [isLast]="last"
+            ></app-alert-item>
+          </div>
+          <div class="card-footer" *ngIf="stockAlerts.length > 3">
+            <a class="link" (click)="toggleRestocks()">
+              {{ showAllRestocks ? ('alert.hideAll' | translate) : ('alert.showAll' | translate) }}
+            </a>
+          </div>
+        </ng-container>
+        <ng-template #noStockAlerts>
+          <div class="no-alerts">
+            <p>{{ 'alert.text' | translate }}</p>
+          </div>
+        </ng-template>
+      </div>
+    </mat-card>
+
+    <!-- Expiration Alerts (EXPIRATION_WARNING) -->
+    <mat-card class="alert-card">
+      <mat-card-title>{{ 'alert.expire-title' | translate }}</mat-card-title>
+      <div class="card-content">
+        <div *ngIf="backendLoading" class="loading">Loading alerts...</div>
+        <ng-container *ngIf="!backendLoading && expirationAlerts.length > 0; else noExpirationAlerts">
+          <div class="alert-items-container">
+            <app-alert-item
+              *ngFor="let alert of displayedExpirationAlerts; let last = last"
+              [alert]="alert"
+              [getMinimumStock]="getMinimumStock"
+              [getSeverityColor]="getSeverityColor"
+              [getSeverityIcon]="getSeverityIcon"
+              [inventoryItems]="inventoryItems"
+              [isLast]="last"
+            ></app-alert-item>
+          </div>
+          <div class="card-footer" *ngIf="expirationAlerts.length > 3">
+            <a class="link" (click)="toggleExpirations()">
+              {{ showAllExpirations ? ('alert.hideAll' | translate) : ('alert.showAll' | translate) }}
+            </a>
+          </div>
+        </ng-container>
+        <ng-template #noExpirationAlerts>
+          <div class="no-alerts">
+            <p>{{ 'alert.expire-text' | translate }}</p>
+          </div>
+        </ng-template>
+      </div>
+    </mat-card>
+  </div>
+</div>
