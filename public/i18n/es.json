@@ -2,6 +2,8 @@
   "title": "WineInventory",
   "sign-in": {
     "title": "Iniciar Sesión",
+    "username": "Nombre de usuario",
+    "username-required": "El nombre de usuario es requerido",
     "email": "Correo electrónico",
     "email-required": "El correo electrónico es requerido",
     "email-invalid": "Por favor ingresa un correo electrónico válido",
@@ -17,6 +19,8 @@
   },
   "sign-up": {
     "title": "Crear Cuenta",
+    "username": "Nombre de usuario",
+    "username-required": "El nombre de usuario es requerido",
     "name": "Nombre Completo",
     "name-required": "El nombre es requerido",
     "email": "Correo electrónico",

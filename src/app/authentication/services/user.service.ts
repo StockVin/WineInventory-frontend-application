@@ -13,6 +13,9 @@ export class UserService {
   private readonly usersEndpoint = environment.userEndpointPath;
   private readonly profilesEndpoint = environment.profileEndpointPath;
   private readonly accountsEndpoint = environment.accountsEndpointPath;
+  private readonly httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   private currentUser: any = null;
 
@@ -21,49 +24,36 @@ export class UserService {
   }
 
   login(email: string, password: string): Observable<boolean> {
-    const url = `${this.baseUrl}${this.usersEndpoint}?email=${email}&password=${password}`;
-
-    return this.http.get<any[]>(url).pipe(
-      map(users => {
-        if (users.length === 0) return false;
-
-        const user = users[0];
-        const token = user.token || 'mock-token-' + Date.now();
-
-        this.currentUser = {
-          ...user,
-          account: null,
-          profileId: null,
-          role: user.role
-        };
-
-        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-        localStorage.setItem('token', token);
-        return true;
-      })
-    );
-  }
-  register(data: { name: string; email: string; password: string; role: string }): Observable<any> {
-    const currentDate = new Date().toISOString();
-    const userPayload = {
-      username: data.name,
-      password: data.password,
-      email: data.email,
-      role: data.role,
-      createdAt: currentDate,
-      updatedAt: currentDate,
-      isActive: true
+    const payload = {
+      username: email,
+      password
     };
 
-    const checkUrl = `${this.baseUrl}${this.usersEndpoint}?email=${encodeURIComponent(data.email)}`;
-    return this.http.get<any[]>(checkUrl).pipe(
-      switchMap(existing => {
-        if (existing && existing.length > 0) {
-          return throwError(() => ({ status: 409, message: 'Email already exists' }));
+    return this.http.post<any>(`${this.backendApi}/sign-in`, payload, this.httpOptions).pipe(
+      tap(response => {
+        const userData = response?.data ?? response ?? {};
+        const token = userData?.token ?? response?.token;
+
+        this.currentUser = userData;
+
+        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+        if (token) {
+          localStorage.setItem('token', token);
         }
-        return this.http.post<any>(`${this.baseUrl}${this.usersEndpoint}`, userPayload);
-      })
+      }),
+      map(() => true)
     );
+  }
+  register(data: { name: string; email: string; password: string; confirmPassword: string; role: string }): Observable<any> {
+    const userPayload = {
+      username: data.name,
+      email: data.email,
+      password: data.password,
+      validationPassword: data.confirmPassword,
+      role: data.role
+    };
+
+    return this.http.post<any>(`${this.backendApi}/sign-up`, userPayload);
   }
 
   loadCurrentUser() {
@@ -147,7 +137,8 @@ export class UserService {
       name: 'Usuario de Prueba',
       email: 'test@example.com',
       password: 'test123',
-      role: 'USER'
+      confirmPassword: 'test123',
+      role: 'PRODUCER'
     };
 
     return this.register(testData).pipe(

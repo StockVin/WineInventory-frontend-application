@@ -2,6 +2,8 @@
   "title": "WineInventory",
   "sign-in": {
     "title": "Sign In",
+    "username": "Username",
+    "username-required": "Username is required",
     "email": "Email",
     "email-required": "Email is required",
     "email-invalid": "Please enter a valid email",
@@ -17,6 +19,8 @@
   },
   "sign-up": {
     "title": "Create Account",
+    "username": "Username",
+    "username-required": "Username is required",
     "name": "Full Name",
     "name-required": "Name is required",
     "email": "Email",
@@ -292,7 +296,7 @@
       "free": "Free",
       "plus": "Plus",
       "Pro": "Pro",
-      "now":"Current plan",
+      "now": "Current plan",
       "subtitle1": "Basic management for small wineries.",
       "subtitle2": "Advanced tools to grow your business.",
       "subtitle3": "Full automation and ERP connection.",
