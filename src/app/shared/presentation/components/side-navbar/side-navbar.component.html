@@ -29,20 +29,19 @@
               {{unreadAlerts}}
             </span>
           </span>
-          <span class="notification-dot" *ngIf="item.icon === 'notifications' && unreadAlerts > 0 && !isExpanded"></span>
         </li>
       </ul>
     </div>
   </nav>
 
   <!-- User Profile -->
-  <div class="user-profile" *ngIf="isExpanded">
+  <div class="user-profile" *ngIf="isExpanded && profileUsername">
     <div class="user-avatar">
       <mat-icon>account_circle</mat-icon>
     </div>
     <div class="user-info">
-      <div class="user-name">Admin User</div>
-      <div class="user-email"></div>
+      <div class="user-name">{{ profileUsername }}</div>
+      <div class="user-email">{{ profileEmail }}</div>
     </div>
   </div>
   <!-- Logout Button -->

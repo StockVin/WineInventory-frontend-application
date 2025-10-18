@@ -1,30 +1,57 @@
 {
   "users": [
     {
-      "id": 1,
-      "username": "admin@admin.com",
-      "password": "admin",
-      "role": "ADMIN"
-    }
-  ],
-  "profile": [
+      "username": "Matias",
+      "password": "prueba",
+      "email": "sdiaz4519@gmail.com",
+      "role": "Productor",
+      "createdAt": "2025-10-08T01:35:10.030Z",
+      "updatedAt": "2025-10-08T01:35:10.030Z",
+      "isActive": true,
+      "id": 1
+    },
     {
-      "id": 1,
-      "username": "admin@admin.com",
-      "password": "admin",
-      "role": "ADMIN"
+      "username": "giovany",
+      "password": "prueba",
+      "email": "prueba@gmail.com",
+      "role": "Productor",
+      "createdAt": "2025-10-08T01:36:16.435Z",
+      "updatedAt": "2025-10-08T01:36:16.435Z",
+      "isActive": true,
+      "id": 2
+    },
+    {
+      "username": "Bryan",
+      "password": "prueba",
+      "email": "bryam@gmail.com",
+      "role": "Productor",
+      "createdAt": "2025-10-08T01:41:15.879Z",
+      "updatedAt": "2025-10-08T01:41:15.879Z",
+      "isActive": true,
+      "id": 3
+    },
+    {
+      "username": "Didier",
+      "password": "prueba",
+      "email": "didier@gmail.com",
+      "role": "Distributor",
+      "createdAt": "2025-10-08T01:45:58.650Z",
+      "updatedAt": "2025-10-08T01:45:58.650Z",
+      "isActive": true,
+      "id": 4
+    },
+    {
+      "username": "Anaely Burga",
+      "password": "prueba",
+      "email": "anaely@gmail.com",
+      "role": "Distributor",
+      "createdAt": "2025-10-08T01:49:30.529Z",
+      "updatedAt": "2025-10-08T01:49:30.529Z",
+      "isActive": true,
+      "id": 5
     }
   ],
   "reporting": [
-    {
-      "id": 1,
-      "products": "Vinos",
-      "type": "destilado",
-      "price": 20,
-      "amount": 2,
-      "date": "2025/05/13",
-      "lost": 40
-    },
     {
       "id": 2,
       "products": "Ron",
@@ -115,6 +142,412 @@
       "description": "Temperatura recomendada: 16 - 20 °C",
       "imageUrl": "",
       "id": "1f2e"
+    }
+  ],
+  "warehouses": [
+    {
+      "warehouseId": 1,
+      "name": "Almacén Central",
+      "imageUrl": "https://gxtra-cr-dxtra.cdn.mediatiquepress.com/wp-content/uploads/2024/11/licores-contrabando-9-800x436.jpeg",
+      "street": "Av. Arequipa 1500",
+      "city": "Lima",
+      "state": "Lima",
+      "postalCode": "15046",
+      "capacity": 1000,
+      "profileId": 1
+    }
+  ],
+  "zones": [
+    {
+      "zoneId": 1,
+      "warehouseId": 1,
+      "name": "Zona Refrigerada",
+      "type": "Vinos Blancos",
+      "description": "Temperatura controlada entre 5°C y 10°C"
+    },
+    {
+      "zoneId": 2,
+      "warehouseId": 1,
+      "name": "Zona Reserva",
+      "type": "Tintos y destilados",
+      "description": "Temperatura entre 15°C y 18°C"
+    }
+  ],
+  "purchase-orders": [
+    {
+      "id": 1,
+      "date": {
+        "_date": "2025-10-01T10:00:00.000Z"
+      },
+      "status": "Delayed",
+      "buyer": {
+        "id": "1",
+        "userOwnerId": 1,
+        "role": "Liquor Store Owner",
+        "businessName": "Licorería San Borja",
+        "name": "Admin",
+        "email": "admin@admin.com"
+      },
+      "supplier": {
+        "id": "2",
+        "userOwnerId": 2,
+        "role": "Supplier",
+        "businessName": "Distribuidora Lima Norte",
+        "name": "Proveedor X",
+        "email": "proveedor@lima.com"
+      },
+      "items": [
+        {
+          "id": "item-123",
+          "catalogId": 1,
+          "name": "Ron Cartavio",
+          "productType": "Ron",
+          "brand": "Cartavio",
+          "content": 750,
+          "unitPrice": 25.5,
+          "customQuantity": "12 botellas"
+        }
+      ],
+      "totalAmount": 306,
+      "totalItems": 12
+    }
+  ],
+  "settings": [
+    {
+      "expirationAlertMargin": 7,
+      "id": 1
+    }
+  ],
+  "catalog": [
+    {
+      "id": "cab-2018",
+      "name": "Gran Reserva Cabernet Sauvignon",
+      "varietal": "Cabernet Sauvignon",
+      "vintage": 2018,
+      "origin": "Napa Valley, USA",
+      "price": 58,
+      "imageUrl": "https://images.unsplash.com/photo-1543248939-ff40856f65d4",
+      "tastingNotes": "Notas de cassis, vainilla y roble tostado con taninos redondos."
+    },
+    {
+      "id": "mal-2019",
+      "name": "Alturas Andinas Malbec",
+      "varietal": "Malbec",
+      "vintage": 2019,
+      "origin": "Mendoza, Argentina",
+      "price": 42,
+      "imageUrl": "https://images.unsplash.com/photo-1543248986-42142f9b6043",
+      "tastingNotes": "Frutos rojos maduros, especias dulces y final persistente."
+    },
+    {
+      "id": "cha-2020",
+      "name": "Costa Dorada Chardonnay",
+      "varietal": "Chardonnay",
+      "vintage": 2020,
+      "origin": "Casablanca, Chile",
+      "price": 36,
+      "imageUrl": "https://images.unsplash.com/photo-1514533450685-26ef7784906e",
+      "tastingNotes": "Aromas cítricos, mantequilla fresca y delicado tostado."
+    },
+    {
+      "id": "tem-2017",
+      "name": "Viña Antigua Tempranillo",
+      "varietal": "Tempranillo",
+      "vintage": 2017,
+      "origin": "Rioja, España",
+      "price": 49,
+      "imageUrl": "https://images.unsplash.com/photo-1527169402691-feff5539e52c",
+      "tastingNotes": "Ciruelas maduras, tabaco y notas de cuero envejecido."
+    },
+    {
+      "id": "ros-2022",
+      "name": "Rosé Mediterráneo",
+      "varietal": "Grenache",
+      "vintage": 2022,
+      "origin": "Provenza, Francia",
+      "price": 24,
+      "imageUrl": "https://images.unsplash.com/photo-1527169402991-3546847d86be",
+      "tastingNotes": "Refrescante, floral y con un delicado toque mineral."
+    }
+  ],
+  "orders": [
+    {
+      "id": "ord-0001",
+      "code": "WI-2025-001",
+      "customerName": "Restaurante La Vid",
+      "customerEmail": "compras@lavid.com",
+      "status": "pending",
+      "createdAt": "2025-02-20T09:30:00.000Z",
+      "expectedDelivery": "2025-02-24T09:30:00.000Z",
+      "notes": "Entrega en horario matutino.",
+      "items": [
+        {
+          "id": "ord-0001-item-1",
+          "catalogItem": {
+            "id": "cab-2018",
+            "name": "Gran Reserva Cabernet Sauvignon",
+            "varietal": "Cabernet Sauvignon",
+            "vintage": 2018,
+            "origin": "Napa Valley, USA",
+            "price": 58
+          },
+          "quantity": 6,
+          "unitPrice": 58,
+          "lineTotal": 348
+        },
+        {
+          "id": "ord-0001-item-2",
+          "catalogItem": {
+            "id": "cha-2020",
+            "name": "Costa Dorada Chardonnay",
+            "varietal": "Chardonnay",
+            "vintage": 2020,
+            "origin": "Casablanca, Chile",
+            "price": 36
+          },
+          "quantity": 3,
+          "unitPrice": 36,
+          "lineTotal": 108
+        }
+      ],
+      "subtotal": 456,
+      "tax": 86.64,
+      "total": 542.64
+    },
+    {
+      "id": "ord-0002",
+      "code": "WI-2025-002",
+      "customerName": "Bodega El Roble",
+      "customerEmail": "contacto@elroble.ar",
+      "status": "completed",
+      "createdAt": "2025-02-13T11:15:00.000Z",
+      "expectedDelivery": "2025-02-17T09:00:00.000Z",
+      "notes": "Pedido recurrente mensual.",
+      "items": [
+        {
+          "id": "ord-0002-item-1",
+          "catalogItem": {
+            "id": "mal-2019",
+            "name": "Alturas Andinas Malbec",
+            "varietal": "Malbec",
+            "vintage": 2019,
+            "origin": "Mendoza, Argentina",
+            "price": 42
+          },
+          "quantity": 12,
+          "unitPrice": 42,
+          "lineTotal": 504
+        },
+        {
+          "id": "ord-0002-item-2",
+          "catalogItem": {
+            "id": "ros-2022",
+            "name": "Rosé Mediterráneo",
+            "varietal": "Grenache",
+            "vintage": 2022,
+            "origin": "Provenza, Francia",
+            "price": 24
+          },
+          "quantity": 8,
+          "unitPrice": 24,
+          "lineTotal": 192
+        }
+      ],
+      "subtotal": 696,
+      "tax": 132.24,
+      "total": 828.24
+    },
+    {
+      "id": "ord-0003",
+      "code": "WI-2025-003",
+      "customerName": "Wine Lovers Club",
+      "customerEmail": "compras@wineloversclub.es",
+      "status": "cancelled",
+      "createdAt": "2025-02-22T15:45:00.000Z",
+      "expectedDelivery": "2025-02-27T15:45:00.000Z",
+      "notes": "Confirmar disponibilidad del Malbec 2019.",
+      "items": [
+        {
+          "id": "ord-0003-item-1",
+          "catalogItem": {
+            "id": "mal-2019",
+            "name": "Alturas Andinas Malbec",
+            "varietal": "Malbec",
+            "vintage": 2019,
+            "origin": "Mendoza, Argentina",
+            "price": 42
+          },
+          "quantity": 20,
+          "unitPrice": 42,
+          "lineTotal": 840
+        }
+      ],
+      "subtotal": 840,
+      "tax": 159.6,
+      "total": 999.6
+    },
+    {
+      "id": "ord-0004",
+      "code": "WI-2025-004",
+      "customerName": "sdfsdfsd",
+      "status": "processing",
+      "createdAt": "2025-10-03T16:55:00.000Z",
+      "expectedDelivery": "2025-10-07T16:55:00.000Z",
+      "items": [
+        {
+          "id": "ord-0004-item-1",
+          "catalogItem": {
+            "id": "cab-2018",
+            "name": "Gran Reserva Cabernet Sauvignon",
+            "varietal": "Cabernet Sauvignon",
+            "vintage": 2018,
+            "origin": "Napa Valley, USA",
+            "price": 58,
+            "imageUrl": "https://images.unsplash.com/photo-1543248939-ff40856f65d4",
+            "tastingNotes": "Notas de cassis, vainilla y roble tostado con taninos redondos."
+          },
+          "quantity": 10,
+          "unitPrice": 58,
+          "lineTotal": 580
+        }
+      ],
+      "subtotal": 580,
+      "tax": 110.2,
+      "total": 690.2,
+      "customerEmail": "sdfdsfs@f",
+      "notes": "sdvsvsdvsv"
+    }
+  ],
+  "subscriptionPlans": [
+    {
+      "id": "Free",
+      "name": "Free",
+      "price": "$0",
+      "shortDescription": "Basic management for small wineries.",
+      "benefits": [
+        "Limited inventory",
+        "Basic reports",
+        "1 user"
+      ]
+    },
+    {
+      "id": "Plus",
+      "name": "Plus",
+      "price": "$18",
+      "shortDescription": "Advanced tools to grow your business.",
+      "benefits": [
+        "Unlimited inventory",
+        "Intelligent reports",
+        "Priority support"
+      ]
+    },
+    {
+      "id": "Pro",
+      "name": "Pro",
+      "price": "$39",
+      "shortDescription": "Full automation and ERP connection.",
+      "benefits": [
+        "Advanced integrations",
+        "Custom roles",
+        "Dedicated account manager"
+      ]
+    }
+  ],
+  "premiumBenefits": [
+    "Access to exclusive promotions from allied distributors",
+    "Intelligent alerts about critical stock and product rotation",
+    "Customized panels for sales and marketing teams",
+    "Direct integration with invoicing and CRM tools",
+    "24/7 priority support with enology specialists"
+  ],
+  "inventory": [
+    {
+      "id": "1",
+      "name": "Whiskey Escocés",
+      "type": "Destilado",
+      "expirationDate": "2024-04-24",
+      "currentStock": 20,
+      "minStockLevel": 20,
+      "price": 40,
+      "location": "Almacén 1A",
+      "imageUrl": "assets/images/whiskey.png"
+    },
+    {
+      "id": "2",
+      "name": "Vino Blanco Chardonnay",
+      "type": "Vino",
+      "expirationDate": "2023-07-23",
+      "currentStock": 10,
+      "minStockLevel": 10,
+      "price": 50,
+      "location": "Almacén 2B",
+      "imageUrl": "assets/images/vino-blanco.png"
+    },
+    {
+      "id": "3",
+      "name": "Vino Tinto Malbec",
+      "type": "Destilado",
+      "expirationDate": "2023-05-12",
+      "currentStock": 20,
+      "minStockLevel": 15,
+      "price": 55,
+      "location": "Almacén 1A",
+      "imageUrl": "assets/images/vino-tinto.png"
+    },
+    {
+      "id": "4",
+      "name": "Cerveza Artesanal IPA",
+      "type": "Cerveza",
+      "expirationDate": "2023-05-12",
+      "currentStock": 20,
+      "minStockLevel": 15,
+      "price": 60,
+      "location": "Almacén 3C",
+      "imageUrl": "assets/images/cerveza.png"
+    },
+    {
+      "id": "5",
+      "name": "Vodka Ruso Premium",
+      "type": "Destilado",
+      "expirationDate": "2023-05-12",
+      "currentStock": 20,
+      "minStockLevel": 15,
+      "price": 45,
+      "location": "Almacén 3C",
+      "imageUrl": "assets/images/vodka.png"
+    },
+    {
+      "id": "6",
+      "name": "Whiskey Japonés",
+      "type": "Destilado",
+      "expirationDate": "2023-05-12",
+      "currentStock": 20,
+      "minStockLevel": 15,
+      "price": 68,
+      "location": "Almacén 2B",
+      "imageUrl": "assets/images/whiskey.png"
+    },
+    {
+      "id": "SLWdXgH",
+      "name": "Ejemplo de Licor",
+      "type": "Licor Anisado",
+      "price": 36,
+      "expirationDate": "2025-10-04",
+      "currentStock": 20,
+      "minStockLevel": 8,
+      "location": "Almacén general",
+      "imageUrl": "assets/images/placeholder.png"
+    },
+    {
+      "id": "GSapssa",
+      "name": "Ejemplo de Licor",
+      "type": "Destilado",
+      "price": 30,
+      "expirationDate": "2025-10-05",
+      "currentStock": 20,
+      "minStockLevel": 8,
+      "location": "Almacén general",
+      "imageUrl": "assets/images/placeholder.png"
     }
   ]
 }

@@ -56,7 +56,7 @@ export class AuthenticationService {
    * @returns The {@link SignUpResponse} object containing the user's id and username.
    */
   signUp(signUpRequest: SignUpRequest) {
-    return this.http.post<SignUpResponse>(`${this.basePath}/accounts/sign-up`, signUpRequest, this.httpOptions)
+    return this.http.post<SignUpResponse>(`${this.basePath}/sign-up`, signUpRequest, this.httpOptions)
       .subscribe({
         next: (response) => {
           console.log('Response backend:', response);

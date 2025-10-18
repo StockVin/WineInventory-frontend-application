@@ -1,1 +1,105 @@
-<p>profile works!</p>
+<div class="profile-layout">
+  <app-side-navbar></app-side-navbar>
+  <section class="workspace" [class.workspace--settings]="isSettingsView()">
+    <header class="workspace__header">
+      <div class="header__title">
+        <div>
+          <h1>
+            {{'profile.title' | translate}}
+          </h1>
+          <p *ngIf="isProfileView()">{{ 'profile.subtitle' | translate }}</p>
+        </div>
+      </div>
+
+      <div class="header__right">
+        <app-language-switcher></app-language-switcher>
+      </div>
+    </header>
+
+    <ng-container *ngIf="!isLoading(); else loading">
+      <ng-container *ngIf="profile() as currentProfile; else emptyProfile">
+
+        <!-- Profile View -->
+        <ng-container *ngIf="isProfileView()">
+          <div class="summary-grid">
+            <article class="card profile-overview">
+              <div class="profile-overview__header">
+                <ng-container *ngIf="currentProfile.avatarUrl && !overviewAvatarError(); else overviewInitials">
+                    <img
+                      [src]="currentProfile.avatarUrl"
+                      [alt]="'Foto de ' + currentProfile.fullName"
+                      (error)="handleOverviewAvatarError()"
+                    />
+                  </ng-container>
+                  <ng-template #overviewInitials>
+                    <span class="profile-overview__initials">
+                      {{ currentProfile.fullName.charAt(0).toUpperCase() }}
+                    </span>
+                  </ng-template>
+                <div>
+                  <h2>{{ currentProfile.username }}</h2>
+                  <p>{{ currentProfile.role }}</p>
+                </div>
+              </div>
+              <dl class="profile-overview__details">
+                <div>
+                  <dt class="material-symbols-outlined">{{ 'profile.username' | translate }}:</dt>
+                  <dd>{{ currentProfile.username }}</dd>
+                </div>
+                <div>
+                  <dt class="material-symbols-outlined">{{ 'profile.email' | translate }}:</dt>
+                  <dd>{{ currentProfile.email }}</dd>
+                </div>
+                <div>
+                  <dt class="material-symbols-outlined">{{ 'profile.role' | translate }}:</dt>
+                  <dd>{{ currentProfile.role }}</dd>
+                </div>
+              </dl>
+              <div class="profile-overview__actions">
+                <button type="button" class="primary-button" (click)="goToSettings()">
+                  {{ 'profile.buttons.edit' | translate }}
+                </button>
+              </div>
+            </article>
+
+            <!-- Plan Details Section -->
+            <div class="plan-details-section">
+              <ng-container *ngIf="plans().length > 0; else noPlans">
+                <app-plan-details
+                  class="plan-details-container"
+                  [plans]="plans()"
+                  [selectedPlanId]="selectedPlanId()"
+                  [disabled]="isSaving()"
+                  (planSelected)="handlePlanSelected($event)"
+                ></app-plan-details>
+              </ng-container>
+              <ng-template #noPlans>
+                <div class="plan-details__empty">
+                  <span class="material-symbols-outlined plan-details__empty-icon">info</span>
+                  <h3 class="plan-details__empty-title">Plans Not Available</h3>
+                  <p class="plan-details__empty-message">
+                    There are no plans available to display at this time.
+                  </p>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </section>
+</div>
+
+<ng-template #loading>
+  <div class="workspace__loading">
+    <span class="material-symbols-outlined">hourglass_empty</span>
+    Loading profile information…
+  </div>
+</ng-template>
+
+<ng-template #emptyProfile>
+  <div class="workspace__empty">
+    <span class="material-symbols-outlined">person_off</span>
+    No found profile information to display.
+  </div>
+</ng-template>

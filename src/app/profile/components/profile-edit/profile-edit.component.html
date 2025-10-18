@@ -1,1 +1,101 @@
-<p>profile-edit works!</p>
+<div class="profile-edit-layout">
+  <app-side-navbar></app-side-navbar>
+  <div class="profile-edit-main">
+    <app-language-switcher></app-language-switcher>
+    <div class="profile-edit-container">
+      <!-- Profile Header -->
+      <div class="profile-edit__header">
+        <div class="profile-edit__avatar">
+          <ng-container *ngIf="shouldShowAvatarImage; else initialsAvatar">
+            <img
+              class="avatar-image"
+              [src]="profile?.avatarUrl"
+              [alt]="'Foto de ' + profile?.fullName"
+              (error)="handleAvatarError()"
+            />
+          </ng-container>
+          <ng-template #initialsAvatar>
+            <div class="avatar-initials">{{ avatarInitials }}</div>
+          </ng-template>
+        </div>
+        <div class="profile-edit__info">
+          <h2>{{ profile?.fullName }}</h2>
+          <p class="profile-role">{{ profile?.role }}</p>
+        </div>
+      </div>
+
+      <!-- Edit Form -->
+      <form class="profile-edit__form" [formGroup]="profileForm" (ngSubmit)="submit()">
+        <div class="form-grid">
+          <!-- Personal Information -->
+          <div class="form-section">
+            <h3>{{ 'profile.edit.title' | translate }}</h3>
+
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('fullName')">
+              <label for="fullName">{{ 'profile.edit.name' | translate }}</label>
+              <input id="fullName" type="text" formControlName="fullName" placeholder="Ingresa tu nombre completo" />
+              <span class="field-error" *ngIf="isFieldInvalid('fullName')">
+                {{ 'profile.edit.nameError' | translate }}
+              </span>
+            </div>
+
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('email')">
+              <label for="email">{{ 'profile.edit.email' | translate }}</label>
+              <input id="email" type="email" formControlName="email" placeholder="correo@empresa.com" />
+              <span class="field-error" *ngIf="isFieldInvalid('email')">
+                {{ 'profile.edit.emailError' | translate }}
+              </span>
+            </div>
+
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('username')">
+              <label for="username">{{ 'profile.edit.username' | translate }}</label>
+              <input id="username" type="text" formControlName="username" placeholder="usuario" />
+              <span class="field-error" *ngIf="isFieldInvalid('username')">
+                {{ 'profile.edit.usernameError' | translate }}
+              </span>
+            </div>
+          </div>          
+        </div>
+
+        <!-- Password Section -->
+        <div class="password-section">
+          <h3>{{ 'profile.edit.changePassword' | translate }}</h3>
+          <div class="password-fields">
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('currentPassword')">
+              <label for="currentPassword">{{ 'profile.edit.currentPassword' | translate }}</label>
+              <input id="currentPassword" type="password" formControlName="currentPassword" placeholder="••••••" />
+            </div>
+
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('newPassword')">
+              <label for="newPassword">{{ 'profile.edit.newPassword' | translate }}</label>
+              <input id="newPassword" type="password" formControlName="newPassword" placeholder="••••••" />
+              <span class="field-error" *ngIf="isFieldInvalid('newPassword')">
+                {{ 'profile.edit.newPasswordError' | translate }}
+              </span>
+            </div>
+
+            <div class="form-field" [class.form-field--error]="isFieldInvalid('confirmPassword')">
+              <label for="confirmPassword">{{ 'profile.edit.confirmPassword' | translate }}</label>
+              <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="••••••" />
+              <span class="field-error" *ngIf="isFieldInvalid('confirmPassword')">
+                {{ 'profile.edit.confirmPasswordError' | translate }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button type="button" class="ghost-button" [disabled]="saving" (click)="return()" >
+            {{ 'profile.edit.cancel' | translate }}
+          </button>
+          <button type="submit" class="primary-button" [disabled]="saving">
+            {{ saving ? 'profile.edit.saving' : 'profile.edit.save' | translate }}
+          </button>
+        </div>
+
+        <p class="form-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </form>
+    </div>
+  </div>
+</div>
