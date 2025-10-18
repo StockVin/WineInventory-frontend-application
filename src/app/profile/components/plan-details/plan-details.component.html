@@ -1,1 +1,57 @@
-<p>plan-details works!</p>
+<div class="plan-details-container">
+  <h2 class="plan-details__title">{{ 'profile.planDetails.title' | translate }}</h2>
+  <p class="plan-details__subtitle">{{ 'profile.planDetails.subtitle' | translate }}</p>
+
+  <ng-container *ngIf="plans?.length; else emptyState">
+    <div class="plan-details__grid">
+      <div
+        *ngFor="let plan of plans; index as planIndex"
+        class="plan-card"
+        [class.plan-card--current]="plan.id === selectedPlanId"
+      >
+        <div class="plan-card__header">
+          <div class="plan-card__current-badge" *ngIf="plan.id === selectedPlanId">
+            {{ 'profile.planDetails.now' | translate }}
+          </div>
+          <h3 class="plan-card__name">{{ plan.name }}</h3>
+          <div class="plan-card__price">
+            {{ plan.price }}<small> / {{ 'profile.planDetails.mounth' | translate }}</small>
+          </div>
+          <p class="plan-card__description">
+            {{ getPlanDescription(planIndex) }}
+          </p>
+        </div>
+
+        <ul class="plan-card__features">
+          <li *ngFor="let benefit of plan.benefits; index as benefitIndex" class="plan-card__feature">
+            <mat-icon class="plan-card__feature-icon">check_circle</mat-icon>
+            {{ getBenefitTranslation(planIndex, benefitIndex) }}
+          </li>
+        </ul>
+
+        <div class="plan-card__actions">
+          <button
+            type="button"
+            class="plan-card__button"
+            [class.plan-card__button--current]="plan.id === selectedPlanId"
+            (click)="onSelectPlan(plan.id)"
+            [disabled]="disabled || plan.id === selectedPlanId"
+          >
+            {{ plan.id === selectedPlanId ? ('profile.buttons.selectedPlan' | translate) : ('profile.buttons.plans' | translate) }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #emptyState>
+    <div class="plan-details__empty">
+      <span class="material-symbols-outlined plan-details__empty-icon">info</span>
+      <h3 class="plan-details__empty-title">Plans Not Available</h3>
+      <p class="plan-details__empty-message">
+        There are no plans available to display at this time. Please try again later.
+      </p>
+    </div>
+  </ng-template>
+</div>
+

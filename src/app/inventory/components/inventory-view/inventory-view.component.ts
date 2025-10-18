@@ -1,11 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { InventoryItemProps } from '../../models/inventory.entity'; 
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-inventory-view',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, MatTableModule, MatCheckboxModule, MatIconModule, MatMenuModule, MatButtonModule, TranslateModule],
   templateUrl: './inventory-view.component.html',
-  styleUrl: './inventory-view.component.css'
+  styleUrls: ['./inventory-view.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush 
 })
 export class InventoryViewComponent {
+  
+  @Input() inventory$!: Observable<InventoryItemProps[]>; 
+  
+  displayedColumns: string[] = [
+    'select', 
+    'name', 
+    'type', 
+    'expirationDate', 
+    'currentStock', 
+    'minStockLevel', 
+    'price', 
+    'actions'
+  ];
 
+  @Output() productDetail = new EventEmitter<string>();
+
+  onViewDetail(productId: string): void {
+    this.productDetail.emit(productId);
+  }
 }

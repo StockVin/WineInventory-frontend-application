@@ -1,0 +1,73 @@
+:root {
+  --blue: #263238;
+  --magenta: #890E4F;
+  --purple: #8E24AA;
+  --red: #C81D33;
+  --dark-text: #263238;
+  --light-text: #6B6B6B;
+  --light-background: #F4EDE3;
+  --white: #fff;
+}
+
+.alerts-bg {
+  background: var(--light-background);
+  min-height: 100vh;
+  display: flex;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.alerts-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.cards-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+app-language-switcher {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .alerts-bg {
+    padding: 1rem;
+  }
+
+  .alerts-container {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  app-language-switcher {
+    top: 10px;
+    right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .alerts-bg {
+    padding: 0.5rem;
+  }
+
+  .alerts-container {
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  app-language-switcher {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+  }
+}

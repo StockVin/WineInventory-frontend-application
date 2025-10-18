@@ -1,1 +1,58 @@
-<p>order-list works!</p>
+<section class="order-list">
+  <header class="order-list__header">
+    <h2>{{ 'orders.recent' | translate }}</h2>
+    <nav class="order-list__filters">
+      <button
+        type="button"
+        class="filter-chip"
+        *ngFor="let filter of statusFilters"
+        (click)="setFilter(filter.value)"
+        [class.filter-chip--active]="(statusFilter$ | async) === filter.value"
+      >
+        {{ filter.label }}
+      </button>
+    </nav>
+  </header>
+
+  <div class="order-list__table-wrapper" *ngIf="filteredOrders$ | async as orders">
+    <table class="order-list__table" *ngIf="orders.length; else emptyState">
+      <thead>
+      <tr>
+        <th>{{ 'orders.table.id' | translate }}</th>
+        <th>{{ 'orders.table.client' | translate }}</th>
+        <th>{{ 'orders.table.date' | translate }}</th>
+        <th>{{ 'orders.table.status' | translate }}</th>
+        <th>{{ 'orders.table.total' | translate }}</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let order of orders; trackBy: trackByOrderId">
+        <td>
+          <span class="order-code">{{ order.code }}</span>
+        </td>
+        <td>
+          <span class="order-customer">{{ order.customerName }}</span>
+          <small class="order-customer__email" *ngIf="order.customerEmail">{{ order.customerEmail }}</small>
+        </td>
+        <td>{{ order.createdAt | date:'mediumDate' }}</td>
+        <td>
+          <span class="badge" [class]="statusBadges[order.status]">{{ filterLabels[order.status] }}</span>
+        </td>
+        <td>{{ order.total | currency:'USD':'symbol':'1.0-0' }}</td>
+        <td class="order-list__actions">
+          <button type="button" (click)="goToOrderDetail(order)">{{ 'orders.table.details' | translate }}</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<ng-template #emptyState>
+  <div class="order-list__empty">
+    <h3>{{ 'orders.emptyState.title' | translate }}</h3>
+    <p>{{ 'orders.emptyState.description' | translate }}</p>
+    <a routerLink="new">{{ 'orders.emptyState.button' | translate }}</a>
+  </div>
+</ng-template>

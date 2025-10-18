@@ -1,1 +1,101 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+    <app-side-navbar></app-side-navbar>
+
+    <main class="main-content">
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">{{ 'dashboard.title' | translate }}</h1>
+            <p class="dashboard-subtitle">{{ 'dashboard.subtitle' | translate }}</p>
+        </div>
+
+        <!-- Key Statistics -->
+        <div class="stats-grid">
+            <!-- Inventory Stats -->
+            <mat-card class="stat-card primary">
+                <mat-card-content>
+                  <mat-icon>inventory</mat-icon>
+                    <div class="stat-info">
+                        <h3>{{ totalProductos }}</h3>
+                        <p>{{ 'dashboard.stats.totalProducts' | translate }}</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card class="stat-card warning">
+                <mat-card-content>
+                  <mat-icon> warning </mat-icon>
+                    <div class="stat-info">
+                        <h3>{{ productosStockBajo }}</h3>
+                        <p>{{ 'dashboard.stats.productsStockLow' | translate }}</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card class="stat-card danger">
+                <mat-card-content>
+                  <mat-icon>calendar</mat-icon>
+                    <div class="stat-info">
+                        <h3>{{ productosPorVencer }}</h3>
+                        <p>{{ 'dashboard.stats.expiringProducts' | translate }}</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card class="stat-card success">
+                <mat-card-content>
+                  <mat-icon>pending</mat-icon>
+                    <div class="stat-info">
+                        <h3>{{ ordenesPendientes }}</h3>
+                        <p>{{ 'dashboard.stats.pendingOrders' | translate }}</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <!-- Detailed Information -->
+        <div class="dashboard-content">
+            <div class="content-row">
+                <!-- Most Recent Products -->
+                <mat-card class="detail-card">
+                    <mat-card-header>
+                        <mat-card-title>{{ 'dashboard.content.recentProducts' | translate }}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="recent-items">
+                            <div class="recent-item" *ngFor="let item of productosRecientes">
+                                <div class="item-info">
+                                    <span class="item-name">{{ item.name }}</span>
+                                    <span class="item-stock">Stock: {{ item.currentStock }}</span>
+                                </div>
+                                <div class="item-badge" [ngClass]="getStockStatusClass(item.currentStock, item.minStockLevel)">
+                                    {{ getStockStatusText(item.currentStock, item.minStockLevel) }}
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+
+                <!-- Recent Orders -->
+                <mat-card class="detail-card">
+                    <mat-card-header>
+                        <mat-card-title>{{ 'dashboard.content.recentOrders' | translate }}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="recent-orders">
+                            <div class="order-item" *ngFor="let order of ordenesRecientes">
+                                <div class="order-info">
+                                    <span class="order-code">{{ order.code }}</span>
+                                    <span class="order-customer">{{ order.customerName }}</span>
+                                </div>
+                                <div class="order-badge" [ngClass]="'status-' + order.status">
+                                    {{ getStatusText(order.status) }}
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </main>
+
+    <app-language-switcher/>
+</div>
