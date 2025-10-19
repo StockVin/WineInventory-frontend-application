@@ -27,7 +27,7 @@
             
             <div class="form-group">
               <label for="report-date">{{ 'report.reportCreate.date' | translate }}</label>
-              <input type="date" id="report-date" [(ngModel)]="report.date" name="reportDate" required>
+              <input type="date" id="report-date" [(ngModel)]="report.reportDate" name="reportDate" required>
             </div>
           </div>
         </div>
@@ -39,15 +39,11 @@
           <div class="form-row">
             <div class="form-group">
               <label for="product">{{ 'report.reportCreate.product' | translate }}</label>
-              <select id="product" [(ngModel)]="report.products" name="product" required>
-                <option value="">Seleccione un producto</option>
-                <option value="Vino Tinto Reserva">Vino Tinto Reserva</option>
-                <option value="Vino Blanco Joven">Vino Blanco Joven</option>
-                <option value="Cava Brut">Cava Brut</option>
-                <option value="Vino Rosado">Vino Rosado</option>
-              </select>
+              <input type="text" id="product" [(ngModel)]="report.productName" name="productName" placeholder="Nombre del producto" required>
             </div>
-            
+          </div>
+
+          <div class="form-row">
             <div class="form-group">
               <label for="quantity">{{ 'report.reportCreate.amount' | translate }}</label>
               <input type="number" id="quantity" [(ngModel)]="report.amount" name="quantity" min="1" required>
@@ -64,18 +60,26 @@
               <label for="type">{{ 'report.reportCreate.type' | translate }}</label>
               <select id="type" [(ngModel)]="report.type" name="type" required>
                 <option value="">Seleccione un tipo</option>
-                <option value="destilado">Destilado</option>
-                <option value="fermentado">Fermentado</option>
-                <option value="licor">Licor</option>
+                <option value="sale">Venta</option>
+                <option value="purchase">Compra</option>
+                <option value="inventory">Inventario</option>
+                <option value="loss">Pérdida</option>
               </select>
             </div>
             
             <div class="form-group">
               <label for="lost">{{ 'report.reportCreate.lost' | translate }}</label>
-              <input type="number" id="lost" [(ngModel)]="report.lost" name="lost" min="0" step="0.01">
+              <input type="number" id="lost" [(ngModel)]="report.lostAmount" name="lostAmount" min="0" step="0.01">
             </div>
           </div>
-        
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="product-name-text">{{ 'report.reportCreate.productNameText' | translate }}</label>
+              <input type="text" id="product-name-text" [(ngModel)]="report.productNameText" name="productNameText" placeholder="Nombre a mostrar opcional">
+            </div>
+          </div>
+
         </div>
         
         <!-- Form Actions -->

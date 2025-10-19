@@ -91,8 +91,9 @@ export class ReportDashboardComponent implements OnInit {
     }
 
     const searchTerm = term.toLowerCase();
-    this.filteredReports = this.reports.filter(report => 
-      report.products.toLowerCase().includes(searchTerm) ||
+    this.filteredReports = this.reports.filter(report =>
+      report.productName.toLowerCase().includes(searchTerm) ||
+      (report.productNameText && report.productNameText.toLowerCase().includes(searchTerm)) ||
       report.type.toLowerCase().includes(searchTerm) ||
       report.id.toString().includes(searchTerm)
     );

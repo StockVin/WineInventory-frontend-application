@@ -14,8 +14,7 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import { ReportService } from '../../services/report.service';
 
 @Component({
   selector: 'app-report-create',
@@ -41,25 +40,27 @@ import { environment } from '../../../../environments/environment';
 export class ReportCreateComponent implements OnInit {
   report: {
     id: number;
-    products: string;
+    productName: string;
+    productNameText: string;
     type: string;
     price: number;
     amount: number;
-    date: string;
-    lost: number;
+    reportDate: string;
+    lostAmount: number;
   } = {
     id: 0,
-    products: '',
+    productName: '',
+    productNameText: '',
     type: '',
     price: 0,
     amount: 1,
-    date: new Date().toISOString().split('T')[0],
-    lost: 0
+    reportDate: new Date().toISOString().split('T')[0],
+    lostAmount: 0
   };
 
   constructor(
     private router: Router,
-    private http: HttpClient
+    private reportService: ReportService
   ) {}
 
   ngOnInit(): void {
@@ -71,26 +72,39 @@ export class ReportCreateComponent implements OnInit {
   }
 
   createReport(): void {
-    const dateValue = new Date(this.report.date);
-    if (!isNaN(dateValue.getTime())) {
-      this.report.date = dateValue.toISOString().split('T')[0];
+    const accountId = localStorage.getItem('accountId');
+    if (!accountId) {
+      alert('Sesión no válida. Inicie sesión nuevamente.');
+      this.router.navigate(['/sign-in']);
+      return;
     }
-    
-    if (!this.report.products || !this.report.type || this.report.amount <= 0) {
+
+    if (!this.report.productName || !this.report.type || this.report.amount <= 0) {
       alert('Por favor complete todos los campos requeridos');
       return;
     }
 
-    if (this.report.lost <= 0) {
-      this.report.lost = this.report.price * this.report.amount;
+    if (this.report.lostAmount <= 0) {
+      this.report.lostAmount = this.report.price * this.report.amount;
+    }
+
+    const dateValue = new Date(this.report.reportDate);
+    if (isNaN(dateValue.getTime())) {
+      alert('Por favor ingrese una fecha válida');
+      return;
     }
 
     const reportData = {
-      ...this.report,
-      date: this.report.date
+      productName: String(this.report.productName ?? ''),
+      productNameText: String(this.report.productNameText || this.report.productName || ''),
+      type: String(this.report.type ?? ''),
+      price: Number(this.report.price),
+      amount: Number(this.report.amount),
+      reportDate: dateValue.toISOString(),
+      lostAmount: Number(this.report.lostAmount)
     };
 
-    this.http.post(`${environment.apiUrl}/reporting`, reportData).subscribe({
+    this.reportService.create(reportData as any).subscribe({
       next: () => {
         this.router.navigate(['/reports']);
       },
