@@ -104,30 +104,27 @@ export class AuthenticationService {
     this.http.post<any>(`${this.basePath}/authentication/sign-in`, signInRequest, this.httpOptions)
       .subscribe({
         next: (response) => {
-          const { id, username, token, accountId } = response;
+          const { id, username, token } = response;
+          const accountId = response.accountId ?? response.account_id ?? response.account?.id ?? response.id;
 
           this.signedIn.next(true);
           this.signedInUserId.next(id);
           this.signedInUsername.next(username);
 
           localStorage.setItem('token', token);
-          localStorage.setItem('accountId', accountId.toString());
+          if (accountId !== undefined && accountId !== null) {
+            localStorage.setItem('accountId', String(accountId));
+          }
           localStorage.setItem('username', username);
-
-          console.log('✅ Account status:', status);
-
-              if (status === 'INACTIVE') {
-                this.router.navigate(['/subscription-choose']);
-              } else {
-                this.router.navigate(['/dashboard']);
-              }
-            },
-            error: (err: any) => {
-              console.error('❌ Error fetching account status:', err);
-              this.router.navigate(['/sign-in']);
-            }
-          });
+          
+          this.router.navigate(['/dashboard']);
+        },
+        error: (err: any) => {
+          console.error('❌ Error during sign-in:', err);
+          this.router.navigate(['/sign-in']);
         }
+      });
+    }
 
   /**
    * Sign out the user.

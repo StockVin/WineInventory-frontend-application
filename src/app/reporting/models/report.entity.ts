@@ -1,19 +1,21 @@
 export class Report {
     id: number;
-    products: string;
+    productName: string;
+    productNameText: string;
     type: string;
     price: number;
     amount: number;
-    date: string;
-    lost: number;
-  
-    constructor(reports: {id?:number,products?:string,type?:string,price?:number,amount?:number,date?:string,lost?:number}) {
+    reportDate: string;
+    lostAmount: number;
+
+    constructor(reports: { id?: number; productName?: string; productNameText?: string; type?: string; price?: number; amount?: number; reportDate?: string; lostAmount?: number; }) {
       this.id = reports.id || 0;
-      this.products = reports.products || '';
+      this.productName = reports.productName || '';
+      this.productNameText = reports.productNameText || '';
       this.type = reports.type || '';
       this.price = reports.price || 0;
       this.amount = reports.amount || 0;
-      this.date = reports.date || '';
-      this.lost = reports.lost || 0;
+      this.reportDate = reports.reportDate || '';
+      this.lostAmount = reports.lostAmount || 0;
     }
 }

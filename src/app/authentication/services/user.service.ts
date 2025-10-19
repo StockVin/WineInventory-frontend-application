@@ -33,12 +33,24 @@ export class UserService {
       tap(response => {
         const userData = response?.data ?? response ?? {};
         const token = userData?.token ?? response?.token;
+        const accountId = userData?.accountId ?? userData?.account_id ?? userData?.account?.id ?? userData?.id;
+        const username = userData?.username ?? userData?.email ?? userData?.account?.name;
+        const role = userData?.role ?? userData?.account?.role ?? userData?.accountRole;
 
         this.currentUser = userData;
 
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
         if (token) {
           localStorage.setItem('token', token);
+        }
+        if (accountId !== undefined && accountId !== null) {
+          localStorage.setItem('accountId', String(accountId));
+        }
+        if (username) {
+          localStorage.setItem('username', String(username));
+        }
+        if (role) {
+          localStorage.setItem('accountRole', String(role));
         }
       }),
       map(() => true)
@@ -65,6 +77,30 @@ export class UserService {
         const user = JSON.parse(currentUserData);
         this.currentUser = user;
         console.log('Usuario cargado desde localStorage:', user);
+
+        const existingAccountId = localStorage.getItem('accountId');
+        if (!existingAccountId) {
+          const accId = user?.account?.id ?? user?.accountId ?? user?.account_id ?? user?.id;
+          if (accId !== undefined && accId !== null) {
+            localStorage.setItem('accountId', String(accId));
+          }
+        }
+
+        const existingUsername = localStorage.getItem('username');
+        if (!existingUsername) {
+          const uname = user?.username ?? user?.email ?? user?.account?.name;
+          if (uname) {
+            localStorage.setItem('username', String(uname));
+          }
+        }
+
+        const existingRole = localStorage.getItem('accountRole');
+        if (!existingRole) {
+          const r = user?.role ?? user?.account?.role ?? user?.accountRole;
+          if (r) {
+            localStorage.setItem('accountRole', String(r));
+          }
+        }
       } catch (error) {
         console.error('Error parsing currentUser from localStorage:', error);
         localStorage.removeItem('currentUser');

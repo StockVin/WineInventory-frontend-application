@@ -80,7 +80,8 @@
       "price": "Precio",
       "type": "Tipo",
       "amount": "Cantidad",
-      "lost": "Perdida"
+      "lost": "Perdida",
+      "productNameText": "Nombre del Producto"
     },
     "tableHeaders": {
       "id": "ID",
