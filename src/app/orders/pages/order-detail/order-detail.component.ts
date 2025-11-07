@@ -26,8 +26,12 @@ export class OrderDetailComponent {
 
   readonly order$: Observable<Order | null> = this.route.paramMap.pipe(
     switchMap(params => {
-      const orderId = params.get('orderId') ?? params.get('id');
-      if (!orderId) {
+      const orderIdParam = params.get('orderId') ?? params.get('id');
+      if (!orderIdParam) {
+        return of(null);
+      }
+      const orderId = Number(orderIdParam);
+      if (!Number.isFinite(orderId)) {
         return of(null);
       }
       return this.ordersService.getOrderById(orderId).pipe(map(order => order ?? null));

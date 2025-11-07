@@ -32,7 +32,7 @@ export class OrdersComponent {
         return acc;
       }, { pending: 0, processing: 0, completed: 0, cancelled: 0 });
 
-      const totalRevenue = orders.reduce((acc, order) => acc + order.total, 0);
+      const totalRevenue = orders.reduce((acc, order) => acc + order.totalAmount.amount, 0);
       return {
         totalOrders: orders.length,
         totalRevenue,

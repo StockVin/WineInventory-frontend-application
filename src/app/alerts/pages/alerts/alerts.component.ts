@@ -27,26 +27,33 @@ export class AlertsComponent implements OnInit {
   inventoryItems: InventoryItemProps[] = [];
 
   constructor(
-    private alertService: AlertService,
-    private inventoryService: InventoryService
+    private readonly alertService: AlertService,
+    private readonly inventoryService: InventoryService
   ) {}
 
   ngOnInit(): void {
     this.loadInventoryAlerts();
   }
 
-  loadInventoryAlerts() {
+  loadInventoryAlerts(): void {
     this.backendLoading = true;
     this.backendErrorMsg = '';
 
-    this.alertService.generateInventoryAlerts().subscribe({
-      next: (alertData) => {
-        this.stockAlerts = alertData.stockAlerts;
-        this.expirationAlerts = alertData.expirationAlerts;
+    const accountId = localStorage.getItem('accountId');
+    if (!accountId) {
+      this.backendErrorMsg = 'No se encontró un accountId en la sesión.';
+      this.backendLoading = false;
+      return;
+    }
+
+    this.alertService.getAlerts(accountId).subscribe({
+      next: alerts => {
+        this.stockAlerts = alerts.filter(alert => alert.type === 'PRODUCTLOWSTOCK');
+        this.expirationAlerts = alerts.filter(alert => alert.type === 'EXPIRATION_WARNING');
         this.backendLoading = false;
       },
       error: () => {
-        this.backendErrorMsg = 'Error loading inventory alerts.';
+        this.backendErrorMsg = 'Error loading alerts from server.';
         this.backendLoading = false;
       }
     });
@@ -55,7 +62,7 @@ export class AlertsComponent implements OnInit {
       next: (items: InventoryItemProps[]) => {
         this.inventoryItems = items;
       },
-      error: (error: any) => {
+      error: error => {
         console.error('Error loading inventory items:', error);
       }
     });

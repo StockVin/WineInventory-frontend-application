@@ -2,8 +2,8 @@
   <app-side-navbar></app-side-navbar>
   <header class="order-detail__header">
     <div>
-      <h1>{{ 'order-detail.title' | translate: { code: order.code } }}</h1>
-      <p>{{ 'order-detail.text' | translate: { date: (order.createdAt | date:'medium') } }}</p>
+      <h1>{{ 'order-detail.title' | translate: { code: order.orderNumber } }}</h1>
+      <p>{{ 'order-detail.text' | translate: { date: (order.orderedAt | date:'medium') } }}</p>
     </div>
     <div class="order-detail__actions">
       <select [value]="order.status" (change)="updateStatus(order, $any($event.target).value)">
@@ -24,13 +24,15 @@
   <section class="order-detail__info">
     <article>
       <h2>{{ 'order-detail.customer' | translate }}</h2>
-      <p class="order-detail__customer">{{ order.customerName }}</p>
+      <p class="order-detail__customer">{{ order.delivery.recipientName }}</p>
+      <p>{{ order.delivery.addressLine }}, {{ order.delivery.city }}, {{ order.delivery.country }}</p>
+      <p>{{ order.delivery.contactPhone }}</p>
       <p *ngIf="order.customerEmail">{{ order.customerEmail }}</p>
       <p *ngIf="order.notes" class="order-detail__notes">{{ order.notes }}</p>
     </article>
     <article>
       <h2>{{ 'order-detail.delivery' | translate }}</h2>
-      <p>{{ 'order-detail.expected' | translate: { date: (order.expectedDelivery | date:'mediumDate') } }}</p>
+      <p>{{ 'order-detail.expected' | translate: { date: (order.deliveryDate | date:'mediumDate') } }}</p>
       <p>
         {{ 'order-detail.status' | translate }}
         <span class="badge" [class]="'badge ' + (order.status | lowercase)">{{ statusLabels[order.status] | translate }}</span>
@@ -38,9 +40,9 @@
     </article>
     <article>
       <h2>{{ 'order-detail.summary' | translate }}</h2>
-      <p>{{ 'order-detail.subtotal' | translate }} : <strong>{{ order.subtotal | currency:'USD':'symbol':'1.0-0' }}</strong></p>
-      <p>{{ 'order-detail.tax' | translate }} : <strong>{{ order.tax | currency:'USD':'symbol':'1.0-0' }}</strong></p>
-      <p>{{ 'order-detail.total' | translate }} : <strong>{{ order.total | currency:'USD':'symbol':'1.0-0' }}</strong></p>
+      <p>{{ 'order-detail.subtotal' | translate }} : <strong>{{ order.subtotalAmount.amount | currency:order.subtotalAmount.currency:'symbol':'1.0-0' }}</strong></p>
+      <p>{{ 'order-detail.tax' | translate }} : <strong>{{ order.taxAmount.amount | currency:order.taxAmount.currency:'symbol':'1.0-0' }}</strong></p>
+      <p>{{ 'order-detail.total' | translate }} : <strong>{{ order.totalAmount.amount | currency:order.totalAmount.currency:'symbol':'1.0-0' }}</strong></p>
     </article>
   </section>
 
@@ -60,14 +62,14 @@
       <tbody>
       <tr *ngFor="let item of order.items">
         <td>
-          <span class="item-name">{{ item.catalogItem.name }}</span>
-          <small>{{ item.catalogItem.origin }}</small>
+          <span class="item-name">{{ item.productName }}</span>
+          <small>#{{ item.productId }}</small>
         </td>
-        <td>{{ item.catalogItem.varietal }}</td>
-        <td>{{ item.catalogItem.vintage }}</td>
+        <td>—</td>
+        <td>—</td>
         <td>{{ item.quantity }}</td>
-        <td>{{ item.unitPrice | currency:'USD':'symbol':'1.0-0' }}</td>
-        <td>{{ item.lineTotal | currency:'USD':'symbol':'1.0-0' }}</td>
+        <td>{{ item.unitPrice.amount | currency:item.unitPrice.currency:'symbol':'1.0-0' }}</td>
+        <td>{{ item.lineTotal.amount | currency:item.lineTotal.currency:'symbol':'1.0-0' }}</td>
       </tr>
       </tbody>
     </table>

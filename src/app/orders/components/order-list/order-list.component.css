@@ -56,7 +56,7 @@
 }
 
 .order-list__table thead {
-  background: #f5f0ff;
+  background: #C81D33;
 }
 
 .order-list__table th,
@@ -82,6 +82,7 @@
 .order-customer {
   display: block;
   font-weight: 600;
+  color: black;
 }
 
 .order-customer__email {

@@ -13,10 +13,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { CareGuideService } from '../../services/care-guide.service';
+import { InventoryService, ProductResource } from '../../../inventory/services/inventory.service';
 
 @Component({
   selector: 'app-careguide-create',
@@ -61,15 +62,32 @@ export class CareguideCreateComponent implements OnInit {
 
   selectedImage: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
+  selectedProductId: number | null = null;
+  products: ProductResource[] = [];
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   constructor(
     private router: Router,
-    private http: HttpClient
+    private careGuideService: CareGuideService,
+    private inventoryService: InventoryService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const accountIdRaw = localStorage.getItem('accountId');
+    if (accountIdRaw) {
+      const accountId = Number(accountIdRaw);
+      this.inventoryService.getProductsByAccount(accountId).subscribe({
+        next: (products) => {
+          this.products = products;
+          if (!this.selectedProductId && this.products.length > 0) {
+            this.selectedProductId = this.products[0].id;
+          }
+        },
+        error: (err) => console.error('Error loading products for care guide', err)
+      });
+    }
+  }
 
   onImagePicked(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
@@ -95,15 +113,26 @@ export class CareguideCreateComponent implements OnInit {
   }
 
   onSave(): void {
-    const careGuideData = {
-      name: this.careguide.name,
-      type: this.careguide.type,
-      description: this.careguide.description,
-      imageUrl: this.imagePreview ? this.imagePreview.toString() : '',
-      date: new Date().toISOString()
-    };
+    const formData = new FormData();
+    formData.append('guideName', this.careguide.name);
+    formData.append('type', this.careguide.type);
+    formData.append('description', this.careguide.description);
+    if (this.selectedImage) {
+      formData.append('imageFile', this.selectedImage);
+    }
 
-    this.http.post(`${environment.apiUrl}${environment.careguidesEndpointPath}`, careGuideData).subscribe({
+    const accountId = localStorage.getItem('accountId');
+    if (accountId) {
+      formData.append('accountId', accountId);
+    }
+
+    if (this.selectedProductId) {
+      formData.append('productId', String(this.selectedProductId));
+    }
+
+    const careGuideId = Date.now();
+
+    this.careGuideService.addCareGuide(careGuideId, formData).subscribe({
       next: (response) => {
         console.log('Care guide saved successfully:', response);
         this.router.navigate(['/reports/careguides']);
@@ -113,6 +142,7 @@ export class CareguideCreateComponent implements OnInit {
       }
     });
   }
+
   onSubmit(): void {
     if (this.isFormValid()) {
       this.onSave();
@@ -126,6 +156,7 @@ export class CareguideCreateComponent implements OnInit {
   isFormValid(): boolean {
     return !!this.careguide.name && 
            !!this.careguide.type && 
-           !!this.careguide.description;
+           !!this.careguide.description &&
+           !!this.selectedProductId;
   }
 }

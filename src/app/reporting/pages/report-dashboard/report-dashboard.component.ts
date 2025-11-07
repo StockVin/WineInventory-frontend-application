@@ -9,7 +9,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
+import { Subject, forkJoin, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -18,6 +18,7 @@ import { LanguageSwitcher } from '../../../shared/presentation/components/langua
 import { MatListModule } from '@angular/material/list';
 import { ReportService } from '../../services/report.service';
 import { Report } from '../../models/report.entity';
+import { InventoryService, ProductResource } from '../../../inventory/services/inventory.service';
 import { ReportListComponent } from '../../components/report-list/report-list.component';
 
 @Component({
@@ -49,8 +50,13 @@ export class ReportDashboardComponent implements OnInit {
   loading = true;
   error: string | null = null;
   private searchTerms = new Subject<string>();
+  private productMap = new Map<number, ProductResource>();
 
-  constructor(private reportService: ReportService, private router: Router) {}
+  constructor(
+    private reportService: ReportService,
+    private inventoryService: InventoryService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadReports();
@@ -64,10 +70,19 @@ export class ReportDashboardComponent implements OnInit {
   loadReports(): void {
     this.loading = true;
     this.error = null;
-    
-    this.reportService.getAll().subscribe({
-      next: (data) => {
-        this.reports = data;
+
+    const accountIdRaw = localStorage.getItem('accountId');
+    const products$ = accountIdRaw
+      ? this.inventoryService.getProductsByAccount(Number(accountIdRaw))
+      : of([] as ProductResource[]);
+
+    forkJoin({
+      reports: this.reportService.getAll(),
+      products: products$
+    }).subscribe({
+      next: ({ reports, products }) => {
+        this.productMap = new Map((products ?? []).map(product => [product.id, product]));
+        this.reports = reports.map(report => this.enhanceReport(report));
         this.filteredReports = [...this.reports];
         this.loading = false;
       },
@@ -91,12 +106,27 @@ export class ReportDashboardComponent implements OnInit {
     }
 
     const searchTerm = term.toLowerCase();
-    this.filteredReports = this.reports.filter(report =>
-      report.productName.toLowerCase().includes(searchTerm) ||
-      (report.productNameText && report.productNameText.toLowerCase().includes(searchTerm)) ||
-      report.type.toLowerCase().includes(searchTerm) ||
-      report.id.toString().includes(searchTerm)
-    );
+    this.filteredReports = this.reports.filter(report => {
+      const displayName = report.productDisplayName || report.productNameText || '';
+      const liquorType = report.productLiquorType || '';
+      return (
+        displayName.toLowerCase().includes(searchTerm) ||
+        liquorType.toLowerCase().includes(searchTerm) ||
+        report.type.toLowerCase().includes(searchTerm) ||
+        report.id.toString().includes(searchTerm)
+      );
+    });
+  }
+
+  private enhanceReport(report: Report): Report {
+    const productId = Number(report.productName);
+    const product = this.productMap.get(productId);
+
+    return {
+      ...report,
+      productDisplayName: report.productNameText || product?.name || report.productName,
+      productLiquorType: product?.liquorType
+    };
   }
   getTypeClass(type: string): string {
     switch (type.toLowerCase()) {
