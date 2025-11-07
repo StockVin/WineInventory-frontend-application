@@ -83,7 +83,7 @@
                         <div class="recent-orders">
                             <div class="order-item" *ngFor="let order of ordenesRecientes">
                                 <div class="order-info">
-                                    <span class="order-code">{{ order.code }}</span>
+                                    <span class="order-code">{{ order.orderNumber }}</span>
                                     <span class="order-customer">{{ order.customerName }}</span>
                                 </div>
                                 <div class="order-badge" [ngClass]="'status-' + order.status">

@@ -9,7 +9,7 @@
         (click)="setFilter(filter.value)"
         [class.filter-chip--active]="(statusFilter$ | async) === filter.value"
       >
-        {{ filter.label }}
+        {{ filter.labelKey | translate }}
       </button>
     </nav>
   </header>
@@ -29,17 +29,17 @@
       <tbody>
       <tr *ngFor="let order of orders; trackBy: trackByOrderId">
         <td>
-          <span class="order-code">{{ order.code }}</span>
+          <span class="order-code">{{ order.orderNumber }}</span>
         </td>
         <td>
-          <span class="order-customer">{{ order.customerName }}</span>
+          <span class="order-customer">{{ order.delivery.recipientName }}</span>
           <small class="order-customer__email" *ngIf="order.customerEmail">{{ order.customerEmail }}</small>
         </td>
-        <td>{{ order.createdAt | date:'mediumDate' }}</td>
+        <td>{{ order.orderedAt | date:'mediumDate' }}</td>
         <td>
-          <span class="badge" [class]="statusBadges[order.status]">{{ filterLabels[order.status] }}</span>
+          <span class="badge" [class]="statusBadges[order.status]">{{ statusLabelKeys[order.status] | translate }}</span>
         </td>
-        <td>{{ order.total | currency:'USD':'symbol':'1.0-0' }}</td>
+        <td>{{ order.totalAmount.amount | currency:order.totalAmount.currency:'symbol':'1.0-0' }}</td>
         <td class="order-list__actions">
           <button type="button" (click)="goToOrderDetail(order)">{{ 'orders.table.details' | translate }}</button>
         </td>

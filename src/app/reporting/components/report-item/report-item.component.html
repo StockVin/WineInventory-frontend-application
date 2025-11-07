@@ -1,9 +1,10 @@
 <div class="report-item">
     <div class="report-date">{{ report.reportDate | date: 'yyyy-MM-dd' }}</div>
     <div class="report-products">
-      <ng-container *ngIf="report.productName || report.productNameText; else noProducts">
+      <ng-container *ngIf="(report.productDisplayName || report.productNameText || report.productName); else noProducts">
         <div class="product">
-          {{ report.productNameText || report.productName }}
+          <div class="product-name">{{ report.productDisplayName || report.productNameText || report.productName }}</div>
+          <div class="product-type" *ngIf="report.productLiquorType">{{ report.productLiquorType | titlecase }}</div>
         </div>
       </ng-container>
       <ng-template #noProducts>

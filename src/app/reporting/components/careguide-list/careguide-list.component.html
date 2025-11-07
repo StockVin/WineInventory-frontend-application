@@ -10,7 +10,7 @@
     <!-- Table Rows -->
     <div class="table-body">
       <div class="table-row" *ngFor="let careguide of careguides" (click)="onSelectCareGuide(careguide)">
-        <div class="cell name">{{careguide.name}}</div>
+        <div class="cell name">{{ careguide.guideName || careguide.name }}</div>
         <div class="cell type">
           <span class="type-badge" [ngClass]="careguide.type">
             {{careguide.type}}
