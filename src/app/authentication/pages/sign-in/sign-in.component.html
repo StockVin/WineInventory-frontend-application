@@ -6,21 +6,18 @@
         <h1>{{ 'sign-in.title' | translate }}</h1>
 
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <!-- Email Input -->
+          <!-- Username Input -->
           <div class="form-group">
             <mat-form-field appearance="outline">
-              <mat-label>{{ 'sign-in.email' | translate }}</mat-label>
+              <mat-label>{{ 'sign-in.username' | translate }}</mat-label>
               <input matInput 
-                type="email" 
-                formControlName="email" 
-                placeholder="{{ 'sign-in.email' | translate }}"
+                type="text" 
+                formControlName="username" 
+                placeholder="{{ 'sign-in.username' | translate }}"
                 required>
-              <mat-icon matPrefix>mail_outline</mat-icon>
-              <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
-                {{ 'sign-in.email-required' | translate }}
-              </mat-error>
-              <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
-                {{ 'sign-in.email-invalid' | translate }}
+              <mat-icon matPrefix>person_outline</mat-icon>
+              <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+                {{ 'sign-in.username-required' | translate }}
               </mat-error>
             </mat-form-field>
           </div>

@@ -65,7 +65,8 @@
 .form-fields {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 16px;
+    padding-right: 8px;
 }
 
 :host ::ng-deep .mat-form-field-wrapper {
@@ -87,17 +88,25 @@
 
 :host ::ng-deep .mat-input-element,
 :host ::ng-deep .mat-select-value {
-    color: #FFFFFF !important;
+    color: #FEEED4 !important;
     font-size: 0.95rem;
 }
 
 :host ::ng-deep .mat-form-field-label {
-    color: #6B6B6B !important;
+    color: rgba(254, 238, 212, 0.7) !important;
     font-size: 0.9rem;
 }
 
 :host ::ng-deep .mat-form-field-label.mat-focused {
     color: #FEEED4 !important;
+}
+
+:host ::ng-deep .mat-input-element::placeholder {
+    color: rgba(254, 238, 212, 0.4) !important;
+}
+
+:host ::ng-deep .mat-select-arrow {
+    color: rgba(254, 238, 212, 0.7) !important;
 }
 
 :host ::ng-deep .mat-form-field.mat-focused .mat-form-field-wrapper {
@@ -147,17 +156,21 @@
 }
 
 .image-placeholder {
-    height: 160px;
+    height: 170px;
     background: linear-gradient(135deg, rgba(254, 238, 212, 0.05) 0%, rgba(254, 238, 212, 0.02) 100%);
     border: 2px dashed rgba(254, 238, 212, 0.3);
-    border-radius: 8px;
+    border-radius: 12px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
+    text-align: center;
+    padding: 24px 16px;
+    gap: 12px;
 }
 
 .image-placeholder:hover {
@@ -165,28 +178,29 @@
     background: linear-gradient(135deg, rgba(254, 238, 212, 0.08) 0%, rgba(254, 238, 212, 0.04) 100%);
 }
 
-.image-placeholder::before {
-    content: '';
+.image-placeholder input[type="file"] {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 2px;
-    height: 40px;
-    background-color: rgba(254, 238, 212, 0.4);
-    border-radius: 1px;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
 }
 
-.image-placeholder::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.image-placeholder mat-icon {
+    font-size: 40px;
     width: 40px;
-    height: 2px;
-    background-color: rgba(254, 238, 212, 0.4);
-    border-radius: 1px;
+    height: 40px;
+    color: rgba(254, 238, 212, 0.8);
+}
+
+.image-placeholder span {
+    color: rgba(254, 238, 212, 0.7);
+    font-size: 0.9rem;
+    pointer-events: none;
+}
+
+.image-placeholder.has-file {
+    border-style: solid;
+    border-color: rgba(254, 238, 212, 0.6);
 }
 
 .action-buttons {

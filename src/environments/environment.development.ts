@@ -13,9 +13,7 @@ export const environment = {
   baseServerUrl: 'http://localhost:8080/api/v1',
   accountWarehousesEndpointPath: '/accounts/{accountId}/warehouses',
   accountProductsEndpointPath: '/accounts/{accountId}/products',
-   //reporting
-   reportingEndpointPath: '/reporting',
-   //careguides
-   careguidesEndpointPath: '/careguides',
-
+  reportingEndpointPath: '/reporting',
+  inventoriesEndpointPath: '/inventories',
+  careguidesEndpointPath: '/careguides',
 };

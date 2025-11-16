@@ -34,6 +34,21 @@
               </mat-select>
             </mat-form-field>
 
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>{{ "careguide.create.product" | translate }} *</mat-label>
+              <mat-select
+                [(ngModel)]="selectedProductId"
+                name="productId"
+                required
+                [disabled]="!products.length"
+              >
+                <mat-option *ngFor="let product of products" [value]="product.id">
+                  {{ product.name }}
+                </mat-option>
+              </mat-select>
+              <mat-hint *ngIf="!products.length">{{ "careguide.create.noProducts" | translate }}</mat-hint>
+            </mat-form-field>
+
             <mat-form-field appearance="outline" class="form-field full-width">
               <mat-label
                 >{{ "careguide.create.description" | translate }} *</mat-label
@@ -63,17 +78,15 @@
                   accept="image/*"
                   style="display: none"
                 />
-                @if (imagePreview) {
-                <img [src]="imagePreview" alt="Preview" class="image-preview" />
-                } @else {
-                <div class="upload-placeholder">
-                  <mat-icon>cloud_upload</mat-icon>
-                  <span>{{ "careguide.create.uploadImage" | translate }}</span>
-                </div>
-                }
+                <img *ngIf="imagePreview; else uploadPlaceholder" [src]="imagePreview" alt="Preview" class="image-preview" />
+                <ng-template #uploadPlaceholder>
+                  <div class="upload-placeholder">
+                    <mat-icon>cloud_upload</mat-icon>
+                    <span>{{ "careguide.create.uploadImage" | translate }}</span>
+                  </div>
+                </ng-template>
               </div>
-              @if (selectedImage) {
-              <div class="file-info">
+              <div class="file-info" *ngIf="selectedImage">
                 <span>{{ selectedImage.name }}</span>
                 <button
                   type="button"
@@ -84,7 +97,6 @@
                   <mat-icon>close</mat-icon>
                 </button>
               </div>
-              }
             </div>
           </div>
         </div>

@@ -39,8 +39,8 @@ export class SignUpComponent {
   hideConfirmPassword = true;
   
   roles = [
-    { value: 'Distributor', viewValue: 'Distributor' },
-    { value: 'Productor', viewValue: 'Productor' },
+    { value: 'PRODUCER', viewValue: 'Productor' },
+    { value: 'DISTRIBUTOR', viewValue: 'Distributor' },
   ];
 
   constructor(
@@ -52,7 +52,7 @@ export class SignUpComponent {
     this.signupForm = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      role: ['user', [Validators.required]],
+      role: [this.roles[0].value, [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
       acceptTerms: [false, [Validators.requiredTrue]]
@@ -73,6 +73,7 @@ export class SignUpComponent {
         name: formData.name,
         email: formData.email,
         password: formData.password,
+        confirmPassword: formData.confirmPassword,
         role: formData.role
       }).subscribe({
         next: (response) => {

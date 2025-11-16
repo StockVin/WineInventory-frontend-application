@@ -16,18 +16,22 @@
       <h2>{{ 'order-create.data' | translate }}</h2>
       <div class="form-grid">
         <label class="form-field">
-          <span>{{ 'order-create.name' | translate }} *</span>
-          <input type="text" formControlName="customerName" placeholder="Ej. Restaurante La Vid" />
-          <small class="error" *ngIf="orderForm.get('customerName')?.touched && orderForm.get('customerName')?.hasError('required')">
-            Este campo es obligatorio.
+          <span>{{ 'order-create.buyerId' | translate }} *</span>
+          <input type="number" min="1" formControlName="buyerId" />
+          <small class="error" *ngIf="orderForm.get('buyerId')?.touched && orderForm.get('buyerId')?.invalid">
+            Ingresa un identificador válido.
           </small>
         </label>
         <label class="form-field">
-          <span>{{ 'order-create.email' | translate }}</span>
+          <span>{{ 'order-create.email' | translate }} *</span>
           <input type="email" formControlName="customerEmail" placeholder="correo@cliente.com" />
           <small class="error" *ngIf="orderForm.get('customerEmail')?.touched && orderForm.get('customerEmail')?.hasError('email')">
             Ingresa un correo válido.
           </small>
+        </label>
+        <label class="form-field">
+          <span>{{ 'order-create.currency' | translate }} *</span>
+          <input type="text" formControlName="currency" placeholder="USD" />
         </label>
         <label class="form-field form-field--full">
           <span>{{ 'order-create.notes' | translate }}</span>
@@ -40,20 +44,10 @@
       <h2>{{ 'order-create.information' | translate }}</h2>
       <div class="form-grid">
         <label class="form-field">
-          <span>{{ 'order-create.date' | translate }} *</span>
-          <input type="datetime-local" formControlName="createdAt" />
-          <small class="error" *ngIf="orderForm.get('createdAt')?.touched && orderForm.get('createdAt')?.hasError('required')">
+          <span>{{ 'order-create.deliveryDate' | translate }} *</span>
+          <input type="datetime-local" formControlName="deliveryDate" />
+          <small class="error" *ngIf="orderForm.get('deliveryDate')?.touched && orderForm.get('deliveryDate')?.invalid">
             Este campo es obligatorio.
-          </small>
-        </label>
-        <label class="form-field">
-          <span>{{ 'order-create.expectedDelivery' | translate }} *</span>
-          <input type="datetime-local" formControlName="expectedDelivery" [min]="orderForm.get('createdAt')?.value || undefined" />
-          <small class="error" *ngIf="orderForm.get('expectedDelivery')?.touched && orderForm.get('expectedDelivery')?.hasError('required')">
-            Este campo es obligatorio.
-          </small>
-          <small class="error" *ngIf="orderForm.hasError('deliveryBeforeCreation') && orderForm.get('expectedDelivery')?.touched">
-            La fecha de entrega no puede ser anterior a la fecha de creación.
           </small>
         </label>
         <label class="form-field">
@@ -66,6 +60,39 @@
             Selecciona un estado para el pedido.
           </small>
         </label>
+        <div class="form-field form-field--full">
+          <h3>{{ 'order-create.delivery.section' | translate }}</h3>
+          <div class="delivery-grid" formGroupName="delivery">
+            <label>
+              <span>{{ 'order-create.delivery.recipient' | translate }} *</span>
+              <input type="text" formControlName="recipientName" />
+            </label>
+            <label>
+              <span>{{ 'order-create.delivery.phone' | translate }} *</span>
+              <input type="text" formControlName="contactPhone" />
+            </label>
+            <label>
+              <span>{{ 'order-create.delivery.address' | translate }} *</span>
+              <input type="text" formControlName="addressLine" />
+            </label>
+            <label>
+              <span>{{ 'order-create.delivery.city' | translate }} *</span>
+              <input type="text" formControlName="city" />
+            </label>
+            <label>
+              <span>{{ 'order-create.delivery.state' | translate }} *</span>
+              <input type="text" formControlName="state" />
+            </label>
+            <label>
+              <span>{{ 'order-create.delivery.postalCode' | translate }} *</span>
+              <input type="text" formControlName="postalCode" />
+            </label>
+            <label>
+              <span>{{ 'order-create.delivery.country' | translate }} *</span>
+              <input type="text" formControlName="country" />
+            </label>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -79,15 +106,20 @@
         <div class="order-item" *ngFor="let item of items.controls; let i = index; trackBy: trackByIndex" [formGroupName]="i">
           <label>
             <span>{{ 'order-create.product' | translate }} *</span>
-            <select formControlName="catalogItemId">
-              <option [ngValue]="null" disabled>Selecciona una referencia</option>
-              <option *ngFor="let catalogItem of (catalogItems$ | async)" [ngValue]="catalogItem.id">
-                {{ catalogItem.name }} · {{ catalogItem.vintage }} · {{ catalogItem.price | currency:'USD':'symbol':'1.0-0' }}
-              </option>
-            </select>
-            <small class="error" *ngIf="item.get('catalogItemId')?.touched && item.get('catalogItemId')?.hasError('required')">
-              Selecciona un producto.
+            <input type="number" min="1" formControlName="productId" placeholder="ID del producto" />
+            <small class="error" *ngIf="item.get('productId')?.touched && item.get('productId')?.invalid">
+              Ingresa el ID del producto.
             </small>
+          </label>
+
+          <label>
+            <span>{{ 'order-create.productName' | translate }} *</span>
+            <input type="text" formControlName="productName" placeholder="Nombre del producto" />
+          </label>
+
+          <label>
+            <span>{{ 'order-create.unitPrice' | translate }} *</span>
+            <input type="number" min="0.01" step="0.01" formControlName="unitPrice" />
           </label>
 
           <label>

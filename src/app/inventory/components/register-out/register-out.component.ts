@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule
   ],
   templateUrl: './register-out.component.html',
-  styleUrl: './register-out.component.css',
+  styleUrls: ['./register-out.component.css'],
 })
 export class RegisterOutComponent implements OnInit {
   
@@ -39,9 +39,11 @@ export class RegisterOutComponent implements OnInit {
     private fb: FormBuilder,
     private inventoryService: InventoryService,
     public dialogRef: MatDialogRef<RegisterOutComponent>,
+    @Inject(MAT_DIALOG_DATA) private data?: { productId?: string }
   ) {
     this.registerOutForm = this.fb.group({
       productId: ['', Validators.required],
+      bestBeforeDate: ['', Validators.required],
       outputType: ['', Validators.required],
       quantity: [null, [Validators.required, Validators.min(1)]], 
     });
@@ -50,25 +52,52 @@ export class RegisterOutComponent implements OnInit {
   ngOnInit(): void {
     this.inventoryService.getInventoryList().subscribe(data => {
       this.products = data;
+
+      if (this.data?.productId) {
+        const exists = this.products.find(p => p.id === this.data?.productId);
+        if (exists) {
+          this.registerOutForm.patchValue({ productId: exists.id });
+          this.handleProductSelection(exists.id);
+        }
+      }
     });
     this.registerOutForm.get('productId')?.valueChanges.subscribe(productId => {
-      const selectedProduct = this.products.find(p => p.id === productId);
-      
-      this.maxQuantity = selectedProduct ? selectedProduct.currentStock : 0;
-      
-      this.registerOutForm.get('quantity')?.setValue(null);
-      this.registerOutForm.get('quantity')?.setValidators([
-        Validators.required,
-        Validators.min(1),
-        Validators.max(this.maxQuantity), 
-      ]);
-      this.registerOutForm.get('quantity')?.updateValueAndValidity();
+      this.handleProductSelection(productId);
     });
   }
-  
+
+  private handleProductSelection(productId: string | null): void {
+    const selectedProduct = this.products.find(p => p.id === productId);
+
+    this.maxQuantity = selectedProduct ? selectedProduct.currentStock : 0;
+
+    const bestBefore = selectedProduct?.expirationDate
+      ? new Date(selectedProduct.expirationDate).toISOString().split('T')[0]
+      : '';
+
+    this.registerOutForm.patchValue({
+      bestBeforeDate: bestBefore
+    }, { emitEvent: false });
+
+    const quantityControl = this.registerOutForm.get('quantity');
+    quantityControl?.setValue(null);
+    quantityControl?.setValidators([
+      Validators.required,
+      Validators.min(1),
+      Validators.max(this.maxQuantity || 1),
+    ]);
+    quantityControl?.updateValueAndValidity();
+  }
+
   onSubmit(): void {
     if (this.registerOutForm.valid) {
-      this.inventoryService.registerOutput(this.registerOutForm.value).subscribe({
+      const formValue = this.registerOutForm.value;
+      this.inventoryService.registerOutput({
+        productId: formValue.productId,
+        quantity: formValue.quantity,
+        bestBeforeDate: formValue.bestBeforeDate,
+        reason: formValue.outputType,
+      }).subscribe({
         next: (response) => {
           console.log('Salida registrada con éxito', response);
           this.dialogRef.close(true); 

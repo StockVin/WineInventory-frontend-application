@@ -2,6 +2,8 @@
   "title": "WineInventory",
   "sign-in": {
     "title": "Sign In",
+    "username": "Username",
+    "username-required": "Username is required",
     "email": "Email",
     "email-required": "Email is required",
     "email-invalid": "Please enter a valid email",
@@ -17,6 +19,8 @@
   },
   "sign-up": {
     "title": "Create Account",
+    "username": "Username",
+    "username-required": "Username is required",
     "name": "Full Name",
     "name-required": "Name is required",
     "email": "Email",
@@ -76,7 +80,8 @@
       "price": "Price",
       "type": "Type",
       "amount": "Quantity",
-      "lost": "Lost"
+      "lost": "Lost",
+      "productNameText":"Name of product"
     },
     "tableHeaders": {
       "id": "ID",
@@ -117,7 +122,8 @@
       "image": "Image",
       "cancel": "Cancel",
       "save": "Save",
-      "uploadImage": "Upload Image"
+      "uploadImage": "Upload Image",
+      "product": "Product"
     }
   },
   "orders": {
@@ -155,9 +161,14 @@
   "order-create": {
     "title": "New Order",
     "text": "Complete the customer information and select the wines that will be part of the order.",
+    "buyerId": "Buyer ID",
+    "deliveryDate": "Delivery Date",
+    "currency": "Currency",
     "button": "Back to order list",
     "data": "Customer information",
     "name": "Customer name",
+    "productName": "Product name",
+    "unitPrice": "Unit price",
     "email": "Email",
     "notes": "Additional notes",
     "information": "Order information",
@@ -172,7 +183,18 @@
     "tax": "Tax",
     "total": "Total",
     "save": "Save order",
-    "add": "Add product"
+    "add": "Add product",
+    "delivery": {
+      "section": "Delivery Information",
+      "recipient": "Recipient",
+      "address": "Address",
+      "phone": "Phone",
+      "city": "City",
+      "state": "State",
+      "zipCode": "Zip Code",
+      "country": "Country",
+      "postalCode": "Postal Code"
+    }
   },
   "order-detail": {
     "title": "Order Details",
@@ -241,7 +263,12 @@
       "highlight": "Highlight product",
       "duplicate": "Duplicate product",
       "delete": "Delete product",
-      "moreOptions": "More options"
+      "moreOptions": "More options",
+      "warehouseId": "Warehouse ID",
+      "productId": "Product ID",
+      "newProductOption": "New Product Option",
+      "brand": "Brand",
+      "minimumStock":"Minimum Stock"
     },
     "register": {
       "title": "Register Product Output",
@@ -292,7 +319,7 @@
       "free": "Free",
       "plus": "Plus",
       "Pro": "Pro",
-      "now":"Current plan",
+      "now": "Current plan",
       "subtitle1": "Basic management for small wineries.",
       "subtitle2": "Advanced tools to grow your business.",
       "subtitle3": "Full automation and ERP connection.",

@@ -1,82 +1,87 @@
 {
-  "title": "WineInventory",
+  "title": "InventarioDeVinos",
   "sign-in": {
-    "title": "Iniciar Sesión",
+    "title": "Iniciar sesión",
+    "username": "Nombre de usuario",
+    "username-required": "El nombre de usuario es obligatorio",
     "email": "Correo electrónico",
-    "email-required": "El correo electrónico es requerido",
+    "email-required": "El correo electrónico es obligatorio",
     "email-invalid": "Por favor ingresa un correo electrónico válido",
     "password": "Contraseña",
-    "password-required": "La contraseña es requerida",
+    "password-required": "La contraseña es obligatoria",
     "password-minlength": "La contraseña debe tener al menos 6 caracteres",
     "remember-me": "Recordar mi cuenta",
     "forgot-password": "¿Olvidaste tu contraseña?",
-    "submit": "Iniciar Sesión",
+    "submit": "Iniciar sesión",
     "welcome-title": "¡Bienvenido de nuevo!",
-    "welcome-text": "Si aún no tienes una cuenta, regístrate para acceder a todas las funcionalidades.",
+    "welcome-text": "Si aún no tienes una cuenta, regístrate para acceder a todas las funciones.",
     "register": "Registrarse"
   },
   "sign-up": {
-    "title": "Crear Cuenta",
-    "name": "Nombre Completo",
-    "name-required": "El nombre es requerido",
+    "title": "Crear cuenta",
+    "username": "Nombre de usuario",
+    "username-required": "El nombre de usuario es obligatorio",
+    "name": "Nombre completo",
+    "name-required": "El nombre es obligatorio",
     "email": "Correo electrónico",
-    "email-required": "El correo electrónico es requerido",
+    "email-required": "El correo electrónico es obligatorio",
     "email-invalid": "Por favor ingresa un correo electrónico válido",
     "role": "Rol",
-    "role-required": "El rol es requerido",
+    "role-required": "El rol es obligatorio",
     "password": "Contraseña",
-    "password-required": "La contraseña es requerida",
+    "password-required": "La contraseña es obligatoria",
     "password-minlength": "La contraseña debe tener al menos 6 caracteres",
-    "confirm-password": "Confirmar Contraseña",
+    "confirm-password": "Confirmar contraseña",
     "confirm-password-required": "Por favor confirma tu contraseña",
     "passwords-mismatch": "Las contraseñas no coinciden",
     "accept-terms-1": "Acepto los",
-    "terms": "Términos de Servicio",
+    "terms": "Términos de servicio",
     "accept-terms-2": "y la",
-    "privacy": "Política de Privacidad",
+    "privacy": "Política de privacidad",
     "accept-terms-required": "Debes aceptar los términos y condiciones",
     "submit": "Registrarse",
     "have-account": "¿Ya tienes una cuenta?",
-    "sign-in": "Iniciar Sesión",
-    "welcome-title": "¡Únete a Nosotros!"
+    "sign-in": "Iniciar sesión",
+    "welcome-title": "¡Únete a nosotros!"
   },
   "notFound": {
-    "title": "¡Uy! Página no encontrada.",
-    "description": "La página que buscas podría haber sido eliminada o no estar disponible temporalmente.",
-    "button": "Volver a la página principal"
+    "title": "¡Vaya! Página no encontrada.",
+    "description": "La página que buscas pudo haber sido eliminada o está temporalmente no disponible.",
+    "button": "Volver al inicio"
   },
   "side-navbar": {
-    "title": "Menu principal",
+    "title": "Menú principal",
     "options": {
       "dashboard": "Inicio",
-      "wine": "Ordenes",
+      "wine": "Pedidos",
       "inventory": "Inventario",
       "report": "Reportes",
       "alert": "Alertas",
       "configuration": "Configuración"
     },
-    "logout": "Cerrar Sesión"
+    "logout": "Cerrar sesión"
   },
   "report": {
     "title": "Reportes",
     "search": "Buscar",
     "searchPlaceholder": "Buscar reporte...",
-    "new": "Nuevo Reporte",
+    "new": "Nuevo reporte",
     "export": "Exportar",
-    "careguide": "Guia de cuidado",
-    "create": "Crear Reporte",
+    "careguide": "Guía de cuidado",
+    "create": "Crear reporte",
     "reportCreate": {
-      "data": "Datos del Reporte",
-      "information": "Información del Producto",
+      "data": "Datos del reporte",
+      "information": "Información del producto",
       "cancel": "Cancelar",
       "save": "Guardar",
-      "number": "Número de Reporte",
+      "number": "Número de reporte",
       "date": "Fecha",
       "product": "Producto",
       "price": "Precio",
       "type": "Tipo",
       "amount": "Cantidad",
-      "lost": "Perdida"
+      "lost": "Perdido",
+      "productNameText": "Nombre del producto"
     },
     "tableHeaders": {
       "id": "ID",
@@ -85,7 +90,7 @@
       "price": "Precio",
       "amount": "Cantidad",
       "date": "Fecha",
-      "lost": "Perdida",
+      "lost": "Perdido",
       "actions": "Acciones"
     },
     "actions": {
@@ -99,10 +104,10 @@
     "noResults": "No se encontraron resultados"
   },
   "careguide": {
-    "title": "Guia de cuidado",
+    "title": "Guía de cuidados",
     "buttons": {
       "return": "Reportes",
-      "create": "Crear nueva guia"
+      "create": "Crear nueva guía"
     },
     "tableHeaders": {
       "name": "Nombre",
@@ -110,21 +115,22 @@
       "description": "Descripción"
     },
     "create": {
-      "title": "Crear Guia de Cuidado",
+      "title": "Crear guía de cuidado",
       "name": "Nombre",
       "type": "Tipo",
       "description": "Descripción",
       "image": "Imagen",
       "cancel": "Cancelar",
       "save": "Guardar",
-      "uploadImage": "Subir Imagen"
+      "uploadImage": "Subir imagen",
+      "product": "Producto"
     }
   },
   "orders": {
-    "title": "Ordenes",
+    "title": "Pedidos",
     "text": "Administra el ciclo completo de ventas y el estado de cada pedido",
     "button": "Agregar nuevo pedido",
-    "total": "Pedidos totales",
+    "total": "Total de pedidos",
     "income": "Ingresos acumulados",
     "pending": "Pendiente",
     "processing": "En preparación",
@@ -139,32 +145,37 @@
       "cancelled": "Cancelado"
     },
     "table": {
-      "id": "Codigo",
+      "id": "Código",
       "client": "Cliente",
       "date": "Fecha",
       "status": "Estado",
       "total": "Total",
-      "details": "Ver Detalles"
+      "details": "Ver detalles"
     },
     "emptyState": {
       "title": "No hay pedidos registrados",
-      "description": "Comienza creando tu primer pedido para visualizarlo en esta lista.",
+      "description": "Comienza creando tu primer pedido para verlo en esta lista.",
       "button": "Crear pedido"
     }
   },
   "order-create": {
-    "title": "Nuevo Pedido",
-    "texto": "Completa la información del cliente y selecciona los vinos que formarán parte del pedido.",
+    "title": "Nuevo pedido",
+    "text": "Completa la información del cliente y selecciona los vinos que formarán parte del pedido.",
+    "buyerId": "ID del comprador",
+    "deliveryDate": "Fecha de entrega",
+    "currency": "Moneda",
     "button": "Volver a la lista de pedidos",
-    "data": "Datos del cliente",
+    "data": "Información del cliente",
     "name": "Nombre del cliente",
+    "productName": "Nombre del producto",
+    "unitPrice": "Precio unitario",
     "email": "Correo electrónico",
     "notes": "Notas adicionales",
     "information": "Información del pedido",
     "date": "Fecha de creación",
     "expectedDelivery": "Fecha de entrega",
     "status": "Estado",
-    "details": "Detalle del pedido",
+    "details": "Detalles del pedido",
     "product": "Producto",
     "quantity": "Cantidad",
     "resume": "Resumen",
@@ -172,15 +183,26 @@
     "tax": "Impuesto",
     "total": "Total",
     "save": "Guardar pedido",
-    "add": "Agregar producto"
+    "add": "Agregar producto",
+    "delivery": {
+      "section": "Información de entrega",
+      "recipient": "Destinatario",
+      "address": "Dirección",
+      "phone": "Teléfono",
+      "city": "Ciudad",
+      "state": "Estado",
+      "zipCode": "Código postal",
+      "country": "País",
+      "postalCode": "Código postal"
+    }
   },
   "order-detail": {
-    "title": "Detalle del pedido",
+    "title": "Detalles del pedido",
     "text": "Detalles del pedido",
     "button": "Volver a la lista de pedidos",
     "delete": "Eliminar pedido",
     "deleting": "Eliminando pedido...",
-    "customer": "Datos del cliente",
+    "customer": "Detalles del cliente",
     "delivery": "Información de entrega",
     "expected": "Fecha de entrega",
     "status": "Estado",
@@ -188,7 +210,7 @@
     "subtotal": "Subtotal",
     "tax": "Impuesto",
     "total": "Total",
-    "items": "Detalle del pedido",
+    "items": "Detalles del pedido",
     "table": {
       "reference": "Referencia",
       "varietal": "Varietal",
@@ -199,52 +221,57 @@
     }
   },
   "alert": {
-    "title": "Reabastecimiento urgente",
-    "text": "No hay alertas de reabastecimiento urgente disponibles",
-    "expire-title": "Proximamente vencimiento",
-    "expire-text": "No hay alertas de proximamente vencimiento disponibles",
+    "title": "Reposición urgente",
+    "text": "No hay alertas de reposición urgente disponibles.",
+    "expire-title": "Próximos a vencer",
+    "expire-text": "No hay alertas de vencimiento disponibles.",
     "showAll": "Mostrar todo",
     "hideAll": "Ocultar todo",
     "stock": "Stock actual",
     "minStock": "Stock mínimo",
-    "expiration": "Fecha de expiración",
-    "daysUntilExpiration": "Días hasta expiración",
+    "expiration": "Fecha de vencimiento",
+    "daysUntilExpiration": "Días hasta el vencimiento",
     "severity": "Severidad"
   },
   "inventory": {
     "title": "Inventario",
     "buttons": {
       "create": "Agregar producto",
-      "return": "Registrar salida de producto",
+      "return": "Revisar producto",
       "details": "Ver detalles"
     },
     "searchPlaceholder": "Buscar producto...",
     "tableHeaders": {
       "name": "Nombre",
       "type": "Tipo",
-      "expireDate": "Fecha de caducidad",
+      "expireDate": "Fecha de vencimiento",
       "quantity": "Stock actual",
       "minQuantity": "Stock mínimo",
       "price": "Precio"
     },
     "new": {
-      "title": "Nuevo Producto",
+      "title": "Nuevo producto",
       "name": "Nombre",
       "type": "Tipo",
-      "expireDate": "Fecha de caducidad",
+      "expireDate": "Fecha de vencimiento",
       "quantity": "Stock actual",
       "minQuantity": "Stock mínimo",
       "price": "Precio",
       "cancel": "Cancelar",
       "save": "Guardar",
-      "uploadImage": "Subir Imagen",
+      "uploadImage": "Subir imagen",
       "highlight": "Destacar producto",
       "duplicate": "Duplicar producto",
-      "delete": "Borrar producto",
-      "moreOptions": "Más opciones"
+      "delete": "Eliminar producto",
+      "moreOptions": "Más opciones",
+      "warehouseId": "ID del almacén",
+      "productId": "ID del producto",
+      "newProductOption": "Nueva opción de producto",
+      "brand": "Marca",
+      "minimumStock": "Stock mínimo"
     },
     "register": {
-      "title": "Registrar Salida de Producto",
+      "title": "Registrar salida de producto",
       "cancel": "Cancelar",
       "save": "Guardar",
       "product": "Producto",
@@ -254,7 +281,7 @@
     "details": {
       "type": "Tipo de licor",
       "price": "Precio",
-      "expirationDate": "Fecha de caducidad",
+      "expirationDate": "Fecha de vencimiento",
       "currentStock": "Stock actual",
       "minStockLevel": "Stock mínimo",
       "location": "Asignado a"
@@ -262,52 +289,52 @@
   },
   "dashboard": {
     "title": "Inicio",
-    "subtitle": "Resumen general de tu inventario de vinos",
+    "subtitle": "Resumen de tu inventario de vinos",
     "stats": {
-      "totalProducts": "Total de Productos",
-      "productsStockLow": "Stock Bajo",
-      "expiringProducts": "Próximos a Vencer",
-      "pendingOrders": "Órdenes Pendientes"
+      "totalProducts": "Total de productos",
+      "productsStockLow": "Stock bajo",
+      "expiringProducts": "Cerca de vencer",
+      "pendingOrders": "Pedidos pendientes"
     },
     "content": {
-      "recentProducts": "Productos Recientes",
-      "recentOrders": "Órdenes Recientes"
+      "recentProducts": "Productos recientes",
+      "recentOrders": "Pedidos recientes"
     }
   },
   "profile": {
     "title": "Perfil",
     "subtitle": "Gestiona tu información personal y datos de contacto.",
-    "email": "Email",
+    "email": "Correo electrónico",
     "username": "Usuario",
     "role": "Rol",
     "buttons": {
-      "edit": "Editar Perfil",
-      "selectedPlan": "Plan Actual",
-      "plans": "Seleccionar Plan"
+      "edit": "Editar perfil",
+      "selectedPlan": "Plan actual",
+      "plans": "Seleccionar plan"
     },
     "planDetails": {
-      "title": "Selecciona tu Plan",
+      "title": "Selecciona tu plan",
       "subtitle": "Elige el plan que mejor se adapte al crecimiento de tu bodega",
       "mounth": "Mes",
-      "free": "Free",
+      "free": "Gratis",
       "plus": "Plus",
       "Pro": "Pro",
-      "now":"Plan actual",
+      "now": "Plan actual",
       "subtitle1": "Gestión básica para bodegas pequeñas.",
-      "subtitle2": "Herramientas avanzadas para crecer tu negocio.",
-      "subtitle3": "Automatización total y conexión con ERP.",
+      "subtitle2": "Herramientas avanzadas para hacer crecer tu negocio.",
+      "subtitle3": "Automatización total y conexión ERP.",
       "details": {
-        "feature1": "Seguimiento del inventario",
-        "feature2": "Guías de almacenamiento",
+        "feature1": "Seguimiento de inventario",
+        "feature2": "Guías de almacén",
         "feature3": "Alertas básicas",
         "feature4": "Soporte prioritario",
         "feature5": "Alertas personalizadas",
-        "feature6": "Seguimiento ilimitado, con integración a sistemas de distribución y rastreo en tiempo real.",
-        "feature7": "Prioritario 24/7 con atención personalizada."
+        "feature6": "Seguimiento ilimitado, con integración a sistemas de distribución y seguimiento en tiempo real.",
+        "feature7": "Soporte prioritario 24/7 con atención personalizada."
       }
     },
     "edit": {
-      "title": "Información Personal",
+      "title": "Información personal",
       "name": "Nombre completo",
       "nameError": "Debe contener al menos 3 caracteres.",
       "email": "Correo electrónico",

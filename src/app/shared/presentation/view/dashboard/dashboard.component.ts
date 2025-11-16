@@ -1,34 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SideNavbarComponent } from '../../components/side-navbar/side-navbar.component';
 import { LanguageSwitcher } from "../../components/language-switcher/language-switcher.component";
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { InventoryService } from '../../../../inventory/services/inventory.service';
+import { InventoryItemProps } from '../../../../inventory/models/inventory.entity';
+import { OrdersService } from '../../../../orders/services/orders.service';
+import { Order, OrderStatus } from '../../../../orders/models/order.entity';
 
-interface InventoryItem {
-  id: string;
-  name: string;
-  currentStock: number;
-  minStockLevel: number;
-  expirationDate?: string;
-}
-
-interface Order {
-  id: string;
-  code: string;
+interface RecentOrder {
+  orderNumber: string;
   customerName: string;
-  status: string;
-  createdAt: string;
-}
-
-interface User {
-  id: number;
-  username: string;
-  role: string;
-  isActive: boolean;
+  status: OrderStatus;
+  orderedAt: string;
 }
 
 @Component({
@@ -45,97 +34,92 @@ interface User {
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   totalProductos: number = 0;
   productosStockBajo: number = 0;
   productosPorVencer: number = 0;
   ordenesPendientes: number = 0;
 
-  productosRecientes: InventoryItem[] = [];
-  ordenesRecientes: Order[] = [];
+  productosRecientes: InventoryItemProps[] = [];
+  ordenesRecientes: RecentOrder[] = [];
 
-  totalUsuarios: number = 0;
-  usuariosActivos: number = 0;
-  administradores: number = 0;
+  private readonly destroy$ = new Subject<void>();
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private readonly inventoryService: InventoryService,
+    private readonly ordersService: OrdersService
+  ) {}
 
   ngOnInit(): void {
     this.loadDashboardData();
   }
 
-  loadDashboardData(): void {
-    this.http.get<any>('http://localhost:3000/inventory').subscribe({
-      next: (inventoryData) => {
-        this.processInventoryData(inventoryData);
-      },
-      error: (error) => {
-        console.error('Error loading inventory data:', error);
-      }
-    });
-
-    this.http.get<any[]>('http://localhost:3000/orders').subscribe({
-      next: (ordersData) => {
-        this.processOrdersData(ordersData);
-      },
-      error: (error) => {
-        console.error('Error loading orders data:', error);
-      }
-    });
-
-    this.http.get<any[]>('http://localhost:3000/users').subscribe({
-      next: (usersData) => {
-        this.processUsersData(usersData);
-      },
-      error: (error) => {
-        console.error('Error loading users data:', error);
-      }
-    });
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
-  /**
-   * Processes inventory data
-    * @param inventory - Inventory data
-   */
-  private processInventoryData(inventory: InventoryItem[]): void {
+  loadDashboardData(): void {
+    this.loadInventoryData();
+    this.loadOrdersData();
+  }
+
+  private loadInventoryData(): void {
+    this.inventoryService.getAllProps()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (items: InventoryItemProps[]) => this.processInventoryData(items),
+        error: (error: unknown) => console.error('Error loading inventory data:', error)
+      });
+  }
+
+  private loadOrdersData(): void {
+    this.ordersService.getOrders()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((orders: Order[] | undefined) => this.processOrdersData(orders ?? []));
+
+    this.ordersService.refreshOrders()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        error: (error: unknown) => console.error('Error loading orders data:', error)
+      });
+  }
+
+  private processInventoryData(inventory: InventoryItemProps[]): void {
     this.totalProductos = inventory.length;
     this.productosRecientes = inventory.slice(0, 5);
 
     this.productosStockBajo = inventory.filter(item =>
       item.currentStock <= item.minStockLevel && item.currentStock > 0
     ).length;
+
     const today = new Date();
     const sevenDaysFromNow = new Date(today.getTime() + (7 * 24 * 60 * 60 * 1000));
 
     this.productosPorVencer = inventory.filter(item => {
       if (!item.expirationDate) return false;
-      const expirationDate = new Date(item.expirationDate);
+      const expirationDate = item.expirationDate instanceof Date
+        ? item.expirationDate
+        : new Date(item.expirationDate);
       return expirationDate <= sevenDaysFromNow && expirationDate >= today;
     }).length;
   }
 
-  /**
-   * Processes order data
-   * @param orders - Order data
-   */
   private processOrdersData(orders: Order[]): void {
     this.ordenesPendientes = orders.filter(order =>
       order.status === 'pending' || order.status === 'processing'
     ).length;
 
-    this.ordenesRecientes = orders
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    const sorted = [...orders]
+      .sort((a, b) => new Date(b.orderedAt).getTime() - new Date(a.orderedAt).getTime())
       .slice(0, 5);
-  }
 
-  /**
-   * Processes user data
-   * @param users - User data
-   */
-  private processUsersData(users: User[]): void {
-    this.totalUsuarios = users.length;
-    this.usuariosActivos = users.filter(user => user.isActive).length;
-    this.administradores = users.filter(user => user.role === 'ADMIN').length;
+    this.ordenesRecientes = sorted.map(order => ({
+      orderNumber: order.orderNumber,
+      customerName: order.delivery?.recipientName ?? order.customerEmail ?? '—',
+      status: order.status,
+      orderedAt: order.orderedAt
+    }));
   }
 
   /**

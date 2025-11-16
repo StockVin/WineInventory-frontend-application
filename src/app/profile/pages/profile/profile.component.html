@@ -12,10 +12,6 @@
       </div>
 
       <div class="header__right">
-        <div class="header__status-chip" *ngIf="accountStatus() as status">
-          <span class="material-symbols-outlined">verified</span>
-          {{ status.statusLabel }}
-        </div>
         <app-language-switcher></app-language-switcher>
       </div>
     </header>
@@ -28,8 +24,7 @@
           <div class="summary-grid">
             <article class="card profile-overview">
               <div class="profile-overview__header">
-                <div class="profile-overview__avatar">
-                  <ng-container *ngIf="currentProfile.avatarUrl && !overviewAvatarError(); else overviewInitials">
+                <ng-container *ngIf="currentProfile.avatarUrl && !overviewAvatarError(); else overviewInitials">
                     <img
                       [src]="currentProfile.avatarUrl"
                       [alt]="'Foto de ' + currentProfile.fullName"
@@ -37,17 +32,20 @@
                     />
                   </ng-container>
                   <ng-template #overviewInitials>
-                    <div class="profile-overview__initials">
-                      {{ computeInitials(currentProfile.fullName) }}
-                    </div>
+                    <span class="profile-overview__initials">
+                      {{ currentProfile.fullName.charAt(0).toUpperCase() }}
+                    </span>
                   </ng-template>
-                </div>
                 <div>
-                  <h2>{{ currentProfile.fullName }}</h2>
+                  <h2>{{ currentProfile.username }}</h2>
                   <p>{{ currentProfile.role }}</p>
                 </div>
               </div>
               <dl class="profile-overview__details">
+                <div>
+                  <dt class="material-symbols-outlined">{{ 'profile.username' | translate }}:</dt>
+                  <dd>{{ currentProfile.username }}</dd>
+                </div>
                 <div>
                   <dt class="material-symbols-outlined">{{ 'profile.email' | translate }}:</dt>
                   <dd>{{ currentProfile.email }}</dd>
@@ -55,10 +53,6 @@
                 <div>
                   <dt class="material-symbols-outlined">{{ 'profile.role' | translate }}:</dt>
                   <dd>{{ currentProfile.role }}</dd>
-                </div>
-                <div>
-                  <dt class="material-symbols-outlined">{{ 'profile.username' | translate }}:</dt>
-                  <dd>{{ currentProfile.username }}</dd>
                 </div>
               </dl>
               <div class="profile-overview__actions">

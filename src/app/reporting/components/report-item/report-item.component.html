@@ -1,9 +1,10 @@
 <div class="report-item">
-    <div class="report-date">{{report.date}}</div>
+    <div class="report-date">{{ report.reportDate | date: 'yyyy-MM-dd' }}</div>
     <div class="report-products">
-      <ng-container *ngIf="report.products; else noProducts">
+      <ng-container *ngIf="(report.productDisplayName || report.productNameText || report.productName); else noProducts">
         <div class="product">
-          {{ report.products }}
+          <div class="product-name">{{ report.productDisplayName || report.productNameText || report.productName }}</div>
+          <div class="product-type" *ngIf="report.productLiquorType">{{ report.productLiquorType | titlecase }}</div>
         </div>
       </ng-container>
       <ng-template #noProducts>
@@ -17,9 +18,9 @@
     </div>
     <div class="report-price">S/ {{ report.price | number:'1.2-2' }}</div>
     <div class="report-amount">{{ report.amount }}</div>
-    <div class="report-lost" [class.lost]="report.lost > 0">
-      <span *ngIf="report.lost > 0">-S/ {{ report.lost | number:'1.2-2' }}</span>
-      <span *ngIf="!report.lost || report.lost === 0">-</span>
+    <div class="report-lost" [class.lost]="report.lostAmount > 0">
+      <span *ngIf="report.lostAmount > 0">-S/ {{ report.lostAmount | number:'1.2-2' }}</span>
+      <span *ngIf="!report.lostAmount || report.lostAmount === 0">-</span>
     </div>
     <div class="report-actions">
       <button class="delete-button"

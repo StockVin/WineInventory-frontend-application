@@ -16,10 +16,34 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline">
+                <mat-label>{{ 'inventory.new.warehouseId' | translate }}</mat-label>
+                <mat-select formControlName="warehouseId">
+                    <mat-option *ngFor="let warehouse of warehouses" [value]="warehouse.warehouseId">
+                        {{ warehouse.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'inventory.new.productId' | translate }}</mat-label>
+                <mat-select formControlName="productId">
+                    <mat-option [value]="null">{{ 'inventory.new.newProductOption' | translate }}</mat-option>
+                    <mat-option *ngFor="let product of products" [value]="product.id">
+                        {{ product.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
                 <mat-label>{{ 'inventory.new.type' | translate }}</mat-label>
                 <mat-select formControlName="type">
-                    <mat-option *ngFor="let type of liquorTypes" [value]="type">{{ type }}</mat-option>
+                    <mat-option *ngFor="let option of liquorTypeOptions" [value]="option.label">{{ option.label }}</mat-option>
                 </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'inventory.new.brand' | translate }}</mat-label>
+                <input matInput formControlName="brandName">
             </mat-form-field>
 
             <mat-form-field appearance="outline">
@@ -38,8 +62,8 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-                <mat-label>{{ 'inventory.new.minQuantity' | translate }}</mat-label>
-                <input matInput type="number" formControlName="minStockLevel">
+                <mat-label>{{ 'inventory.new.minimumStock' | translate }}</mat-label>
+                <input matInput type="number" formControlName="minimumStock">
             </mat-form-field>
         </div>
 
@@ -53,7 +77,11 @@
 
             <div class="image-panel">
                 <h4>{{ 'inventory.new.uploadImage' | translate }}</h4>
-                <div class="image-placeholder"><mat-icon>add</mat-icon></div>
+                <label class="image-placeholder">
+                    <input #imageInput type="file" accept="image/*" (change)="onImageSelected(imageInput.files)">
+                    <mat-icon>add</mat-icon>
+                    <span>{{ imageFile ? imageFile.name : ('inventory.new.selectImage' | translate) }}</span>
+                </label>
             </div>
 
             <div class="action-buttons">

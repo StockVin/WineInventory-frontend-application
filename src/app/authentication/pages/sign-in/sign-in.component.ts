@@ -47,7 +47,7 @@ export class SignInComponent {
     private snackBar: MatSnackBar
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       rememberMe: [false]
     });
@@ -58,7 +58,7 @@ export class SignInComponent {
       this.isLoading = true;
       const formData = this.loginForm.value;
 
-      this.userService.login(formData.email, formData.password).subscribe({
+      this.userService.login(formData.username, formData.password).subscribe({
         next: (isValid) => {
           this.isLoading = false;
           if (isValid) {
