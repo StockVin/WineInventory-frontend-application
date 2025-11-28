@@ -4,6 +4,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SubscriptionPlan } from '../../models/profile.entity';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { PlanService } from '../../../plans-subcripstions/services/plan.service';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-plan-details',
@@ -22,6 +24,31 @@ export class PlanDetailsComponent implements OnChanges {
   @Output() planSelected = new EventEmitter<string>();
 
   private translate = inject(TranslateService);
+  private planService = inject(PlanService);
+  private profileService = inject(ProfileService);
+  private accountId: string | null = null;
+
+  constructor() {
+    this.profileService.getProfile().subscribe(() => {
+      this.accountId = this.resolveAccountId();
+      console.log('PlanDetails: Resolved accountId:', this.accountId);
+    });
+  }
+
+  private resolveAccountId(): string | null {
+    try {
+      const raw = localStorage.getItem('currentUser');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed?.accountId !== undefined && parsed?.accountId !== null) {
+          return String(parsed.accountId);
+        }
+      }
+    } catch {}
+    let fallback: string | null = null;
+    this.profileService.getProfile().subscribe(p => fallback = p?.id ? String(p.id) : null).unsubscribe();
+    return fallback;
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['plans'] || changes['selectedPlanId']) {
@@ -37,38 +64,36 @@ export class PlanDetailsComponent implements OnChanges {
       return;
     }
 
-    console.log('PlanDetails: Emitiendo selección de plan:', planId);
-    this.planSelected.emit(planId);
-  }
+    const selectedPlan = this.plans.find(plan => plan.planId === planId);
+    if (!selectedPlan) {
+      console.error('PlanDetails: Plan no encontrado:', planId);
+      console.error('Planes disponibles:', this.plans.map(p => ({ id: p.planId, type: p.planType })));
+      return;
+    }
 
-  getPlanDescription(index: number): string {
-    const descriptions = [
-      'profile.planDetails.subtitle1',
-      'profile.planDetails.subtitle2',
-      'profile.planDetails.subtitle3'
-    ];
+    console.log('PlanDetails: Plan encontrado:', selectedPlan);
+    this.accountId = this.resolveAccountId();
+    console.log('PlanDetails: AccountId para procesar:', this.accountId);
 
-    return this.translate.instant(descriptions[index] || descriptions[0]);
-  }
+    if (!this.accountId || this.accountId.trim() === '') {
+      console.error('PlanDetails: No se proporcionó accountId válido para procesar el pago');
+      return;
+    }
 
-  getBenefitTranslation(planIndex: number, benefitIndex: number): string {
-    const benefits = [
-      'profile.planDetails.details.feature1',
-      'profile.planDetails.details.feature2',
-      'profile.planDetails.details.feature3',
-      'profile.planDetails.details.feature4',
-      'profile.planDetails.details.feature5',
-      'profile.planDetails.details.feature6',
-      'profile.planDetails.details.feature7'
-    ];
+    if (selectedPlan.price === 0) {
+      console.log('PlanDetails: Plan gratuito seleccionado, procesando sin pago');
+      this.planSelected.emit(planId);
+      return;
+    }
 
-    const planFeatureMapping = [
-      [0, 2, 4],
-      [1, 3, 5],
-      [6, 0, 1]
-    ];
+    console.log('PlanDetails: Plan de pago seleccionado, procesando con PayPal');
+    console.log('PlanDetails: Enviando solicitud con:', {
+      accountId: this.accountId,
+      planId: planId,
+      planType: selectedPlan.planType,
+      price: selectedPlan.price
+    });
 
-    const featureIndex = planFeatureMapping[planIndex]?.[benefitIndex] ?? 0;
-    return this.translate.instant(benefits[featureIndex] || benefits[0]);
+    this.planService.subscribeToPlanWithPayment(this.accountId, planId);
   }
 }

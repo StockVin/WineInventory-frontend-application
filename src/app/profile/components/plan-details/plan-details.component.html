@@ -7,37 +7,48 @@
       <div
         *ngFor="let plan of plans; index as planIndex"
         class="plan-card"
-        [class.plan-card--current]="plan.id === selectedPlanId"
+        [class.plan-card--current]="plan.planId === selectedPlanId"
       >
         <div class="plan-card__header">
-          <div class="plan-card__current-badge" *ngIf="plan.id === selectedPlanId">
+          <div class="plan-card__current-badge" *ngIf="plan.planId === selectedPlanId">
             {{ 'profile.planDetails.now' | translate }}
           </div>
-          <h3 class="plan-card__name">{{ plan.name }}</h3>
+          <h3 class="plan-card__name">{{ plan.planType }}</h3>
           <div class="plan-card__price">
-            {{ plan.price }}<small> / {{ 'profile.planDetails.mounth' | translate }}</small>
+            {{ plan.price }} {{ plan.currency }}<small *ngIf="plan.paymentFrequency !== 'None'"> / {{ plan.paymentFrequency }}</small>
           </div>
           <p class="plan-card__description">
-            {{ getPlanDescription(planIndex) }}
+            {{ plan.description }}
           </p>
+          <div class="plan-card__max-products">
+            <strong>Max Products:</strong> {{ plan.maxProducts }}
+          </div>
         </div>
 
-        <ul class="plan-card__features">
-          <li *ngFor="let benefit of plan.benefits; index as benefitIndex" class="plan-card__feature">
+        <div class="plan-card__features">
+          <div class="plan-card__feature">
             <mat-icon class="plan-card__feature-icon">check_circle</mat-icon>
-            {{ getBenefitTranslation(planIndex, benefitIndex) }}
-          </li>
-        </ul>
+            <span>Payment Frequency: {{ plan.paymentFrequency }}</span>
+          </div>
+          <div class="plan-card__feature">
+            <mat-icon class="plan-card__feature-icon">inventory_2</mat-icon>
+            <span>Maximum Products: {{ plan.maxProducts }}</span>
+          </div>
+          <div class="plan-card__feature">
+            <mat-icon class="plan-card__feature-icon">payments</mat-icon>
+            <span>Currency: {{ plan.currency }}</span>
+          </div>
+        </div>
 
         <div class="plan-card__actions">
           <button
             type="button"
             class="plan-card__button"
-            [class.plan-card__button--current]="plan.id === selectedPlanId"
-            (click)="onSelectPlan(plan.id)"
-            [disabled]="disabled || plan.id === selectedPlanId"
+            [class.plan-card__button--current]="plan.planId === selectedPlanId"
+            (click)="onSelectPlan(plan.planId)"
+            [disabled]="disabled || plan.planId === selectedPlanId"
           >
-            {{ plan.id === selectedPlanId ? ('profile.buttons.selectedPlan' | translate) : ('profile.buttons.plans' | translate) }}
+            {{ plan.planId === selectedPlanId ? ('profile.buttons.selectedPlan' | translate) : ('profile.buttons.plans' | translate) }}
           </button>
         </div>
       </div>

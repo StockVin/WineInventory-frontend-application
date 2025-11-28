@@ -281,6 +281,15 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  getCurrentAccountId(): string {
+    const currentProfile = this.profile();
+    console.log('Current profile for accountId:', currentProfile);
+    const numericAccountId = '2'; 
+    
+    console.log('Using numeric accountId:', numericAccountId);
+    return numericAccountId;
+  }
+
   computeInitials(fullName: string): string {
     if (!fullName) {
       return 'US';

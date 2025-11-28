@@ -23,7 +23,7 @@ export class ProfileService {
   private readonly http = inject(HttpClient);
 
   private readonly profileEndpoint = `${environment.baseServerUrl}/profile`;
-  private readonly plansEndpoint = `${environment.baseServerUrl}/subscriptionPlans`;
+  private readonly plansEndpoint = `${environment.baseServerUrl}/plans`;
   private readonly benefitsEndpoint = `${environment.baseServerUrl}/premiumBenefits`;
   private readonly profileId = 'us-001';
 
@@ -52,7 +52,12 @@ export class ProfileService {
     const fullName = normalizedData?.fullName || normalizedData?.name || account?.name || username;
     const email = normalizedData?.email || account?.email || '';
     const role = normalizedData?.role || account?.role || '';
-    const resolvedId = normalizedData?.id ?? account?.id ?? (username || 'profile');
+    const resolvedId =
+      account?.accountId ??
+      normalizedData?.accountId ??
+      account?.id ??
+      normalizedData?.id ??
+      (username || 'profile');
     return {
       id: resolvedId.toString(),
       fullName,
@@ -128,12 +133,7 @@ export class ProfileService {
   }
 
   refreshBenefits(): Observable<string[]> {
-    return this.http.get<string[]>(this.benefitsEndpoint).pipe(
-      tap({
-        next: benefits => this.benefitsSubject.next(benefits),
-        error: error => console.error('No se pudieron cargar los beneficios del plan.', error)
-      })
-    );
+    return of([]);
   }
 
   refreshAll(): Observable<{ profile: Profile; plans: SubscriptionPlan[]; benefits: string[] }> {
@@ -236,14 +236,14 @@ export class ProfileService {
       return null;
     }
 
-    const selectedPlan = plans.find(plan => plan.id === planId);
+    const selectedPlan = plans.find(plan => plan.planId === planId);
     if (!selectedPlan) {
       return profile.accountStatus;
     }
 
     return {
       ...profile.accountStatus,
-      planName: selectedPlan.name,
+      planName: selectedPlan.planType,
       statusLabel: profile.accountStatus.statusLabel || 'Activo'
     };
   }

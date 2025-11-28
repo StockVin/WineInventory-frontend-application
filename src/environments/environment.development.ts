@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:3000/api/v1',
+  //apiUrl: 'http://localhost:3000/api/v1',
+  apiUrl: 'https://wineinventory-back-end.azurewebsites.net/api/v1',
   warehousesEndpointPath: '/warehouses',
   productsEndpointPath: '/products',
   reportsEndpointPath: '/reports',
@@ -10,10 +11,15 @@ export const environment = {
   accountsEndpointPath: '/accounts',
   catalogEndpointPath: '/catalog',
   authEndpointPath: '/authentications',
-  baseServerUrl: 'http://localhost:8080/api/v1',
+  //baseServerUrl: 'http://localhost:8080/api/v1',
+  baseServerUrl: 'https://wineinventory-back-end.azurewebsites.net/api/v1',
   accountWarehousesEndpointPath: '/accounts/{accountId}/warehouses',
   accountProductsEndpointPath: '/accounts/{accountId}/products',
   reportingEndpointPath: '/reporting',
   inventoriesEndpointPath: '/inventories',
   careguidesEndpointPath: '/careguides',
+  plansEndpointPath: '/plans',
+  subscriptionUpdateEndpointPath:'/accounts/{accountId}/subscriptions/{subscriptionId}',
+  subscriptionEndpointPath: '/accounts/{accountId}/subscriptions',
+  subscriptionPaypalEndpointPath:'/accounts/{accountId}/subscriptions'
 };

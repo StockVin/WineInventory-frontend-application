@@ -21,11 +21,15 @@ export interface Profile {
 }
 
 export interface SubscriptionPlan {
-  id: string;
-  name: string;
-  price: string;
-  shortDescription: string;
-  benefits: string[];
+  planId: string;
+  paypalPlanId: string | null;
+  paypalSubscriptionId: string | null;
+  planType: string;
+  description: string;
+  paymentFrequency: string;
+  price: number;
+  currency: string;
+  maxProducts: number;
 }
 
 export interface ProfileUpdateInput {
